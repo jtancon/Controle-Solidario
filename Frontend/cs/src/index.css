@@ -1,16 +1,14 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Fenix, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #000000;
+  background-color: #E6EDF3;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -24,15 +22,32 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+p, li {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100%;
+}
+
+h2, h3 {
+  margin: 0;
+  padding-top: 10px;
 }
 
 button {
@@ -65,4 +80,24 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  background-color: #1A4E80;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  color: #FFFFFF;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  background-color: #1A4E80;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  color: #FFFFFF;
 }
