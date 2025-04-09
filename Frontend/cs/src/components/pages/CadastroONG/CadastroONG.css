@@ -1,0 +1,51 @@
+.CadastroONG {
+  background-color: #e6eef4;
+  color: #003866;
+  font-family: Arial, sans-serif;
+  padding: 40px;
+  max-width: 500px;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 56, 102, 0.2);
+}
+
+.CadastroONG h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1a4d80;
+}
+
+.CadastroONG form {
+  display: flex;
+  flex-direction: column;
+}
+
+.CadastroONG label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.CadastroONG input {
+  padding: 10px;
+  border: 1px solid #b3c7d6;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #003866;
+}
+
+.CadastroONG button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #003866;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.CadastroONG button:hover {
+  background-color: #1a4d80;
+}
