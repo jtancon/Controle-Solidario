@@ -1,4 +1,4 @@
-import './Navbar.css'
+import './NavFooter.css'
 function Navbar() {
     return (
         <div className="navbar">
