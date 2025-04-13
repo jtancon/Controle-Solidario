@@ -1,3 +1,4 @@
+import './NavFooter.css'
 function Footer() {
     return (
         <div className="footer">
