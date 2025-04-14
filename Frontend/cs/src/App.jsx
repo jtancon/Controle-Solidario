@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Saq from "./components/pages/Saq/Saq";
 import Doacao from "./components/pages/Doacao/doacao";
 import CadastroONG from "./components/pages/CadastroONG/CadastroONG";
+import IndexONG from "./components/pages/IndexONG/IndexONG";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Saq />} />
             <Route path="/Doacao" element={<Doacao />} />
             <Route path="/CadastroONG" element={<CadastroONG />} />
+            <Route path="/IndexONG" element={<IndexONG />} />
           </Routes>
         </main>
 
