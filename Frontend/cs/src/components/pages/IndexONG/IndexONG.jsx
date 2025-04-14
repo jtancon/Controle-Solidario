@@ -3,8 +3,6 @@ import './indexONG.css';
 const IndexONG = () => {
   return (
     <div className="ong-container">
-      <Navbar />
-
       <main className="main-content">
         <section className="header-box">
           <h1>Página Central da ONG</h1>
@@ -23,8 +21,6 @@ const IndexONG = () => {
           </a>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 };
