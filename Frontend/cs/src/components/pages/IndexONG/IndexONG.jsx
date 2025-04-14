@@ -1,6 +1,5 @@
 import './indexONG.css';
 
-
 const IndexONG = () => {
   return (
     <div className="ong-container">
@@ -11,7 +10,7 @@ const IndexONG = () => {
         </section>
 
         <section className="card-grid">
-          <a href="/relatorios" className="card">
+          <a href="/Dashboard" className="card">
             <h2>
               Relatórios
               <br />e<br />
