@@ -1,6 +1,5 @@
 import './indexONG.css';
 
-
 const IndexONG = () => {
   return (
     <div className="ong-container">
