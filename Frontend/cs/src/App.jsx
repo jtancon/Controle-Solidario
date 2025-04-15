@@ -4,6 +4,9 @@ import Footer from "./components/Footer";
 import Saq from "./components/pages/Saq/Saq";
 import Doacao from "./components/pages/Doacao/doacao";
 import CadastroONG from "./components/pages/CadastroONG/CadastroONG";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
 
 function App() {
   return (
