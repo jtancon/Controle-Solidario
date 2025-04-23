@@ -3,17 +3,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    
+    margin: 0;
 }
-.instituicoes{
-    background-color: white;
-    width: 90vw;
-    height: 50vh;
-    padding: 2vw;
-    border-radius: 20px;
-    margin-top: 1vw;
-}
-.valores{
+
+.valores {
     background-color: white;
     width: 90vw;
     height: 10vh;
@@ -25,21 +18,76 @@
     flex-direction: row;
     align-items: center;
 }
+
 .botao {
     background-color: #1a4e80;
-    border: solid 2px #b4c7d6;
+    border: solid 2px #1a4e80;
     color: white;
     font-weight: bold;
     width: 25vw;
-    height: 100%;
+    height: 50px;  /* Ajuste de altura para consistência */
     margin: 2vw;
-    font-family: Fenix, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Fenix', system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
-    font-weight: bold;
+    border-radius: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;  /* Transição suave ao passar o mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Adicionando sombra sutil */
+    cursor: pointer;
 }
 
 .botao:hover {
-    background-color: white;
-    border: solid 2px #b4c7d6;
-    color: black;
+    background-color: #fff; /* Mudar para branco */
+    color: #1a4e80;  /* Alterando a cor do texto para a cor original */
+    border-color: #1a4e80;  /* Mantendo a borda no mesmo tom */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Aumentando a sombra para efeito de hover */
+    transform: translateY(-2px); /* Efeito de elevação do botão */
 }
+
+.botao:active {
+    transform: translateY(1px);  /* Efeito de pressionamento do botão */
+}
+
+.botao:focus {
+    outline: none;  /* Remove o contorno do botão ao clicar */
+    box-shadow: 0 0 0 4px rgba(26, 78, 128, 0.5); /* Sombra sutil no foco */
+}
+
+.instituicoes {
+    background-color: white;
+    width: 90vw;
+    height: 60vh;  /* Ajustando a altura da div conforme necessário */
+    padding: 2vw;
+    border-radius: 20px;
+    margin-top: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.slick-slider {
+    width: 100%;  /* Ocupa toda a largura disponível */
+    margin: 0 auto;
+}
+
+.slick-track {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.slick-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;  /* Exibe 3 slides de cada vez */
+    height: 100vh;  /* Ocupa toda a altura da div .instituicoes */
+    margin: 0;
+}
+
+

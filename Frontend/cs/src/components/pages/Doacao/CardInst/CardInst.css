@@ -1,0 +1,44 @@
+.card {
+    width: 28vw;  /* Ajuste para a largura do card */
+    height: 24vw;  /* Garantir que o card ocupe a altura do slide */
+    background-color: #1a4e80;
+    border-radius: 20px;  /* Arredondar mais suavemente as bordas */
+    padding: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;  /* Coloca o título na parte inferior do card */
+    margin-right: 40px;
+    overflow: hidden;  /* Evita que a imagem ultrapasse os limites do card */
+    transition: all 0.3s ease-in-out;  /* Transição suave ao passar o mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+    cursor: pointer;  /* Cursor de clique */
+    margin: 2%;
+}
+
+.card:hover {
+    transform: translateY(-5px);  /* Levanta o card ao passar o mouse */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);  /* Aumenta a sombra para dar efeito de profundidade */
+}
+
+.imgs {
+    width: 100%;  /* A imagem ocupa toda a largura do card */
+    height: 90%;  /* A altura é ajustada automaticamente */
+    border-radius: 15px;  /* Arredondamento suave das bordas da imagem */
+    object-fit: cover;  /* Ajusta a imagem dentro do card sem cortar */
+}
+
+h2 {
+    margin: 10px 0;
+    font-size: 2.5vw;  /* Ajuste o tamanho do título */
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;  /* Centraliza o texto */
+    opacity: 0.8;  /* Deixa o título levemente transparente */
+    transition: opacity 0.3s ease;  /* Transição suave no hover */
+}
+
+.card:hover h2 {
+    opacity: 1;  /* Aumenta a opacidade do título ao passar o mouse */
+}
