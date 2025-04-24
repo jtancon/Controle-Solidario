@@ -1,11 +1,8 @@
 import './indexONG.css';
 
-
 const IndexONG = () => {
   return (
     <div className="ong-container">
-      <Navbar />
-
       <main className="main-content">
         <section className="header-box">
           <h1>Página Central da ONG</h1>
@@ -13,19 +10,31 @@ const IndexONG = () => {
         </section>
 
         <section className="card-grid">
-          <a href="/relatorios" className="card">
-            <h2>Relatórios<br />e<br />Gráficos</h2>
+          <a href="/Dashboard" className="card">
+            <h2>
+              Relatórios
+              <br />e<br />
+              Gráficos
+            </h2>
           </a>
           <a href="/cadastro" className="card">
-            <h2>Cadastro<br />Colaboradores<br />e<br />Beneficiários</h2>
+            <h2>
+              Cadastro
+              <br />
+              Colaboradores
+              <br />e<br />
+              Beneficiários
+            </h2>
           </a>
           <a href="/registros" className="card">
-            <h2>Registros<br />Entrada/Saída</h2>
+            <h2>
+              Registros
+              <br />
+              Entrada/Saída
+            </h2>
           </a>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 };

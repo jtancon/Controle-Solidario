@@ -19,6 +19,8 @@ function App() {
             <Route path="/" element={<Saq />} />
             <Route path="/Doacao" element={<Doacao />} />
             <Route path="/CadastroONG" element={<CadastroONG />} />
+            <Route path="/IndexONG" element={<IndexONG />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
           </Routes>
         </main>
 
