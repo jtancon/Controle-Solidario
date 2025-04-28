@@ -1,5 +1,5 @@
 import './NavFooter.css'
-function Navbar() {
+function NavbarDoador() {
     return (
         <div className="navbar">
             <h1>Navbar</h1>
@@ -7,4 +7,4 @@ function Navbar() {
     )
 }
 
-export default Navbar
+export default NavbarDoador

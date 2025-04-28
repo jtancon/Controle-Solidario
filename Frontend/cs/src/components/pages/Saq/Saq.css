@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fenix&display=swap');
 .saq {
     margin: 0 auto;
-    padding: 0px 20px;
+    padding: 0px 15px;
     font-family: Fenix, system-ui, Avenir, Helvetica, Arial, sans-serif;
     color: #333;
     line-height: 1.6;
@@ -10,7 +10,7 @@
   .saq h1 {
     font-size: 48px;
     font-weight: 700;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     color: #1A1A1A;
   }
   
@@ -90,7 +90,7 @@
     padding-right: 20px;
     border-radius: 5px;
     align-items: center;
-    gap: 50px;;
+    gap: 50px;
   }
   
 
@@ -161,8 +161,15 @@
     padding: 40px 20px;
   }
 
+  .topicosONG {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+
   .ongFrase {
     background-color: #B4C7D6;
+    margin-left: -20px;
     display: inline-block;
     padding: 20px;
     text-align: center;
@@ -192,6 +199,7 @@
   .containerImgOngs {
     overflow-x: hidden;
     position: relative;
+    margin-right: -20px;
   }
 
   .imgOngs {
