@@ -1,21 +1,22 @@
-.card {
-    width: 28vw;  /* Ajuste para a largura do card */
-    height: 24vw;  /* Garantir que o card ocupe a altura do slide */
-    background-color: #1a4e80;
-    border-radius: 20px;  /* Arredondar mais suavemente as bordas */
+.card-instituicao {
+    width: 94%;
+    height: 95%;
+    background-color: #D9D9D9;
+    border-radius: 20px;
     padding: 10px;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;  /* Coloca o título na parte inferior do card */
-    margin-right: 40px;
-    overflow: hidden;  /* Evita que a imagem ultrapasse os limites do card */
-    transition: all 0.3s ease-in-out;  /* Transição suave ao passar o mouse */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Sombra suave */
-    cursor: pointer;  /* Cursor de clique */
-    margin: 2%;
+    justify-content: space-between;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    margin: 10%;
+    border-radius: 40px;
 }
+
 
 .card:hover {
     transform: translateY(-5px);  /* Levanta o card ao passar o mouse */
@@ -23,10 +24,10 @@
 }
 
 .imgs {
-    width: 100%;  /* A imagem ocupa toda a largura do card */
-    height: 90%;  /* A altura é ajustada automaticamente */
-    border-radius: 15px;  /* Arredondamento suave das bordas da imagem */
-    object-fit: cover;  /* Ajusta a imagem dentro do card sem cortar */
+    width: 70%;  
+    height: 70%;  
+    border-radius: 15px;  
+    margin: 5% 15% 0% 15%;  
 }
 
 h2 {
@@ -41,4 +42,42 @@ h2 {
 
 .card:hover h2 {
     opacity: 1;  /* Aumenta a opacidade do título ao passar o mouse */
+}
+
+.botao {
+    background-color: #1a4e80;
+    border: solid 2px #1a4e80;
+    color: white;
+    font-weight: bold;
+    width: 95%;
+    height: 15%;
+    margin:  5% 0 2% 0;  /* Margem superior para espaçamento */
+    font-family: 'Fenix', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 3vh;
+    line-height: 1.5;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;  /* Transição suave ao passar o mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Adicionando sombra sutil */
+    cursor: pointer;
+}
+
+.botao:hover {
+    background-color: #fff; /* Mudar para branco */
+    color: #1a4e80;  /* Alterando a cor do texto para a cor original */
+    border-color: #1a4e80;  /* Mantendo a borda no mesmo tom */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Aumentando a sombra para efeito de hover */
+    transform: translateY(-2px); /* Efeito de elevação do botão */
+}
+
+.botao:active {
+    transform: translateY(1px);  /* Efeito de pressionamento do botão */
+}
+
+.botao:focus {
+    outline: none;  /* Remove o contorno do botão ao clicar */
+    box-shadow: 0 0 0 4px rgba(26, 78, 128, 0.5); /* Sombra sutil no foco */
 }

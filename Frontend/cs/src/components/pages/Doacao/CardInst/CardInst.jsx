@@ -1,14 +1,16 @@
 import './CardInst.css';
 
-function CardInst() {
+function CardInst({ aoSelecionar }) {
     return (
-        <div className="card">
-            <h2>ONG</h2>
+        <div className="card-instituicao">
             <img  
                 className="imgs" 
-                src={"src/assets/ONGS.jpg"}  // Usando a imagem importada
-                alt="Imagem de uma ONG" // Sempre boa prática para acessibilidade
+                src={"src/assets/ONGS.png"} 
+                alt="Imagem de uma ONG"
             />
+            <button className="botao" onClick={aoSelecionar}>
+                Selecionar ONG
+            </button>
         </div>
     );
 }
