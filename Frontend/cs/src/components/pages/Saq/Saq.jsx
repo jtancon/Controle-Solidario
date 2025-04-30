@@ -5,6 +5,7 @@ function Saq() {
   return (
     <>
     <NavbarDoador/>
+
     <div className="saq">
       <div className="titulo">
         <hr className="linha"/>

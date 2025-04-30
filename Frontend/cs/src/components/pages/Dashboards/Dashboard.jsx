@@ -1,8 +1,15 @@
 import "./Dashboard.css";
+import { useContext } from 'react';
+import { AuthGoogleContext } from '../../../context/authGoogle';
 
 const Dashboard = () => {
+
+  const { signOut } = useContext(AuthGoogleContext);
+  
   return (
     <div className="pagina-relatorios">
+
+    <button className='Deslogar' onClick={() => {signOut()}}>Deslogar</button>
       <h1 className="titulo">Painel de Doações</h1>
 
       {/* Cards de KPIs */}
