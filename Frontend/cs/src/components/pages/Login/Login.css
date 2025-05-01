@@ -15,9 +15,33 @@
   margin-bottom: 20px;
 }
 
-.login-container p {
-  margin-bottom: 20px;
-  font-size: 16px;
+.login-form input {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 15px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #003866;
+  border-radius: 6px;
+  font-size: 14px;
+  display: block;
+}
+
+.login-form button {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px;
+  background-color: #003866;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #1a4d80;
 }
 
 .login-button {
@@ -35,7 +59,7 @@
   transition: background-color 0.3s ease;
   max-width: 300px;
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 }
 
 .login-button:hover {
@@ -45,6 +69,18 @@
 .login-button img {
   width: 20px;
   height: 20px;
+}
+
+.ou-texto {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.erro {
+  color: #d00000;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 20px;
 }
 
 /* Responsividade */

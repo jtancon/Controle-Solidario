@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUveYgm8XX3T3mjyn8UAJDNWkKS7vueBM",
@@ -11,4 +11,7 @@ const firebaseConfig = {
   measurementId: "G-D1SBG7KN7R",
 };
 
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export { app, db };

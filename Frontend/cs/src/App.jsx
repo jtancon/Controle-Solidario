@@ -7,6 +7,8 @@ import CadastroONG from "./components/pages/CadastroONG/CadastroONG";
 import IndexONG from "./components/pages/IndexONG/IndexONG";
 import Dashboard from "./components/pages/Dashboards/Dashboard";
 import Login from "./components/pages/Login/Login";
+import RecuperarSenha from "./components/pages/RecuperarSenha/RecuperarSenha";
+import PerfilONG from "./components/pages/PerfilONG/PerfilONG";
 import { PrivateRoute } from "./routes/routes";
 import { Fragment } from "react";
 import "slick-carousel/slick/slick.css";
@@ -22,13 +24,15 @@ function App() {
               <Route path="/" element={<Saq />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/CadastroONG" element={<CadastroONG />} />
+              <Route path="/RecuperarSenha" element={<RecuperarSenha />} />
               <Route path="*" element={<Saq />} />
-              
+
               <Route element={<PrivateRoute />}>
                 <Route path="/Doacao" element={<Doacao />} />
                 <Route path="/IndexONG" element={<IndexONG />} />
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/HistoricoDoacao" element={<HistoricoDoacao />} />
+                <Route path="PerfilONG" element={<PerfilONG />} />
               </Route>
             </Routes>
           </main>
