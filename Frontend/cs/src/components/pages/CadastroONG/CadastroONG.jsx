@@ -2,12 +2,19 @@ import "./CadastroONG.css";
 import { useState, useContext } from "react";
 import { AuthGoogleContext } from "../../../context/authGoogle";
 import { db } from "../../../services/firebaseconfig";
-import { doc, setDoc, getDocs, collection, query, where } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 function CadastroONG() {
   const [form, setForm] = useState({
@@ -34,7 +41,10 @@ function CadastroONG() {
     if (name === "cnpj") {
       formattedValue = value.replace(/\D/g, "").slice(0, 14);
       formattedValue = formattedValue.replace(/^(\d{2})(\d)/, "$1.$2");
-      formattedValue = formattedValue.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+      formattedValue = formattedValue.replace(
+        /^(\d{2})\.(\d{3})(\d)/,
+        "$1.$2.$3"
+      );
       formattedValue = formattedValue.replace(/\.(\d{3})(\d)/, ".$1/$2");
       formattedValue = formattedValue.replace(/(\d{4})(\d)/, "$1-$2");
     }
@@ -59,9 +69,17 @@ function CadastroONG() {
     const temMinuscula = /[a-z]/.test(senha);
     const temNumero = /[0-9]/.test(senha);
     const temEspecial = /[@$!%*?&]/.test(senha);
-    const temSequencia = /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i.test(senha);
+    const temSequencia =
+      /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i.test(
+        senha
+      );
 
-    const criterios = [temMaiuscula, temMinuscula, temNumero, temEspecial].filter(Boolean).length;
+    const criterios = [
+      temMaiuscula,
+      temMinuscula,
+      temNumero,
+      temEspecial,
+    ].filter(Boolean).length;
 
     if (senha.length < 6 || temSequencia || (!temNumero && !temEspecial)) {
       return "fraca";
@@ -73,19 +91,30 @@ function CadastroONG() {
   };
 
   const verificarEmailExistente = async (email) => {
-    const q = query(collection(db, "ongs"), where("email", "==", email));
+    const q = query(collection(db, "usuarios"), where("email", "==", email));
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   };
 
   const validarCampos = async () => {
-    const { nome, cnpj, cep, endereco, representante, telefone, email, senha } = form;
+    const { nome, cnpj, cep, endereco, representante, telefone, email, senha } =
+      form;
     const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
     const cepRegex = /^\d{5}-\d{3}$/;
     const telefoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!nome || !cnpj || !cep || !endereco || !representante || !telefone || !email || !senha || !confirmarSenha) {
+    if (
+      !nome ||
+      !cnpj ||
+      !cep ||
+      !endereco ||
+      !representante ||
+      !telefone ||
+      !email ||
+      !senha ||
+      !confirmarSenha
+    ) {
       toast.error("Todos os campos são obrigatórios.");
       return false;
     }
@@ -138,7 +167,11 @@ function CadastroONG() {
     if (!(await validarCampos())) return;
 
     try {
-      const { user } = await createUserWithEmailAndPassword(auth, form.email, form.senha);
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        form.email,
+        form.senha
+      );
       const uid = user.uid;
 
       const ongData = {
@@ -149,9 +182,10 @@ function CadastroONG() {
         representante: form.representante,
         telefone: form.telefone,
         email: form.email,
+        classificacao: "ONG",
       };
 
-      await setDoc(doc(db, "ongs", uid), ongData);
+      await setDoc(doc(db, "usuarios", uid), ongData);
       signUpOng(ongData, uid);
       toast.success("ONG cadastrada com sucesso!");
       navigate("/");
@@ -163,35 +197,101 @@ function CadastroONG() {
 
   return (
     <div className="CadastroONG">
-      <ToastContainer autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+      <ToastContainer
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <h1>Cadastro de ONG</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="nome">Nome da ONG</label>
-        <input type="text" id="nome" name="nome" placeholder="Ex: Instituto Esperança" value={form.nome} onChange={handleChange} />
-
-        <label htmlFor="cnpj">CNPJ</label>
-        <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" value={form.cnpj} onChange={handleChange} />
-
-        <label htmlFor="cep">CEP</label>
-        <input type="text" id="cep" name="cep" placeholder="00000-000" value={form.cep} onChange={handleChange} />
-
-        <label htmlFor="endereco">Endereço</label>
-        <input type="text" id="endereco" name="endereco" placeholder="Rua das Flores, 123" value={form.endereco} onChange={handleChange} />
-
-        <label htmlFor="representante">Representante</label>
-        <input type="text" id="representante" name="representante" placeholder="Maria Silva" value={form.representante} onChange={handleChange} />
-
-        <label htmlFor="telefone">Telefone</label>
-        <input type="text" id="telefone" name="telefone" placeholder="(11) 91234-5678" value={form.telefone} onChange={handleChange} />
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          placeholder="Ex: Instituto Esperança"
+          value={form.nome}
+          onChange={handleChange}
+        />
 
         <label htmlFor="email">E-mail</label>
-        <input type="email" id="email" name="email" placeholder="contato@ong.org" value={form.email} onChange={handleChange} />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="contato@ong.org"
+          value={form.email}
+          onChange={handleChange}
+        />
+
+        <label htmlFor="cnpj">CNPJ</label>
+        <input
+          type="text"
+          id="cnpj"
+          name="cnpj"
+          placeholder="00.000.000/0000-00"
+          value={form.cnpj}
+          onChange={handleChange}
+        />
+
+        <label htmlFor="cep">CEP</label>
+        <input
+          type="text"
+          id="cep"
+          name="cep"
+          placeholder="00000-000"
+          value={form.cep}
+          onChange={handleChange}
+        />
+
+        <label htmlFor="endereco">Endereço</label>
+        <input
+          type="text"
+          id="endereco"
+          name="endereco"
+          placeholder="Rua das Flores, 123"
+          value={form.endereco}
+          onChange={handleChange}
+        />
+
+        <label htmlFor="representante">Representante</label>
+        <input
+          type="text"
+          id="representante"
+          name="representante"
+          placeholder="Maria Silva"
+          value={form.representante}
+          onChange={handleChange}
+        />
+
+        <label htmlFor="telefone">Telefone</label>
+        <input
+          type="text"
+          id="telefone"
+          name="telefone"
+          placeholder="(11) 91234-5678"
+          value={form.telefone}
+          onChange={handleChange}
+        />
 
         <label htmlFor="senha">Senha</label>
-        <input type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres" value={form.senha} onChange={(e) => {
-          handleChange(e);
-          setForcaSenha(verificarForcaSenha(e.target.value));
-        }} />
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          placeholder="Mínimo 6 caracteres"
+          value={form.senha}
+          onChange={(e) => {
+            handleChange(e);
+            setForcaSenha(verificarForcaSenha(e.target.value));
+          }}
+        />
 
         {form.senha && (
           <p className={`forca-senha forca-${forcaSenha}`}>
@@ -200,12 +300,22 @@ function CadastroONG() {
         )}
 
         <label htmlFor="confirmarSenha">Confirmar Senha</label>
-        <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirme sua senha" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} />
+        <input
+          type="password"
+          id="confirmarSenha"
+          name="confirmarSenha"
+          placeholder="Confirme sua senha"
+          value={confirmarSenha}
+          onChange={(e) => setConfirmarSenha(e.target.value)}
+        />
 
         <br />
 
         <button type="submit">Cadastrar</button>
       </form>
+      <p>
+        Já tem uma conta? <a href="/Login">Faça login</a>
+      </p>
     </div>
   );
 }

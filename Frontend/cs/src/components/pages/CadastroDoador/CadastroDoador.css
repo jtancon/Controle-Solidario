@@ -1,0 +1,82 @@
+.CadastroDoador {
+    background-color: #e6eef4;
+    color: #003866;
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    max-width: 500px;
+    margin: 40px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 56, 102, 0.2);
+  }
+  
+  .CadastroDoador p {
+    text-align: center;
+  }
+
+  .CadastroDoador h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1a4d80;
+  }
+  
+  .CadastroDoador form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .CadastroDoador label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .CadastroDoador input {
+    padding: 10px;
+    border: 1px solid #b3c7d6;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #003866;
+  }
+  
+  .CadastroDoador button {
+    margin-top: 30px;
+    padding: 12px;
+    background-color: #003866;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .CadastroDoador button:hover {
+    background-color: #1a4d80;
+  }
+  
+  .forca-senha {
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .forca-fraca {
+    color: red;
+  }
+  
+  .forca-media {
+    color: orange;
+  }
+  
+  .forca-forte {
+    color: green;
+  }
+  
+  
+  @media (max-width: 600px) {
+    .CadastroDoador {
+      padding: 30px 20px;
+      margin: 20px;
+      max-width: 90%;
+    }
+  }
+  

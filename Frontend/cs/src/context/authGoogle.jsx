@@ -25,35 +25,42 @@ export const AuthGoogleProvider = ({ children }) => {
       setUser(JSON.parse(storedUser));
       setLoading(false);
     }
-  
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        const userData = await carregarDadosOng(currentUser.uid);
+        const userData = await carregarDadosUsuario(currentUser.uid);
         const fullUserData = { ...userData, uid: currentUser.uid };
         setUser(fullUserData);
-        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(fullUserData));
-        sessionStorage.setItem("@AuthFirebase:token", await currentUser.getIdToken());
+        sessionStorage.setItem(
+          "@AuthFirebase:user",
+          JSON.stringify(fullUserData)
+        );
+        sessionStorage.setItem(
+          "@AuthFirebase:token",
+          await currentUser.getIdToken()
+        );
       } else {
         setUser(null);
         sessionStorage.clear();
       }
       setLoading(false);
     });
-  
-    return () => unsubscribe();
-  }, []);  
 
-  const carregarDadosOng = async (uid) => {
+    return () => unsubscribe();
+  }, []);
+
+  const carregarDadosUsuario = async (uid) => {
     try {
-      const docRef = doc(db, "ongs", uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        return docSnap.data();
-      } else {
-        return null;
-      }
+      const userRef = doc(db, "usuarios", uid);
+
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        return userSnap.data();
+      } 
+
     } catch (error) {
-      console.error("Erro ao carregar dados da ONG:", error);
+      console.error("Erro ao carregar dados do usuário:", error);
       return null;
     }
   };
@@ -65,7 +72,7 @@ export const AuthGoogleProvider = ({ children }) => {
       const token = credential.accessToken;
       const firebaseUser = result.user;
 
-      const userRef = doc(db, "ongs", firebaseUser.uid);
+      const userRef = doc(db, "usuarios", firebaseUser.uid);
       const userSnap = await getDoc(userRef);
 
       let userData;
@@ -74,15 +81,18 @@ export const AuthGoogleProvider = ({ children }) => {
         userData = {
           uid: firebaseUser.uid,
           nome: firebaseUser.displayName || "",
+          nomeCompleto: firebaseUser.displayName || "",
+          usuario: firebaseUser.displayName || "",
           email: firebaseUser.email,
           cnpj: "",
+          cpf: "",
           cep: "",
           endereco: "",
           representante: "",
           telefone: "",
           criadoEm: new Date(),
+          classificacao: "Não definido",
         };
-
         await setDoc(userRef, userData);
       } else {
         userData = userSnap.data();
@@ -97,7 +107,13 @@ export const AuthGoogleProvider = ({ children }) => {
   };
 
   const signUpOng = async (ongData, uid) => {
-    const newUser = { ...ongData, uid };
+    const newUser = { ...ongData, uid, classificacao: "ONG" };
+    setUser(newUser);
+    sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(newUser));
+  };
+
+  const signUpDoador = async (doadorData, uid) => {
+    const newUser = { ...doadorData, uid, classificacao: "Doador" };
     setUser(newUser);
     sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(newUser));
   };
@@ -121,8 +137,14 @@ export const AuthGoogleProvider = ({ children }) => {
   const deletarConta = async () => {
     try {
       const currentUser = auth.currentUser;
+      const userRef = auth.currentUser.classificacao === "ONG" ? "ongs" : "doador";
       if (currentUser) {
-        await deleteDoc(doc(db, "ongs", currentUser.uid));
+        if (userRef === "doador") {
+          await deleteDoc(doc(db, "usuarios", currentUser.uid));
+        }
+        if (userRef === "ongs") {
+          await deleteDoc(doc(db, "ongs", currentUser.uid));
+        }
         await deleteUser(currentUser);
         sessionStorage.clear();
         setUser(null);
@@ -139,6 +161,7 @@ export const AuthGoogleProvider = ({ children }) => {
       value={{
         signInGoogle,
         signUpOng,
+        signUpDoador,
         signed: !!user,
         loading,
         user,

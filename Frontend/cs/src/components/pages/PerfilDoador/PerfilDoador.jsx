@@ -2,13 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import { AuthGoogleContext } from "../../../context/authGoogle";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import "./PerfilONG.css";
 import { getAuth, updatePassword } from "firebase/auth";
+import "./PerfilDoador.css";
 
-function PerfilONG() {
+function PerfilDoador() {
   const { user, signOut, deletarConta } = useContext(AuthGoogleContext);
   const [dados, setDados] = useState({});
   const [editando, setEditando] = useState(false);
@@ -28,18 +27,16 @@ function PerfilONG() {
   };
 
   useEffect(() => {
-    if (user && user.classificacao === "doador") {
-      navigate("/PerfilDoador");
+    if (user && user.classificacao === "ong") {
+      navigate("/PerfilONG");
     }
     if (user) {
       setDados({
-        nome: user.nome || "",
-        cnpj: user.cnpj || "",
-        cep: user.cep || "",
-        endereco: user.endereco || "",
-        representante: user.representante || "",
-        telefone: user.telefone || "",
+        nomeCompleto: user.nomeCompleto || "",
+        nomeUsuario: user.nomeUsuario || "",
         email: user.email || "",
+        cpf: user.cpf || "",
+        telefone: user.telefone || "",
       });
     }
   }, [user, navigate]);
@@ -47,22 +44,16 @@ function PerfilONG() {
   const formatarCampo = (name, value) => {
     let formatted = value;
 
-    if (name === "cnpj") {
-      formatted = value.replace(/\D/g, "").slice(0, 14);
-      formatted = formatted.replace(/^(\d{2})(\d)/, "$1.$2");
-      formatted = formatted.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
-      formatted = formatted.replace(/\.(\d{3})(\d)/, ".$1/$2");
-      formatted = formatted.replace(/(\d{4})(\d)/, "$1-$2");
-    }
-
-    if (name === "cep") {
-      formatted = value.replace(/\D/g, "").slice(0, 8);
-      formatted = formatted.replace(/^(\d{5})(\d)/, "$1-$2");
+    if (name === "cpf") {
+      formatted = value.replace(/\D/g, "").slice(0, 11);
+      formatted = formatted.replace(/(\d{3})(\d)/, "$1.$2");
+      formatted = formatted.replace(/(\d{3})(\d)/, "$1.$2");
+      formatted = formatted.replace(/(\d{3})(\d{2})$/, "$1-$2");
     }
 
     if (name === "telefone") {
       formatted = value.replace(/\D/g, "").slice(0, 11);
-      formatted = formatted.replace(/^(\d{2})(\d)/, "($1) $2");
+      formatted = formatted.replace(/(\d{2})(\d)/, "($1) $2");
       formatted = formatted.replace(/(\d{5})(\d)/, "$1-$2");
     }
 
@@ -87,20 +78,16 @@ function PerfilONG() {
   };
 
   const validarCampos = () => {
-    const { nome, cnpj, cep, endereco, representante, telefone } = dados;
-    const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
-    const cepRegex = /^\d{5}-\d{3}$/;
+    const { nomeCompleto, nomeUsuario, telefone, cpf } = dados;
     const telefoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
+    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
 
-    if (!nome) return toast.error("Preencha o nome.");
-    if (!cnpj) return toast.error("Preencha o CNPJ.");
-    if (!cnpjRegex.test(cnpj)) return toast.error("CNPJ inválido.");
-    if (!cep) return toast.error("Preencha o CEP.");
-    if (!cepRegex.test(cep)) return toast.error("CEP inválido.");
-    if (!endereco) return toast.error("Preencha o endereço.");
-    if (!representante) return toast.error("Preencha o representante.");
+    if (!nomeCompleto) return toast.error("Preencha o nome completo.");
+    if (!nomeUsuario) return toast.error("Preencha o nome de usuário.");
     if (!telefone) return toast.error("Preencha o telefone.");
     if (!telefoneRegex.test(telefone)) return toast.error("Telefone inválido.");
+    if (!cpf) return toast.error("Preencha o CPF.");
+    if (!cpfRegex.test(cpf)) return toast.error("CPF inválido.");
 
     return true;
   };
@@ -132,7 +119,7 @@ function PerfilONG() {
     }
 
     try {
-      await updateDoc(doc(db, "ongs", user.uid), dados);
+      await updateDoc(doc(db, "usuarios", user.uid), dados);
       setEditando(false);
       toast.success("Informações atualizadas com sucesso!");
     } catch (error) {
@@ -143,19 +130,8 @@ function PerfilONG() {
 
   return (
     <div className="PerfilONG">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <h1>Perfil da ONG</h1>
+      <ToastContainer position="top-right" autoClose={3000} />
+      <h1>Perfil do Doador</h1>
 
       {!editando ? (
         <>
@@ -174,7 +150,6 @@ function PerfilONG() {
             >
               Editar
             </button>
-
             <button onClick={signOut} className="cancel-button">
               Logout
             </button>
@@ -183,61 +158,23 @@ function PerfilONG() {
       ) : (
         <>
           <form>
-            <label htmlFor="nome">Nome da ONG</label>
+            <label>Nome Completo</label>
             <input
               type="text"
-              name="nome"
-              value={dados.nome}
+              name="nomeCompleto"
+              value={dados.nomeCompleto}
               onChange={handleChange}
-              placeholder="Ex: Instituto Esperança"
             />
 
-            <label htmlFor="cnpj">CNPJ</label>
+            <label>Nome de Usuário</label>
             <input
               type="text"
-              name="cnpj"
-              value={dados.cnpj}
+              name="nomeUsuario"
+              value={dados.nomeUsuario}
               onChange={handleChange}
-              placeholder="00.000.000/0000-00"
             />
 
-            <label htmlFor="cep">CEP</label>
-            <input
-              type="text"
-              name="cep"
-              value={dados.cep}
-              onChange={handleChange}
-              placeholder="00000-000"
-            />
-
-            <label htmlFor="endereco">Endereço</label>
-            <input
-              type="text"
-              name="endereco"
-              value={dados.endereco}
-              onChange={handleChange}
-              placeholder="Rua Exemplo, 123 - Bairro"
-            />
-
-            <label htmlFor="representante">Representante</label>
-            <input
-              type="text"
-              name="representante"
-              value={dados.representante}
-              onChange={handleChange}
-              placeholder="Nome do responsável legal"
-            />
-
-            <label htmlFor="telefone">Telefone</label>
-            <input
-              type="text"
-              name="telefone"
-              value={dados.telefone}
-              onChange={handleChange}
-              placeholder="(11) 91234-5678"
-            />
-
-            <label htmlFor="email">E-mail</label>
+            <label>Email</label>
             <input
               type="email"
               name="email"
@@ -246,7 +183,25 @@ function PerfilONG() {
               style={{ backgroundColor: "#f0f0f0" }}
             />
 
-            <label htmlFor="senha">Nova Senha</label>
+            <label>CPF:</label>
+            <input
+              type="text"
+              value={dados.cpf}
+              onChange={handleChange}
+              name="cpf"
+              placeholder="000.000.000-00"
+              disabled={user?.cpf}
+            />
+
+            <label>Telefone</label>
+            <input
+              type="text"
+              name="telefone"
+              value={dados.telefone}
+              onChange={handleChange}
+            />
+
+            <label>Nova Senha</label>
             <input
               type="password"
               name="senha"
@@ -274,7 +229,7 @@ function PerfilONG() {
               </p>
             )}
 
-            <label htmlFor="confirmarSenha">Confirmar Senha</label>
+            <label>Confirmar Senha</label>
             <input
               type="password"
               name="confirmarSenha"
@@ -328,4 +283,4 @@ function PerfilONG() {
   );
 }
 
-export default PerfilONG;
+export default PerfilDoador;

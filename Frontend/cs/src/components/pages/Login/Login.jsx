@@ -7,7 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
 
 const Login = () => {
-  const { signInGoogle, signed, signUpOng } = useContext(AuthGoogleContext);
+  const { signInGoogle, signed, signUpOng, signUpDoador } = useContext(AuthGoogleContext);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
@@ -25,25 +25,34 @@ const Login = () => {
 
   const loginEmailSenha = async (e) => {
     e.preventDefault();
+    setErro("");
+  
     try {
       const result = await signInWithEmailAndPassword(auth, email, senha);
       const uid = result.user.uid;
 
-      const ongRef = doc(db, "ongs", uid);
-      const ongSnap = await getDoc(ongRef);
+      const userRef = doc(db, "usuarios", uid);
+      const userSnap = await getDoc(userRef);
 
-      if (ongSnap.exists()) {
-        const ongData = ongSnap.data();
-        signUpOng(ongData, uid);
-        navigate("/");
-      } else {
-        setErro("Dados da ONG não encontrados.");
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        if (userData.classificacao === "Doador") {
+          signUpDoador(userData, uid);
+          navigate("/");
+          return;
+        } else if (userData.classificacao === "ONG") {
+          signUpOng(userData, uid);
+          navigate("/");
+          return;
+        }
       }
+  
+      setErro("Perfil de ONG ou Doador não encontrado.");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
       setErro("Email ou senha incorretos.");
     }
-  };
+  };  
 
   if (signed) {
     return <Navigate to="/" replace />;
@@ -56,7 +65,7 @@ const Login = () => {
       <form onSubmit={loginEmailSenha} className="login-form">
         <input
           type="email"
-          placeholder="E-mail da ONG"
+          placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -84,7 +93,13 @@ const Login = () => {
       {erro && <p className="erro">{erro}</p>}
 
       <p>
-        Não tem uma conta? <a href="/CadastroONG">Cadastre-se</a>
+        Não tem uma conta?
+      </p>
+      <p>
+        <a href="/CadastroONG">Cadastre-se como ONG</a>
+      </p>
+      <p>
+        <a href="/CadastroDoador">Cadastre-se como Doador</a>
       </p>
       <p>
         Esqueceu sua senha? <a href="/RecuperarSenha">Recuperar Senha</a>
