@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CS from "../../../assets/CS.jpg";
 
 function CadastroONG() {
   const [form, setForm] = useState({
@@ -182,6 +183,7 @@ function CadastroONG() {
         representante: form.representante,
         telefone: form.telefone,
         email: form.email,
+        fotoPerfil: CS,
         classificacao: "ONG",
       };
 

@@ -83,6 +83,7 @@ export const AuthGoogleProvider = ({ children }) => {
           nome: firebaseUser.displayName || "",
           nomeCompleto: firebaseUser.displayName || "",
           usuario: firebaseUser.displayName || "",
+          fotoPerfil: firebaseUser.photoURL || "",
           email: firebaseUser.email,
           cnpj: "",
           cpf: "",

@@ -102,6 +102,19 @@ input:disabled {
   }
 }
 
+.foto-perfil-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.foto-perfil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;

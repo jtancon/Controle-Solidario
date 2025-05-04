@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./PerfilONG.css";
+import NavbarDoador from '../../Navbar_Footer/NavbarDoador';
 import { getAuth, updatePassword } from "firebase/auth";
 
 function PerfilONG() {
@@ -40,6 +41,7 @@ function PerfilONG() {
         representante: user.representante || "",
         telefone: user.telefone || "",
         email: user.email || "",
+        fotoPerfil: "",
       });
     }
   }, [user, navigate]);
@@ -142,6 +144,8 @@ function PerfilONG() {
   };
 
   return (
+    <>
+    <NavbarDoador />
     <div className="PerfilONG">
       <ToastContainer
         position="top-right"
@@ -325,6 +329,7 @@ function PerfilONG() {
         </div>
       )}
     </div>
+    </>
   );
 }
 
