@@ -1,0 +1,74 @@
+.AdminONG {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+}
+
+.tabela {
+  background-color: white;
+  width: 90vw;
+  height: 70vh;
+  padding: 2vw;
+  border-radius: 20px;
+  margin: 3vw 3vw 1vw 3vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+
+.titulo {
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+  box-sizing: border-box;
+  justify-items: center;
+  justify-content: center;
+}
+
+.scroll-area {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  height: 100%;
+  width: 100%;
+  padding-right: 10px;
+}
+.scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
+.items {
+  background-color: #f1f1f1;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  width: 98%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.info-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.info {
+  font-size: 0.95em;
+  color: #222;
+  background-color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease-in-out;
+}
+
+.info:hover {
+  background-color: #f9f9f9;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}

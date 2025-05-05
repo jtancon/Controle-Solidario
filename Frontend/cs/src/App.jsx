@@ -13,6 +13,7 @@ import CadastroDoador from "./components/pages/CadastroDoador/CadastroDoador";
 import Index from "./components/pages/Index/Index";
 import EscolherClassificacao from "./components/pages/EscolherClassificacao/EscolherClassificacao";
 import PerfilDoador from "./components/pages/PerfilDoador/PerfilDoador";
+import AdminONG from "./components/pages/AdminONG/AdminONG";
 import { PrivateRoute } from "./routes/routes";
 import { Fragment } from "react";
 import "slick-carousel/slick/slick.css";
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/HistoricoDoacao" element={<HistoricoDoacao />} />
                 <Route path="PerfilONG" element={<PerfilONG />} />
                 <Route path="/PerfilDoador" element={<PerfilDoador />} />
+                <Route path="/AdminONG" element={<AdminONG />} />
               </Route>
             </Routes>
           </main>
