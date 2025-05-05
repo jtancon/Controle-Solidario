@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #d0e7f9;
+}
+
+header {
+    background-color: #1a73e8;
+    padding: 20px;
+    text-align: left;
+    padding-left: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* sombra no cabeçalho */
+}
+
+header h1 {
+    margin: 0;
+    color: white;
+    font-size: 26px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* sombra no texto do título */
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 130px;
+    height: calc(100vh - 100px);
+}
+
+.container {
+    text-align: center;
+}
+
+.btn {
+    display: block;
+    width: 250px;
+    margin: 25px auto 10px auto;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* sombra no botão */
+}
+
+.btn:hover {
+    background-color: #357ae8;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* sombra maior no hover */
+}
+
+.link-text {
+    font-size: 14px;
+    margin-bottom: 50px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* leve sombra no texto */
+}
+
+.link-text a {
+    color: #0645AD;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.link-text a:hover {
+    text-decoration: underline;
+}
