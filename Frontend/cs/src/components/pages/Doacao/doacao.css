@@ -3,43 +3,331 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    
-}
-.instituicoes{
-    background-color: white;
-    width: 90vw;
-    height: 50vh;
-    padding: 2vw;
-    border-radius: 20px;
-    margin-top: 1vw;
-}
-.valores{
-    background-color: white;
-    width: 90vw;
-    height: 10vh;
-    padding: 2vw;
-    border-radius: 20px;
-    margin-top: 1vw;
-    margin-bottom: 1vw;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.botao {
-    background-color: #1a4e80;
-    border: solid 2px #b4c7d6;
-    color: white;
-    font-weight: bold;
-    width: 25vw;
-    height: 100%;
-    margin: 2vw;
-    font-family: Fenix, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: bold;
+    margin: 0;
 }
 
-.botao:hover {
+.instituicoes {
     background-color: white;
-    border: solid 2px #b4c7d6;
-    color: black;
+    width: 90vw;
+    height: 70vh;
+    padding: 2vw;
+    border-radius: 20px;
+    margin: 3vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+.slick-slider, .slick-track, .slick-list, .slick-slide {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slick-slide > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.doacao-valor {
+    width: 90vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2vw;
+    gap: 1vw;
+}
+
+.doacao-valor-dados {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.dados-ong {
+    background-color: white;
+    padding: 2vw;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.logo-ong {
+    width: 80px;
+    height: auto;
+}
+
+.dados-ong p {
+    font-size: 1.2vw;
+}
+
+.dados-valores {
+    background-color: white;
+    padding: 2vw;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    height: 60%;
+}
+
+.botoes-valores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vw;
+}
+
+.botoes-valores button {
+    background-color: #1a4e80;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1vw;
+    cursor: pointer;
+    border: solid 2px #1a4e80;
+    font-weight: bold;
+    font-family: 'Fenix', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;  /* Transição suave ao passar o mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Adicionando sombra sutil */
+    cursor: pointer;
+}
+
+.botoes-valores button:hover {
+    background-color: #fff; /* Mudar para branco */
+    color: #1a4e80;  /* Alterando a cor do texto para a cor original */
+    border-color: #1a4e80;  /* Mantendo a borda no mesmo tom */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Aumentando a sombra para efeito de hover */
+    transform: translateY(-2px); /* Efeito de elevação do botão */
+}
+.botoes-valores button:active {
+    transform: translateY(1px);  /* Efeito de pressionamento do botão */
+}
+.botoes-valores button:focus {
+    outline: none;  /* Remove o contorno do botão ao clicar */
+    box-shadow: 0 0 0 4px rgba(26, 78, 128, 0.5); /* Sombra sutil no foco */
+}
+.campo-outro {
+    width: 20%;
+    height: 50px;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    margin-top: 1vw;
+    border: none;
+    padding: 0 10px;
+    font-size: 1.5vw;
+    font-weight: bold;
+    color: black;
+    text-align: right; /* valor alinhado à direita como bancos fazem */
+    caret-color: black; /* cor da barrinha do cursor */
+}
+
+.campo-outro:focus {
+    outline: none;
+    background-color: #ececec; /* leve mudança de cor ao focar */
+}
+
+.doacao-valor-resumo {
+    width: 30%;
+    background-color: white;
+    padding: 2vw;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vw;
+}
+
+.resumo-linha {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
+.resumo-valor {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2vw;
+}
+
+.botao-pagamento {
+    background-color: #1a4e80;
+    color: white;
+    border: none;
+    padding: 1vw 2vw;
+    border-radius: 10px;
+    font-size: 1.2vw;
+    cursor: pointer;
+    width: 100%;
+}
+
+.botao-pagamento:hover {
+    background-color: #163d66;
+}
+.pagamento {
+    width: 90vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2vw;
+    gap: 1vw;
+}
+
+.pagamento-opcoes {
+    width: 65%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    min-height: 150px;
+    transition: min-height 0.5s ease; /* animação ainda mais suave */
+}
+
+.pagamento-expandido {
+    height: 100vh; /* pode ajustar o valor se quiser */
+}
+
+.opcao-pagamento {
+    background-color: white;
+    padding: 2vw;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.opcao-pagamento.ativo {
+    border: 2px solid #1a4e80;
+}
+
+.cartao-info {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.cartao-info input {
+    flex: 1;
+}
+
+.botao-adicionar {
+    margin-top: 1vw;
+    background-color: #1a4e80;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.pagamento-resumo {
+    width: 30%;
+    background-color: white;
+    padding: 2vw;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vw;
+}
+
+.botao-concluir {
+    background-color: #1a4e80;
+    color: white;
+    border: none;
+    padding: 1vw 2vw;
+    border-radius: 10px;
+    font-size: 1.2vw;
+    cursor: pointer;
+    width: 100%;
+}
+
+.botao-concluir:hover {
+    background-color: #163d66;
+}
+.form-cartao {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    background-color: #e9f0f5; /* fundo cinza claro */
+    padding: 2vw;
+    border-radius: 20px;
+}
+
+.linha-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1vw;
+}
+
+.linha-input label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.linha-input input {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.linha-grupo {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.grupo-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-item label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.grupo-item input {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.botao-adicionar {
+    background-color: #1a4e80;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    width: 30%;
+    margin-top: 1vw;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.botao-adicionar:hover {
+    background-color: #163d66;
+}
+

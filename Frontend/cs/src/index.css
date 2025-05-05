@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fenix&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fenix&display=swap");
 :root {
   font-family: Fenix, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: #000000;
-  background-color: #E6EDF3;
+  background-color: #e6edf3;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,6 +23,7 @@ a:hover {
 
 body {
   margin: 0;
+  padding: 0;
 }
 
 @media (prefers-color-scheme: light) {
