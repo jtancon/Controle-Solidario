@@ -1,5 +1,5 @@
 import './AdminONG.css';
-
+import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 function AdminONG() {
   const beneficiarios = [
     { ID: 1, OngID: 101, Nome: "Maria Silva", CPF: "123.456.789-00", Telefone: "(11) 99999-0000", Endereco: "Rua das Flores, 123", Observacoes: "Precisa de cesta básica" },
@@ -33,64 +33,67 @@ function AdminONG() {
   ];
   
     return (
-<div className="AdminONG">
-  <div className="tabela">
-    <h1 className="titulo">Beneficiários</h1>
-    <div className="scroll-area">
-      {beneficiarios.map((b, index) => (
-        <div className="items" key={index}>
-          <div className="info-box">
-            <div className="info"><strong>ID:</strong> {b.ID}</div>
-            <div className="info"><strong>OngID:</strong> {b.OngID}</div>
-            <div className="info"><strong>Nome:</strong> {b.Nome}</div>
-            <div className="info"><strong>CPF:</strong> {b.CPF}</div>
-            <div className="info"><strong>Telefone:</strong> {b.Telefone}</div>
-            <div className="info"><strong>Endereço:</strong> {b.Endereco}</div>
-            <div className="info full-width"><strong>Observações:</strong> {b.Observacoes}</div>
+      <>
+      <NavbarDoador />
+        <div className="AdminONG">
+          <div className="tabela">
+            <h1 className="titulo">Beneficiários</h1>
+            <div className="scroll-area">
+              {beneficiarios.map((b, index) => (
+                <div className="items" key={index}>
+                  <div className="info-box">
+                    <div className="info"><strong>ID:</strong> {b.ID}</div>
+                    <div className="info"><strong>OngID:</strong> {b.OngID}</div>
+                    <div className="info"><strong>Nome:</strong> {b.Nome}</div>
+                    <div className="info"><strong>CPF:</strong> {b.CPF}</div>
+                    <div className="info"><strong>Telefone:</strong> {b.Telefone}</div>
+                    <div className="info"><strong>Endereço:</strong> {b.Endereco}</div>
+                    <div className="info full-width"><strong>Observações:</strong> {b.Observacoes}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+          <div className="tabela">
+          <h1 className="titulo">Doações</h1>
+        <div className="scroll-area">
+          {doacoes.map((d, index) => (
+            <div className="items" key={index}>
+              <div className="info-box">
+                <div className="info"><strong>ID:</strong> {d.ID}</div>
+                <div className="info"><strong>DoadorID:</strong> {d.DoadorID}</div>
+                <div className="info"><strong>OngID:</strong> {d.OngID}</div>
+                <div className="info"><strong>Valor:</strong> R$ {d.Valor}</div>
+                <div className="info"><strong>Data:</strong> {d.Data}</div>
+                <div className="info"><strong>Tipo:</strong> {d.Tipo}</div>
+                <div className="info full-width"><strong>Descrição:</strong> {d.Descricao}</div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </div>
-  <div className="tabela">
-  <h1 className="titulo">Doações</h1>
-<div className="scroll-area">
-  {doacoes.map((d, index) => (
-    <div className="items" key={index}>
-      <div className="info-box">
-        <div className="info"><strong>ID:</strong> {d.ID}</div>
-        <div className="info"><strong>DoadorID:</strong> {d.DoadorID}</div>
-        <div className="info"><strong>OngID:</strong> {d.OngID}</div>
-        <div className="info"><strong>Valor:</strong> R$ {d.Valor}</div>
-        <div className="info"><strong>Data:</strong> {d.Data}</div>
-        <div className="info"><strong>Tipo:</strong> {d.Tipo}</div>
-        <div className="info full-width"><strong>Descrição:</strong> {d.Descricao}</div>
-      </div>
-    </div>
-  ))}
-</div>
 
-  </div>
-    <div className="tabela">
-      <h1 className="titulo">Ações da ONG</h1>
-    <div className="scroll-area">
-      {acoes.map((a, index) => (
-        <div className="items" key={index}>
-          <div className="info-box">
-            <div className="info"><strong>ID:</strong> {a.ID}</div>
-            <div className="info"><strong>OngID:</strong> {a.OngID}</div>
-            <div className="info"><strong>Título:</strong> {a.Titulo}</div>
-            <div className="info"><strong>Status:</strong> {a.Status}</div>
-            <div className="info"><strong>Início:</strong> {a.DataInicio}</div>
-            <div className="info"><strong>Fim:</strong> {a.DataFim}</div>
-            <div className="info full-width"><strong>Descrição:</strong> {a.Descricao}</div>
+          </div>
+            <div className="tabela">
+              <h1 className="titulo">Ações da ONG</h1>
+            <div className="scroll-area">
+              {acoes.map((a, index) => (
+                <div className="items" key={index}>
+                  <div className="info-box">
+                    <div className="info"><strong>ID:</strong> {a.ID}</div>
+                    <div className="info"><strong>OngID:</strong> {a.OngID}</div>
+                    <div className="info"><strong>Título:</strong> {a.Titulo}</div>
+                    <div className="info"><strong>Status:</strong> {a.Status}</div>
+                    <div className="info"><strong>Início:</strong> {a.DataInicio}</div>
+                    <div className="info"><strong>Fim:</strong> {a.DataFim}</div>
+                    <div className="info full-width"><strong>Descrição:</strong> {a.Descricao}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</div>
+      </>
     );
-}
+  }
 
 export default AdminONG;

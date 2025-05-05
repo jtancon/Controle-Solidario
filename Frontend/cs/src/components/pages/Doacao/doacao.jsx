@@ -2,6 +2,7 @@ import './doacao.css';
 import Card1 from './CardInst/CardInst.jsx';
 import Slider from 'react-slick';
 import { useState, useRef } from 'react';
+import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 
 function Doacao() {
     const [etapa, setEtapa] = useState('instituicoes');
@@ -69,6 +70,8 @@ function Doacao() {
     };
 
     return (
+        <>
+            <NavbarDoador/>
         <div className="doacao">
             {etapa === 'instituicoes' && (
                 <div className="instituicoes">
@@ -190,6 +193,7 @@ function Doacao() {
                 </div>
             )}
         </div>
+        </>
     );
 }
 
