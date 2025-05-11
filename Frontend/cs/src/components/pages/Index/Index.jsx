@@ -101,8 +101,25 @@ function Index() {
             </div>
           </div>
         ) : usuario?.classificacao === "ONG" ? (
-          <div style={{ textAlign: "center", marginTop: "2rem" }}>
-            Você é uma ONG
+          <div className="painel-ong" style={{ textAlign: "center", marginTop: "2rem" }}>
+            <h1 style={{ marginBottom: "1rem" }}>Bem-vindo, {usuario.nome || "ONG"}!</h1>
+            <p style={{ maxWidth: "800px", margin: "0 auto 2rem", fontSize: "1.1rem" }}>
+              {usuario.descricao || "Sua ONG ainda não possui uma descrição cadastrada."}
+            </p>
+            <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
+              <a href="/Dashboard">
+                <button className="botao">Dashboard</button>
+              </a>
+              <a href="/HistoricoDoacao">
+                <button className="botao">Histórico de Doações</button>
+              </a>
+              <a href="/AdminONG">
+                <button className="botao">Administrar ONG</button>
+              </a>
+              <a href="/PerfilONG">
+                <button className="botao">Perfil</button>
+              </a>
+            </div>
           </div>
         ) : null}
       </div>

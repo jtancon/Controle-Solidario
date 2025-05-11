@@ -4,56 +4,57 @@ import { useState, useRef, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { doc, getDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from "../../../services/firebaseconfig";
+import { useNavigate } from 'react-router-dom';
 
 function Doacao() {
-  const [etapa, setEtapa] = useState('doacao');
-  const [valorOutro, setValorOutro] = useState('R$ 0,00');
-  const [valorSelecionado, setValorSelecionado] = useState('R$ 0,00');
-  const [mostrarCampoOutro, setMostrarCampoOutro] = useState(false);
-  const [metodoPagamento, setMetodoPagamento] = useState('Cartão');
-  const inputRef = useRef(null);
+    const [etapa, setEtapa] = useState('doacao');
+    const [valorOutro, setValorOutro] = useState('R$ 0,00');
+    const [valorSelecionado, setValorSelecionado] = useState('R$ 0,00');
+    const [mostrarCampoOutro, setMostrarCampoOutro] = useState(false);
+    const [metodoPagamento, setMetodoPagamento] = useState('Cartão');
+    const inputRef = useRef(null);
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const ongId = searchParams.get("id");
+    const [dadosOng, setDadosOng] = useState(null);
 
-  const [searchParams] = useSearchParams();
-  const ongId = searchParams.get("id");
-  const [dadosOng, setDadosOng] = useState(null);
-
-  useEffect(() => {
+    useEffect(() => {
     const buscarOng = async () => {
-      if (ongId) {
+        if (ongId) {
         const docRef = doc(db, "usuarios", ongId);
         const snapshot = await getDoc(docRef);
         if (snapshot.exists()) {
-          setDadosOng(snapshot.data());
+            setDadosOng(snapshot.data());
         }
-      }
+        }
     };
     buscarOng();
-  }, [ongId]);
+    }, [ongId]);
 
-  const handleValorClick = (valor) => {
+    const handleValorClick = (valor) => {
     setMostrarCampoOutro(false);
     setValorSelecionado(valor);
-  };
+    };
 
-  const handleOutroClick = () => {
+    const handleOutroClick = () => {
     setMostrarCampoOutro(true);
     setValorSelecionado(valorOutro);
     setTimeout(() => {
-      if (inputRef.current) {
+        if (inputRef.current) {
         inputRef.current.focus();
-      }
+        }
     }, 0);
-  };
+    };
 
-  const handleOutroChange = (e) => {
+    const handleOutroChange = (e) => {
     let value = e.target.value.replace(/\D/g, '');
 
     if (value.length === 0) {
-      value = '0';
+        value = '0';
     }
 
     while (value.length < 3) {
-      value = '0' + value;
+        value = '0' + value;
     }
 
     const reais = value.slice(0, -2);
@@ -75,13 +76,14 @@ function Doacao() {
     try {
       await addDoc(collection(db, "doacao"), {
         Data: serverTimestamp(),
-        IdDoador: "1", // Substitua por ID real do usuário se disponível
+        IdDoador: "1", // Substitua por ID real do usuário se tiver
         IdOng: ongId,
         Valor: parseFloat(valorSelecionado.replace("R$ ", "").replace(",", ".")),
         descricao: dadosOng?.descricao || "",
-        tipo: metodoPagamento // Aqui pega o método atual (Cartão, Pix ou Boleto)
+        tipo: metodoPagamento
       });
-      alert("Doação registrada com sucesso!");
+  
+      navigate("/"); // Redireciona para a home após registrar a doação
     } catch (error) {
       console.error("Erro ao registrar doação:", error);
       alert("Erro ao concluir a doação.");
