@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
+import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 
 const Login = () => {
   const { signInGoogle, signed, signUpOng, signUpDoador } = useContext(AuthGoogleContext);
@@ -59,51 +60,56 @@ const Login = () => {
   }
 
   return (
-    <div className="login-container">
-      <h1>Login</h1>
+    
+    <div className="login-page">
+      <NavbarDoador />
+        <div className="login-container">
+          
+          <h1>Login</h1>
 
-      <form onSubmit={loginEmailSenha} className="login-form">
-        <input
-          type="email"
-          placeholder="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          required
-        />
-        <button type="submit">Entrar com E-mail</button>
-      </form>
+          <form onSubmit={loginEmailSenha} className="login-form">
+            <input
+              type="email"
+              placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+            <button type="submit">Entrar com E-mail</button>
+          </form>
 
-      <p className="ou-texto">ou</p>
+          <p className="ou-texto">ou</p>
 
-      <button className="login-button" onClick={loginGoogle}>
-        <img
-          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-          alt="Google logo"
-        />
-        Login com Google
-      </button>
+          <button className="login-button" onClick={loginGoogle}>
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+              alt="Google logo"
+            />
+            Login com Google
+          </button>
 
-      {erro && <p className="erro">{erro}</p>}
+          {erro && <p className="erro">{erro}</p>}
 
-      <p>
-        Não tem uma conta?
-      </p>
-      <p>
-        <a href="/CadastroONG">Cadastre-se como ONG</a>
-      </p>
-      <p>
-        <a href="/CadastroDoador">Cadastre-se como Doador</a>
-      </p>
-      <p>
-        Esqueceu sua senha? <a href="/RecuperarSenha">Recuperar Senha</a>
-      </p>
+          <p>
+            Não tem uma conta?
+          </p>
+          <p>
+            <a href="/CadastroONG">Cadastre-se como ONG</a>
+          </p>
+          <p>
+            <a href="/CadastroDoador">Cadastre-se como Doador</a>
+          </p>
+          <p>
+            Esqueceu sua senha? <a href="/RecuperarSenha">Recuperar Senha</a>
+          </p>
+        </div>
     </div>
   );
 };

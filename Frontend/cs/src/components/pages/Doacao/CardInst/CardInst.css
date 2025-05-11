@@ -64,20 +64,19 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Adicionando sombra sutil */
     cursor: pointer;
 }
-
 .botao:hover {
-    background-color: #fff; /* Mudar para branco */
-    color: #1a4e80;  /* Alterando a cor do texto para a cor original */
-    border-color: #1a4e80;  /* Mantendo a borda no mesmo tom */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Aumentando a sombra para efeito de hover */
-    transform: translateY(-2px); /* Efeito de elevação do botão */
+    background-color: white;
+    color: #1a4e80;
+    border: 2px solid #1a4e80;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .botao:active {
-    transform: translateY(1px);  /* Efeito de pressionamento do botão */
+    transform: translateY(1px);
 }
 
 .botao:focus {
-    outline: none;  /* Remove o contorno do botão ao clicar */
-    box-shadow: 0 0 0 4px rgba(26, 78, 128, 0.5); /* Sombra sutil no foco */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 78, 128, 0.4);
 }

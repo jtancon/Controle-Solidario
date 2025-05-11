@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 function NavbarDoador() {
     return (
         <div className="navbar">
-            <h1 className="logo">Controle Solidário</h1>
+            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                <h1 className="logo">Controle Solidário</h1>
+            </Link>
             <div className="nav-links">
                 <Link to="/Doacao" className="nav-button">Doações</Link>
                 <Link to="/HistoricoDoacao" className="nav-button">Histórico</Link>
