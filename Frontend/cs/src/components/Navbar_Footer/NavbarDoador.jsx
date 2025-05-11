@@ -1,7 +1,20 @@
 import './NavFooter.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
 
 function NavbarDoador() {
+    const navigate = useNavigate();
+    const auth = getAuth();
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate("/Login"); // redireciona após logout
+        } catch (error) {
+            console.error("Erro ao sair:", error);
+        }
+    };
+
     return (
         <div className="navbar">
             <Link to="/" style={{ color: "white", textDecoration: "none" }}>
@@ -11,7 +24,9 @@ function NavbarDoador() {
                 <Link to="/Doacao" className="nav-button">Doações</Link>
                 <Link to="/HistoricoDoacao" className="nav-button">Histórico</Link>
                 <Link to="/PerfilDoador" className="nav-button">Perfil</Link>
-                <Link to="/Login" className="nav-button logout">Sair</Link>
+                <button className="nav-button logout" onClick={handleLogout}>
+                    Sair
+                </button>
             </div>
         </div>
     );
