@@ -72,3 +72,36 @@
 .full-width {
   grid-column: 1 / -1;
 }
+.botao-excluir {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: bold;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botao-excluir:hover {
+  background-color: #c0392b;
+}
+
+/* Select para editar status */
+.info select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: 500;
+  margin-left: 8px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  color: black;
+}
+
+.info select:focus {
+  outline: none;
+  border-color: #1a4e80;
+  box-shadow: 0 0 0 2px rgba(26, 78, 128, 0.2);
+}
