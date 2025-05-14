@@ -2,6 +2,7 @@
   "dependencies": {
     "react-slick": "^0.30.3",
     "react-toastify": "^11.0.5",
+    "recharts": "^2.15.3",
     "slick-carousel": "^1.8.1"
   }
 }

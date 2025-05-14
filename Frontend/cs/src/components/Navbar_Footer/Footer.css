@@ -1,15 +1,19 @@
 .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
-    height: 60px;
-    width: 100%;
-    background-color: #1A4E80;
-    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
-    color: #FFFFFF;
-    margin-top: auto;
+  position: fixed; /* fixa o rodapé */
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 60px;
+  width: 100%;
+  background-color: #1A4E80;
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+  color: #FFFFFF;
+  z-index: 1000; /* garante que fique acima do conteúdo */
 }
+
 .footer-copy {
   font-size: 0.9rem;
 }
@@ -29,4 +33,7 @@
 .footer-link:hover {
   text-decoration: underline;
   color: #ccc;
+}
+.main-content {
+  padding-bottom: 60px;
 }

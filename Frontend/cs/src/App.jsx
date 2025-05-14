@@ -39,7 +39,7 @@ function App() {
                 <Route path="/IndexONG" element={<IndexONG />} />
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/HistoricoDoacao" element={<HistoricoDoacao />} />
-                <Route path="PerfilONG" element={<PerfilONG />} />
+                <Route path="/PerfilONG" element={<PerfilONG />} />
                 <Route path="/PerfilDoador" element={<PerfilDoador />} />
                 <Route path="/AdminONG" element={<AdminONG />} />
               </Route>

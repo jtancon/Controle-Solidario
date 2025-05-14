@@ -12,15 +12,34 @@
 }
 
 .modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
+  background: #f9f9f9;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
   text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 90%;
+  width: 400px;
+}
+
+.modal-content h2 {
+  margin-bottom: 1.5rem;
+  color: #1A4E80;
+  font-size: 1.6rem;
 }
 
 .modal-content button {
+  background-color: #1A4E80;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
   margin: 0.5rem;
-  padding: 0.7rem 1.5rem;
+  padding: 0.8rem 1.8rem;
   font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #15527f; /* tom mais escuro ao passar o mouse */
 }
