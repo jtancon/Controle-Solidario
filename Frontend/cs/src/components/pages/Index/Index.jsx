@@ -9,6 +9,7 @@ import Slider from "react-slick";
 import Card1 from "../Doacao/CardInst/CardInst";
 import "../Doacao/doacao.css"; // estilos da doação
 import "../Index/Index.css"; // estilos da index
+import { Link } from "react-router-dom";
 
 function Index() {
   const [usuario, setUsuario] = useState(null);
@@ -78,12 +79,16 @@ function Index() {
           />
         ) : usuario?.classificacao === "doador" ? (
           <div>
-            <div className="doacao">
-              <div className="textos">
-                <h1 className="frase-impacto">
-                  Transforme solidariedade em ação. Doe para quem faz a diferença.
-                </h1>
+            <div className="doadorHome">
+              <div className="tituloDoadorbg">
+                <div className="transparencia">
+                  <h1 className="tituloDoador">Conheça as nossas instituições parceiras!</h1>
+                </div>
               </div>
+              <div className="divisor"></div>
+              <h1 className="fraseImpacto">
+                Doe para quem faz a diferença.
+              </h1>
 
               <div className="instituicoes">
                 <Slider {...settings}>
@@ -92,11 +97,12 @@ function Index() {
                   ))}
                 </Slider>
               </div>
-
-              <div className="textos">
-                <h2 className="texto-proposito">
-                  Controle Solidário é uma plataforma dedicada a conectar pessoas dispostas a ajudar com ONGs que realmente fazem a diferença. Nosso propósito é tornar o ato de doar mais acessível, seguro e transparente, permitindo que cada contribuição chegue a quem mais precisa. Ao apoiar uma instituição, você fortalece projetos sociais, amplia o alcance de ações humanitárias e transforma vidas. Pequenos gestos constroem grandes mudanças — e você pode ser parte disso.
-                </h2>
+              {/* <Link to="/Doacao" className="verMais">Descubra mais ONGs</Link> */}
+              <div className="textoBg">
+                <p className="texto">Controle Solidário é uma plataforma dedicada a conectar pessoas dispostas a ajudar com ONGs que realmente fazem a diferença. Nosso propósito é tornar o ato de doar 
+                  mais acessível, seguro e transparente, permitindo que cada contribuição chegue a quem mais precisa. Ao apoiar uma instituição, você fortalece projetos sociais, amplia 
+                  o alcance de ações humanitárias e transforma vidas. Pequenos gestos constroem grandes mudanças e você pode ser parte disso.
+                </p>
               </div>
             </div>
           </div>
