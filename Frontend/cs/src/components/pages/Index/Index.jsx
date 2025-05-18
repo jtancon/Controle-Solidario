@@ -89,7 +89,6 @@ function Index() {
               <h1 className="fraseImpacto">
                 Doe para quem faz a diferença.
               </h1>
-
               <div className="instituicoes">
                 <Slider {...settings}>
                   {ongs.map((ong) => (
@@ -97,7 +96,14 @@ function Index() {
                   ))}
                 </Slider>
               </div>
-              {/* <Link to="/Doacao" className="verMais">Descubra mais ONGs</Link> */}
+              <div className="botoesDoadorContainer">
+                  <Link to="/HistoricoDoacao" className="botoesDoadorMenu">
+                  <img className='imgBotao' src={"src/assets/svghist-com.svg"}></img>
+                  <span className="txtBotao">Doações</span></Link>
+                  
+                  <Link to="/PerfilDoador" className="botoesDoadorMenu"><img className='imgBotao' src={"src/assets/profile.svg"}></img>
+                  <span className="txtBotao">Perfil</span></Link>
+              </div>
               <div className="textoBg">
                 <p className="texto">Controle Solidário é uma plataforma dedicada a conectar pessoas dispostas a ajudar com ONGs que realmente fazem a diferença. Nosso propósito é tornar o ato de doar 
                   mais acessível, seguro e transparente, permitindo que cada contribuição chegue a quem mais precisa. Ao apoiar uma instituição, você fortalece projetos sociais, amplia 
@@ -107,15 +113,36 @@ function Index() {
             </div>
           </div>
         ) : usuario?.classificacao === "ONG" ? (
-          <div className="painel-ong">
-            <h1 className="painel-ong-titulo">Bem-vindo, {usuario.nome || "ONG"}!</h1>
-            <p className="painel-ong-descricao">
-              {usuario.descricao || "Sua ONG ainda não possui uma descrição cadastrada."}
-            </p>
-            <div className="painel-ong-botoes">
-              <a href="/Dashboard"><button className="painel-ong-botao">Dashboard</button></a>
-              <a href="/AdminONG"><button className="painel-ong-botao">Administrar ONG</button></a>
-              <a href="/PerfilONG"><button className="painel-ong-botao">Perfil</button></a>
+          <div>
+            <div className="bem-vindoBg">
+              <div className="painel-ong-titulo">
+                <h1>Bem-vindo, </h1>
+                <h1>{usuario.nome || "ONG"}!</h1>
+              </div>
+            </div>
+            <div className="painel">
+              <div className="descricao">
+                <h1>Descrição</h1>
+                <p className="painel-ong-descricao">
+                {usuario.descricao || "Sua ONG ainda não possui uma descrição cadastrada."}
+                </p>
+              </div>
+              <div>
+                <div className="logoContainer">
+                  <div className="imagecontainer">
+                    <img
+                    className="imgLogo"
+                    src={usuario.fotoPerfil || "src/assets/ONGS.png"}
+                    alt="Logo da ONG"
+                    />
+                  </div>
+                </div>
+                <Link to="/AdminONG" className="admnistrarBtn">Administrar ONG</Link>
+                <div className="ongBotoesContainer">
+                  <Link to="/PerfilONG" className="ongBotoes">Perfil</Link>
+                  <Link to="/Dashboard" className="ongBotoes">Dashboard</Link>
+                </div>
+              </div>
             </div>
           </div>
         ) : null}
