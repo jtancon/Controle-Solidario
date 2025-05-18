@@ -79,6 +79,13 @@
   border-radius: 20px;
 }
 
+.containerHist {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .textoCard {
   margin-right: 35px;
 }
@@ -100,4 +107,5 @@
 .valor {
   font-size: 20px;
   color: #1A4E80;
+  margin-right: 10px;
 }

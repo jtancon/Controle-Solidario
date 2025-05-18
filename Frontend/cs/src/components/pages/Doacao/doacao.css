@@ -9,7 +9,7 @@
 .instituicoes {
     width: 100%;
     height: 70vh;
-    padding: 1vw 0;
+    padding: 1vw 0 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
