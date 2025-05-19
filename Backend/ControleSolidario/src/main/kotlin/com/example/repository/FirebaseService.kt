@@ -1,27 +1,31 @@
-package com.example.ControleSolidario.repository
+package com.example.controle.service
 
-import com.example.ControleSolidario.model.Doacao
-import com.google.gson.Gson
-import java.net.HttpURLConnection
-import java.net.URL
-import java.nio.charset.StandardCharsets
+import com.google.auth.oauth2.GoogleCredentials
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
+import com.google.firebase.cloud.FirestoreClient
+import com.google.cloud.firestore.Firestore
+import java.io.FileNotFoundException
 
 class FirebaseService {
 
-    private val firebaseUrl = "https://controlesolidario-default-rtdb.firebaseio.com/Doacao.json"
+    val firestore: Firestore
 
-    fun inserirDoacao(doacao: Doacao): Boolean {
-        val url = URL(firebaseUrl)
-        val connection = url.openConnection() as HttpURLConnection
+    init {
+        if (FirebaseApp.getApps().isEmpty()) {
+            println("🔧 Inicializando Firebase...")
+            val serviceAccount = FirebaseService::class.java.classLoader
+                .getResourceAsStream("firebase-key.json")
+                ?: throw FileNotFoundException("firebase-key.json não encontrado!")
 
-        connection.requestMethod = "POST"
-        connection.doOutput = true
-        connection.setRequestProperty("Content-Type", "application/json")
+            val options = FirebaseOptions.builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setProjectId("controlesolidario")
+                .build()
 
-        val json = Gson().toJson(doacao)
-        val outputBytes = json.toByteArray(StandardCharsets.UTF_8)
-        connection.outputStream.write(outputBytes)
+            FirebaseApp.initializeApp(options)
+        }
 
-        return connection.responseCode == 200
+        firestore = FirestoreClient.getFirestore()
     }
 }

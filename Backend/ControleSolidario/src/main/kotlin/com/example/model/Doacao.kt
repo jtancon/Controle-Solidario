@@ -1,11 +1,12 @@
-package com.example.ControleSolidario.model
+package com.example.controle.model
+
+import java.util.*
 
 data class Doacao(
-    val ID: Int,
-    val DoadorID: String,
-    val OngID: String,
-    val Valor: String,
-    val Data: String,
-    val Descricao: String,
-    val Tipo: String
+    var data: Date? = null,
+    var idDoador: String = "",
+    var idOng: String = "",
+    var valor: Double = 0.0,
+    var descricao: String = "",
+    var tipo: String = ""
 )
