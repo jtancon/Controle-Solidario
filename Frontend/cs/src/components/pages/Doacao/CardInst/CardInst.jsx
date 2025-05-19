@@ -10,11 +10,14 @@ function CardInst({ ong }) {
 
     return (
     <div className="card-instituicao">
+        <div className="imagecontainer">
         <img
         className="imgs"
         src={ong.fotoPerfil || "src/assets/ONGS.png"}
         alt={ong.nome || "ONG"}
         />
+        </div>
+        
         <h2>{ong.nome || "Nome da ONG"}</h2>
         <button className="botao" onClick={handleSelecionar}>
         Selecionar ONG

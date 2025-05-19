@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Fenix&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,300..800;1,300..800&family=Fenix&display=swap');
 :root {
-  font-family: Fenix, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Faustina, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 

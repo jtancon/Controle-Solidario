@@ -1,20 +1,15 @@
 .card-instituicao {
-    width: 94%;
-    height: 95%;
-    background-color: #D9D9D9;
-    border-radius: 20px;
-    padding: 10px;
-    color: white;
+    width: 55%;
+    height: 55vh;
+    background-color: #1A4D80;
+    border-radius: 40px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    overflow: hidden;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 5px #1A4E802B;
     cursor: pointer;
-    margin: 10%;
-    border-radius: 40px;
 }
 
 
@@ -23,14 +18,27 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);  /* Aumenta a sombra para dar efeito de profundidade */
 }
 
+.imagecontainer {
+    height: 200px;
+    width: 200px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
 .imgs {
-    width: 70%;  
-    height: 70%;  
-    border-radius: 15px;  
-    margin: 5% 15% 0% 15%;  
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 h2 {
+    color: white;
     margin: 10px 0;
     font-size: 2.5vw;  /* Ajuste o tamanho do título */
     font-weight: bold;
@@ -45,14 +53,13 @@ h2 {
 }
 
 .botao {
-    background-color: #1a4e80;
-    border: solid 2px #1a4e80;
-    color: white;
+    background-color: white;
+    border: solid 2px white;
+    color: #1a4e80;
     font-weight: bold;
-    width: 95%;
-    height: 15%;
-    margin:  5% 0 2% 0;  /* Margem superior para espaçamento */
-    font-family: 'Fenix', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    width: 90%;
+    height: 8vh;
+    margin:  10px auto 20px;
     font-size: 3vh;
     line-height: 1.5;
     border-radius: 20px;
@@ -67,7 +74,9 @@ h2 {
 .botao:hover {
     background-color: white;
     color: #1a4e80;
-    border: 2px solid #1a4e80;
+    border: solid 2px #1a4e80;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
