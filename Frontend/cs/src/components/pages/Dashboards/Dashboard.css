@@ -2,6 +2,7 @@
 
 .pagina-relatorios {
   padding: 1.5rem;
+  padding-bottom: 4rem; /* 👈 resolve o problema do gráfico colado no rodapé */
   background-color: #e9f0f7;
   min-height: 100vh;
 }
@@ -13,6 +14,23 @@
   margin-bottom: 1.5rem;
 }
 
+.filtro-ano {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.filtro-ano select {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.375rem;
+  background-color: white;
+  color: #1f2937;
+}
+
 .grid-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -22,7 +40,7 @@
 
 .card-kpi {
   background-color: white;
-  border-left: 4px solid #facc15; /* Amarelo */
+  border-left: 4px solid #facc15;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   padding: 1rem;
   border-radius: 0.375rem;
@@ -41,6 +59,7 @@
 }
 
 .icone {
+  font-size: 1.5rem;
   color: #facc15;
 }
 
@@ -65,8 +84,51 @@
   background-color: white;
   padding: 1.5rem;
   text-align: center;
-  color: #9ca3af;
-  font-style: italic;
+  color: #111827;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   border-radius: 0.375rem;
+}
+.filtros-avancados {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: end;
+}
+
+.filtros-avancados label {
+  font-size: 0.875rem;
+  color: #374151;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.filtros-avancados select,
+.filtros-avancados input {
+  width: 100%;
+  padding: 0.4rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background-color: white;
+  color: #111827; 
+  font-weight: 500;
+  font-size: 0.875rem;
+  appearance: none;
+}
+
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
