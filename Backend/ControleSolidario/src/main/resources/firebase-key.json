@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "controlesolidario",
+  "private_key_id": "d2d672f8d089f0ea7b07a0b447f25da7a6c68154",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDRpCVTYTyKbILo\nno2yGYsDj1ri1FHmhg+EQyu63TOTlNiCC5UhzC/SK8ss0gQbfTyPthjlLCNsOfv8\n8zZBbPD8MM1wkAn5s+8iarIy7E5MNc/hY2zEsXqAya6p7g+thV+1wj6JvahsMsyK\n2Hc7X0X8VYOMXtzsPVlTMy94PAbraNQtFRN5OKsedETS1CKk6w+xFJYqgxA4jstM\nlfDPEgB1U8k0rNLq616QlFUahp6q1+acYIcPWD6hpBqD2JwD8QfGN1iSj6cdunqL\nJ6F00TmYhLAeR4devdi9+HnNFngjRo7Cn+kMesuuF6QXLCCj3jK/n6sRliMAc5iY\nApCujV4jAgMBAAECggEADAiyI9EnGoMUGKpRU/HnavLlsrOhZ+w2I89/SSC9fzFC\nJGTp0KDZ9eSRqyb7GWDdAxre3vjjp6jEcEa9zI+mXbOnd1itWeocRgt94zJxZCqK\nnlOIwNm3QIFTR2nk+H75eYOG930tl9hqqWW3om7bo5p9DKe9Yso6wG3lwa8gbo7h\nVW9OIDLecnom4GQvy6fjR/xUcdXqxWPmeAh2ddLX0qTkxomZ5etZTlP94Uyby5Ei\nLfctkwlZmJFQneLd8hSWcqWQpFkcGIgLmwBOOUq9pJbVB6n2pkRfI31FuAwGbvNx\nNkHu1LPy2FF6/ZKYZuyrbRGIOkTOUfbrIcn7qAMCwQKBgQDriB0m0IobCcU00dzm\n3K8j9Eg44vxrlUvQXweQsJlZ7EPi7iN0hzKZGKecik4dipRGm57MIdD6nhG4TQhm\n07IQt5U08U+YcEsIwE351Xk+4+qwqzgAgBxSuy3CgHd/g5Bj8AQ7j2x8aHYUTVEw\n7jsb9AQ4HzmEWgBghKYAL4hCsQKBgQDj3AtqlUnOdUXES+IgKj78wiHwzFUyxWBj\nDB1hdeS8e2dQVZ4peujd2hlYzHqSzorSSMvVLhyodbImYqwEZqYXXUwJpCALTKkB\nKxPSP5nsUx+JJY2rDlTw225+3XJMZMopnkTF8V3SUOey91cPLkhsjgabG+/5PSmD\n+FadJ1PbEwKBgQCbVLANChkajc398K2jn0TuDEuZILFh7hsKt7FQjfcEo9l9jpnZ\nXtRSvTzE8z1jJCJ3kmgereqZbae4CS2SSuizN69yM/bPTLdfdRu3uT516G+9xZ1w\nTwzezsz16i1k7gpKrl7MPOFKBsZgy0DRaTuYSsyBiq4vCAAZp0Gm+7H8cQKBgQCv\n42LYoma3vSTesujZhWLbv4ttkn1N1LhjnK1tVxD7QZLtmzmcsWjiIAIi3qzbeB4G\n1vSpGZA7paagJNi+CPK65GTWqF+n+UQYR8VkLX5Gw597QYbK/SQqTGhN++jH+aFo\nYOibl4ah25wPNQh6CnMTgMqunvEuBr1uRputcfc0CwKBgQCzhaOFb+290fsPFUFW\nRjxu/aocJSB3WI5m/0ljKTxGjwmBN/qLhOJwQi4xkxv9Fft/DpMWUKwTnMSCOgwr\nU84si5FdPujgSYEzucg4yTOlVhUfjsfZFObpfZlirvQjJqeUYBmUIG45GOj+KBTS\nvUkSVZeid71p//5MEQ1fVgW0Zw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@controlesolidario.iam.gserviceaccount.com",
+  "client_id": "106899439266792974587",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40controlesolidario.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
