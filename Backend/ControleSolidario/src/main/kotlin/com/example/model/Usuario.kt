@@ -19,4 +19,3 @@ data class Users(
     val fotoPerfil: String = "",
     val criadoEm: Timestamp? = null
 )
-

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/doacoes")
-@CrossOrigin(origins = ["http://localhost:3000"]) // ajuste se necessário
+@CrossOrigin(origins = ["http://localhost:5173"])
 class DoacaoRestController(
     private val doacaoController: DoacaoController
 ) {
@@ -34,4 +34,12 @@ class DoacaoRestController(
         else
             ResponseEntity.internalServerError().body("❌ Erro ao deletar doação")
     }
+    @GetMapping("/ong/{id}")
+    fun listarDoacoesPorOng(@PathVariable id: String): ResponseEntity<Any> {
+        println("🔗 Endpoint /api/doacoes/ong/$id foi chamado") // <-- DEBUG!
+        val todas = doacaoController.listarTodasDoacoes()
+        val filtradas = todas.filter { it.IdOng == id }
+        return ResponseEntity.ok(filtradas)
+    }
+
 }

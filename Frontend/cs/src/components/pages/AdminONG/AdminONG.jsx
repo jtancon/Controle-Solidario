@@ -2,16 +2,7 @@ import './AdminONG.css';
 import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  deleteDoc,
-  doc,
-  updateDoc
-} from "firebase/firestore";
-import { db } from "../../../services/firebaseconfig";
+import api from "../../../services/api"; // <- Usa axios com baseURL já definida
 
 function AdminONG() {
   const [doacoes, setDoacoes] = useState([]);
@@ -32,31 +23,45 @@ function AdminONG() {
   }, []);
 
   const carregarDados = async (id) => {
-    const doacoesRef = query(collection(db, "doacao"), where("IdOng", "==", id));
-    const acoesRef = query(collection(db, "acoes"), where("IdOng", "==", id));
-
-    const doacoesSnap = await getDocs(doacoesRef);
-    const acoesSnap = await getDocs(acoesRef);
-
-    setDoacoes(doacoesSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-    setAcoes(acoesSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    try {
+      const doacoesRes = await api.get(`/doacoes/ong/${id}`);
+      const acoesRes = await api.get(`/acoes/ong/${id}`);
+      setDoacoes(doacoesRes.data);
+      setAcoes(acoesRes.data);
+    } catch (error) {
+      console.error("Erro ao carregar dados:", error);
+    }
   };
 
   const excluirAcao = async (idAcao) => {
     if (window.confirm("Deseja realmente excluir esta ação?")) {
-      await deleteDoc(doc(db, "acoes", idAcao));
-      setAcoes(prev => prev.filter(acao => acao.id !== idAcao));
+      try {
+        await api.delete(`/acoes/${idAcao}`);
+        setAcoes(prev => prev.filter(acao => acao.id !== idAcao));
+      } catch (error) {
+        console.error("Erro ao excluir ação:", error);
+      }
     }
   };
 
   const editarStatus = async (idAcao, novoStatus) => {
-    const acaoRef = doc(db, "acoes", idAcao);
-    await updateDoc(acaoRef, { Status: novoStatus });
-    setAcoes(prev =>
-      prev.map((acao) =>
-        acao.id === idAcao ? { ...acao, Status: novoStatus } : acao
-      )
-    );
+    try {
+      await api.put(`/acoes/${idAcao}`, { status: novoStatus });
+      setAcoes(prev =>
+        prev.map((acao) =>
+          acao.id === idAcao ? { ...acao, status: novoStatus } : acao
+        )
+      );
+    } catch (error) {
+      console.error("Erro ao atualizar status:", error);
+    }
+  };
+
+  const formatarData = (data) => {
+    if (data?.seconds) {
+      return new Date(data.seconds * 1000).toLocaleString("pt-BR");
+    }
+    return "Data inválida";
   };
 
   return (
@@ -70,9 +75,9 @@ function AdminONG() {
               <div className="items" key={d.id}>
                 <div className="info-box">
                   <div className="info"><strong>ID:</strong> {d.id}</div>
-                  <div className="info"><strong>Valor:</strong> R$ {d.Valor?.toFixed(2)}</div>
+                  <div className="info"><strong>Valor:</strong> R$ {d.valor?.toFixed(2)}</div>
                   <div className="info"><strong>Tipo:</strong> {d.tipo}</div>
-                  <div className="info"><strong>Data:</strong> {d.Data?.toDate().toLocaleString()}</div>
+                  <div className="info"><strong>Data:</strong> {formatarData(d.data)}</div>
                   <div className="info full-width"><strong>Descrição:</strong> {d.descricao}</div>
                 </div>
               </div>
@@ -87,11 +92,11 @@ function AdminONG() {
               <div className="items" key={a.id}>
                 <div className="info-box">
                   <div className="info"><strong>ID:</strong> {a.id}</div>
-                  <div className="info"><strong>Título:</strong> {a.Titulo}</div>
+                  <div className="info"><strong>Título:</strong> {a.titulo}</div>
                   <div className="info">
-                    <strong>Status:</strong> 
+                    <strong>Status:</strong>
                     <select
-                      value={a.Status}
+                      value={a.status}
                       onChange={(e) => editarStatus(a.id, e.target.value)}
                     >
                       <option value="Planejada">Planejada</option>
@@ -100,9 +105,9 @@ function AdminONG() {
                       <option value="Encerrada">Encerrada</option>
                     </select>
                   </div>
-                  <div className="info"><strong>Início:</strong> {a.DataInicio?.toDate().toLocaleDateString()}</div>
-                  <div className="info"><strong>Fim:</strong> {a.DataFim?.toDate().toLocaleDateString()}</div>
-                  <div className="info full-width"><strong>Descrição:</strong> {a.Descricao}</div>
+                  <div className="info"><strong>Início:</strong> {a.dataInicio}</div>
+                  <div className="info"><strong>Fim:</strong> {a.dataFim}</div>
+                  <div className="info full-width"><strong>Descrição:</strong> {a.descricao}</div>
                   <button className="botao-excluir" onClick={() => excluirAcao(a.id)}>Excluir</button>
                 </div>
               </div>

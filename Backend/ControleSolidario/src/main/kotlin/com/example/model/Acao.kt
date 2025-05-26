@@ -3,11 +3,12 @@ package com.example.controle.model
 import com.google.cloud.Timestamp
 
 data class Acao(
-    val id: String? = null,
-    val Titulo: String = "",
-    val Descricao: String = "",
-    val IdOng: String = "",
-    val Status: String = "Planejada",
-    val DataInicio: Timestamp? = null,
-    val DataFim: Timestamp? = null
+    val id: String = "",
+    val titulo: String = "",
+    val descricao: String = "",
+    val status: String = "",          // Planejada, Em andamento, etc
+    val dataInicio: Timestamp? = null,
+    val dataFim: Timestamp? = null,
+    val IdOng: String = ""            // <- esse campo é essencial
 )
+

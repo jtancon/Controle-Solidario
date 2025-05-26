@@ -22,10 +22,12 @@ class DoacaoController {
     }
 
     fun listarTodasDoacoes(): List<Doacao> {
+        println("🚨 Método listarTodasDoacoes foi chamado") // <-- debug
         return try {
             val snapshot = firestore.collection(collectionName).get().get()
             snapshot.documents.mapNotNull { it.toObject(Doacao::class.java)?.copy(id = it.id) }
         } catch (e: Exception) {
+            println("❌ Erro ao listar doações: ${e.message}") // <-- debug erro
             emptyList()
         }
     }

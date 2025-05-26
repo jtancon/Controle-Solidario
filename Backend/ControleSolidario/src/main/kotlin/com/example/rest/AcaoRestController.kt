@@ -42,4 +42,10 @@ class AcaoRestController(
         else
             ResponseEntity.internalServerError().body("❌ Erro ao excluir ação")
     }
+    @GetMapping("/ong/{id}")
+    fun listarAcoesPorOng(@PathVariable id: String): ResponseEntity<Any> {
+        val todas = acaoController.listarTodasAcoes()
+        val filtradas = todas.filter { it.IdOng == id }
+        return ResponseEntity.ok(filtradas)
+    }
 }
