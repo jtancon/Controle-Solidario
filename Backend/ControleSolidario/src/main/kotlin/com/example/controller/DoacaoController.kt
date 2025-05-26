@@ -2,57 +2,48 @@ package com.example.controle.controller
 
 import com.example.controle.model.Doacao
 import com.example.controle.service.FirebaseService
-import com.google.cloud.firestore.SetOptions
+import com.google.cloud.firestore.Firestore
+import org.springframework.stereotype.Controller
 
-class DoacaoController(firebaseService: FirebaseService) {
+@Controller
+class DoacaoController {
 
-    private val firestore = firebaseService.firestore
-    private val colecao = firestore.collection("doacao")
+    private val firestore: Firestore = FirebaseService().firestore
+    private val collectionName = "doacao"
 
-    fun inserirDoacao(doacao: Doacao): Boolean {
+    fun inserirDoacao(doacao: Doacao): Pair<Boolean, String> {
         return try {
-            val result = colecao.add(doacao).get()
-            println("✅ Doação enviada com sucesso!")
-            println("🆔 ID do documento: ${result.id}")
-            println("📦 Conteúdo enviado: $doacao")
-            true
+            val docRef = firestore.collection(collectionName).document()
+            docRef.set(doacao.copy(id = docRef.id)).get()
+            Pair(true, docRef.id)
         } catch (e: Exception) {
-            println("❌ Erro ao enviar doação: ${e.message}")
-            false
+            Pair(false, e.message ?: "Erro ao registrar doação")
         }
     }
 
-    fun listarTodasDoacoes(): List<Pair<String, Doacao>> {
+    fun listarTodasDoacoes(): List<Doacao> {
         return try {
-            val snapshot = colecao.get().get()
-            snapshot.documents.mapNotNull { doc ->
-                val doacao = doc.toObject(Doacao::class.java)
-                if (doacao != null) Pair(doc.id, doacao) else null
-            }
+            val snapshot = firestore.collection(collectionName).get().get()
+            snapshot.documents.mapNotNull { it.toObject(Doacao::class.java)?.copy(id = it.id) }
         } catch (e: Exception) {
-            println("❌ Erro ao buscar doações: ${e.message}")
             emptyList()
         }
     }
 
-    fun atualizarDoacao(id: String, novaDoacao: Doacao): Boolean {
+    fun atualizarDoacao(id: String, doacao: Doacao): Boolean {
         return try {
-            colecao.document(id).set(novaDoacao, SetOptions.merge()).get()
-            println("✅ Doação atualizada com sucesso!")
+            firestore.collection(collectionName).document(id).set(doacao.copy(id = id)).get()
             true
         } catch (e: Exception) {
-            println("❌ Erro ao atualizar doação: ${e.message}")
             false
         }
     }
 
     fun deletarDoacao(id: String): Boolean {
         return try {
-            colecao.document(id).delete().get()
-            println("🗑️ Doação deletada com sucesso!")
+            firestore.collection(collectionName).document(id).delete().get()
             true
         } catch (e: Exception) {
-            println("❌ Erro ao deletar doação: ${e.message}")
             false
         }
     }

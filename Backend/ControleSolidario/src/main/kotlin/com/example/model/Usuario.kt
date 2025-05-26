@@ -1,8 +1,8 @@
 package com.example.controle.model
 
-import java.util.*
+import com.google.cloud.Timestamp
 
-data class Usuario(
+data class Users(
     val uid: String = "",
     val nome: String = "",
     val nomeCompleto: String = "",
@@ -17,5 +17,6 @@ data class Usuario(
     val representante: String = "",
     val classificacao: String = "",
     val fotoPerfil: String = "",
-    val criadoEm: Date? = null
+    val criadoEm: Timestamp? = null
 )
+

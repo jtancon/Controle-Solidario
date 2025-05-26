@@ -1,12 +1,13 @@
 package com.example.controle.model
 
-import java.util.*
+import com.google.cloud.Timestamp
 
 data class Acao(
-    val titulo: String = "",
-    val descricao: String = "",
-    val idOng: String = "",
-    val status: String = "",
-    val dataInicio: Date? = null,
-    val dataFim: Date? = null
+    val id: String? = null,
+    val Titulo: String = "",
+    val Descricao: String = "",
+    val IdOng: String = "",
+    val Status: String = "Planejada",
+    val DataInicio: Timestamp? = null,
+    val DataFim: Timestamp? = null
 )
