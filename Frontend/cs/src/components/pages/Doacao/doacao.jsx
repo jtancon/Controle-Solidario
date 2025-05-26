@@ -2,9 +2,8 @@ import './doacao.css';
 import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 import { useState, useRef, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { db } from "../../../services/firebaseconfig";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import api from "../../../services/api"; // usa a baseURL da API Kotlin
 
 function Doacao() {
   const [etapa, setEtapa] = useState('doacao');
@@ -31,10 +30,12 @@ function Doacao() {
   useEffect(() => {
     const buscarOng = async () => {
       if (ongId) {
-        const docRef = doc(db, "usuarios", ongId);
-        const snapshot = await getDoc(docRef);
-        if (snapshot.exists()) {
-          setDadosOng(snapshot.data());
+        try {
+          const res = await api.get(`/usuarios/${ongId}`);
+          setDadosOng(res.data);
+        } catch (err) {
+          console.error("Erro ao buscar ONG:", err);
+          setDadosOng(null);
         }
       }
     };
@@ -49,19 +50,12 @@ function Doacao() {
   const handleOutroClick = () => {
     setMostrarCampoOutro(true);
     setValorSelecionado(valorOutro);
-    setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, 0);
+    setTimeout(() => inputRef.current?.focus(), 0);
   };
 
   const handleOutroChange = (e) => {
     let value = e.target.value.replace(/\D/g, '');
-
-    if (value.length === 0) value = '0';
-    while (value.length < 3) value = '0' + value;
-
+    value = value.padStart(3, '0');
     const reais = value.slice(0, -2);
     const centavos = value.slice(-2);
     const formatado = `R$ ${parseInt(reais, 10)},${centavos}`;
@@ -78,22 +72,33 @@ function Doacao() {
   };
 
   const registrarDoacao = async () => {
-    try {
-      await addDoc(collection(db, "doacao"), {
-        Data: serverTimestamp(),
-        IdDoador: userId,
-        IdOng: ongId,
-        Valor: parseFloat(valorSelecionado.replace("R$ ", "").replace(",", ".")),
-        descricao: dadosOng?.descricao || "",
-        tipo: metodoPagamento
-      });
+  if (!userId || !ongId || !valorSelecionado || valorSelecionado === "R$ 0,00") {
+    alert("Usuário, ONG ou valor inválido.");
+    return;
+  }
 
-      navigate("/");
-    } catch (error) {
-      console.error("Erro ao registrar doação:", error);
-      alert("Erro ao concluir a doação.");
-    }
-  };
+  const payload = {
+  idDoador: userId,
+  idOng: ongId,
+  valor: parseFloat(valorSelecionado.replace("R$ ", "").replace(",", ".")),
+  descricao: dadosOng?.descricao || "",
+  tipo: metodoPagamento
+  // ❌ NÃO envie o campo data
+};
+  console.log("🟢 Enviando doação:", payload); // deve mostrar tudo correto
+
+  try {
+    await api.post("/doacoes", payload);
+    navigate("/");
+  } catch (error) {
+    console.error("❌ Erro ao registrar doação:", error);
+    alert("Erro ao concluir a doação.");
+  }
+};
+console.log("userId:", userId);
+console.log("ongId:", ongId);
+console.log("valor:", valorSelecionado);
+
 
   return (
     <>
@@ -103,28 +108,17 @@ function Doacao() {
           <div className="doacao-valor">
             <div className="doacao-valor-dados">
               <div className="dados-ong">
-                <img
-                  src={dadosOng?.fotoPerfil || "src/assets/ONGS.png"}
-                  alt="Logo ONG"
-                  className="logo-ong"
-                />
-                <p>
-                  {dadosOng?.descricao ||
-                    "Esta organização ainda não possui uma descrição cadastrada."}
-                </p>
+                <img src={dadosOng?.fotoPerfil || "src/assets/ONGS.png"} alt="Logo ONG" className="logo-ong" />
+                <p>{dadosOng?.descricao || "Esta organização ainda não possui uma descrição cadastrada."}</p>
               </div>
-
               <div className="dados-valores">
                 <h3>Selecione o valor da Doação</h3>
                 <div className="botoes-valores">
-                  <button onClick={() => handleValorClick('R$ 1,00')}>R$ 1,00</button>
-                  <button onClick={() => handleValorClick('R$ 5,00')}>R$ 5,00</button>
-                  <button onClick={() => handleValorClick('R$ 10,00')}>R$ 10,00</button>
-                  <button onClick={() => handleValorClick('R$ 50,00')}>R$ 50,00</button>
-                  <button onClick={() => handleValorClick('R$ 100,00')}>R$ 100,00</button>
+                  {["R$ 1,00", "R$ 5,00", "R$ 10,00", "R$ 50,00", "R$ 100,00"].map(v => (
+                    <button key={v} onClick={() => handleValorClick(v)}>{v}</button>
+                  ))}
                   <button onClick={handleOutroClick}>OUTRO</button>
                 </div>
-
                 {mostrarCampoOutro && (
                   <input
                     className="campo-outro"
@@ -135,7 +129,6 @@ function Doacao() {
                 )}
               </div>
             </div>
-
             <div className="doacao-valor-resumo">
               <h2>Resumo</h2>
               <div className="resumo-linha"></div>
@@ -154,7 +147,7 @@ function Doacao() {
             <div className={`pagamento-opcoes ${metodoPagamento === 'Cartão' ? 'pagamento-expandido' : ''}`}>
               <div className={`opcao-pagamento ${metodoPagamento === 'Cartão' ? 'ativo' : ''}`} onClick={() => selecionarMetodo('Cartão')}>
                 <h3>Cartões de crédito</h3>
-                {metodoPagamento === 'Cartão' ? (
+                {metodoPagamento === 'Cartão' && (
                   <div className="form-cartao">
                     <div className="linha-input">
                       <label>Número do cartão</label>
@@ -176,19 +169,17 @@ function Doacao() {
                     </div>
                     <button className="botao-adicionar">Adicionar</button>
                   </div>
-                ) : (
-                  <p className="mensagem-pagamento">Pagamento com cartão de crédito</p>
                 )}
               </div>
 
               <div className={`opcao-pagamento ${metodoPagamento === 'Boleto' ? 'ativo' : ''}`} onClick={() => selecionarMetodo('Boleto')}>
                 <h3>Boleto</h3>
-                <p>Vencimento em 1 dia útil. A data de entrega será alterada devido ao tempo de processamento do Boleto.</p>
+                <p>Vencimento em 1 dia útil.</p>
               </div>
 
               <div className={`opcao-pagamento ${metodoPagamento === 'Pix' ? 'ativo' : ''}`} onClick={() => selecionarMetodo('Pix')}>
                 <h3>Pix</h3>
-                <p>O código Pix gerado para o pagamento é válido por 30 minutos após a finalização do pedido.</p>
+                <p>O código Pix gerado é válido por 30 minutos após a finalização.</p>
               </div>
             </div>
 
@@ -201,7 +192,14 @@ function Doacao() {
               <div className="resumo-valor">
                 <span>Método:</span> <span><strong>{metodoPagamento}</strong></span>
               </div>
-              <button className="botao-concluir" onClick={registrarDoacao}>Concluir</button>
+              <button
+              className="botao-concluir"
+              onClick={registrarDoacao}
+              disabled={!userId || !ongId || valorSelecionado === "R$ 0,00"}
+            >
+              Concluir
+            </button>
+
             </div>
           </div>
         )}

@@ -4,6 +4,7 @@ import com.example.controle.model.Doacao
 import com.example.controle.service.FirebaseService
 import com.google.cloud.firestore.Firestore
 import org.springframework.stereotype.Controller
+import com.google.cloud.Timestamp
 
 @Controller
 class DoacaoController {
@@ -14,10 +15,11 @@ class DoacaoController {
     fun inserirDoacao(doacao: Doacao): Pair<Boolean, String> {
         return try {
             val docRef = firestore.collection(collectionName).document()
-            docRef.set(doacao.copy(id = docRef.id)).get()
+            val novaDoacao = doacao.copy(id = docRef.id, data = Timestamp.now()) // 🕒 adiciona a data aqui
+            docRef.set(novaDoacao).get()
             Pair(true, docRef.id)
         } catch (e: Exception) {
-            Pair(false, e.message ?: "Erro ao registrar doação")
+            Pair(false, e.message ?: "Erro ao inserir doação")
         }
     }
 

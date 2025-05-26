@@ -46,4 +46,12 @@ class UsuarioRestController(
         else
             ResponseEntity.internalServerError().body("❌ Erro ao deletar usuário")
     }
+    @GetMapping("/{id}")
+    fun buscarUsuarioPorId(@PathVariable id: String): ResponseEntity<Any> {
+        val usuario = usersController.buscarUsuarioPorId(id)
+        return if (usuario != null)
+            ResponseEntity.ok(usuario)
+        else
+            ResponseEntity.notFound().build()
+    }
 }

@@ -47,4 +47,12 @@ class UsersController {
             false
         }
     }
+    fun buscarUsuarioPorId(id: String): Users? {
+        return try {
+            val doc = firestore.collection("usuarios").document(id).get().get()
+            doc.toObject(Users::class.java)?.copy(uid = doc.id)
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

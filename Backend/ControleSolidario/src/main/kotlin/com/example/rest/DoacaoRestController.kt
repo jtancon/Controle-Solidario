@@ -20,7 +20,6 @@ class DoacaoRestController(
         else
             ResponseEntity.internalServerError().body(mapOf("error" to resultado))
     }
-
     @GetMapping
     fun listarDoacoes(): ResponseEntity<Any> {
         val doacoes = doacaoController.listarTodasDoacoes()
@@ -38,8 +37,13 @@ class DoacaoRestController(
     fun listarDoacoesPorOng(@PathVariable id: String): ResponseEntity<Any> {
         println("🔗 Endpoint /api/doacoes/ong/$id foi chamado") // <-- DEBUG!
         val todas = doacaoController.listarTodasDoacoes()
-        val filtradas = todas.filter { it.IdOng == id }
+        val filtradas = todas.filter { it.idOng == id }
         return ResponseEntity.ok(filtradas)
     }
-
+    @GetMapping("/doador/{id}")
+    fun listarDoacoesPorDoador(@PathVariable id: String): ResponseEntity<Any> {
+        val todas = doacaoController.listarTodasDoacoes()
+        val filtradas = todas.filter { it.idDoador == id }
+        return ResponseEntity.ok(filtradas)
+    }
 }

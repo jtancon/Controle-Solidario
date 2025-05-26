@@ -4,11 +4,10 @@ import com.google.cloud.Timestamp
 
 data class Doacao(
     val id: String = "",
-    val Data: Timestamp? = null,         // ✔ correto
-    val IdDoador: String = "",           // ✔ correto
-    val IdOng: String = "",              // ✔ correto
-    val Valor: Double = 0.0,             // ✔ correto
+    val data: Timestamp? = null,
+    val idDoador: String = "",
+    val idOng: String = "",
+    val valor: Double = 0.0,
     val descricao: String = "",
     val tipo: String = ""
 )
-
