@@ -16,6 +16,7 @@ import PerfilDoador from "./components/pages/PerfilDoador/PerfilDoador";
 import AdminONG from "./components/pages/AdminONG/AdminONG";
 import { PrivateRoute } from "./routes/routes";
 import { Fragment } from "react";
+import useEffect from "./components/pages/useEffect";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -32,6 +33,7 @@ function App() {
               <Route path="/CadastroDoador" element={<CadastroDoador />} />
               <Route path="/RecuperarSenha" element={<RecuperarSenha />} />
               <Route path="/EscolherClassificacao" element={<EscolherClassificacao />} />
+              <Route path="/teste" element={<useEffect />} />
               <Route path="*" element={<Saq />} />
 
               <Route element={<PrivateRoute />}>
