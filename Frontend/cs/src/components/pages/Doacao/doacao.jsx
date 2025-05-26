@@ -83,7 +83,6 @@ function Doacao() {
   valor: parseFloat(valorSelecionado.replace("R$ ", "").replace(",", ".")),
   descricao: dadosOng?.descricao || "",
   tipo: metodoPagamento
-  // ❌ NÃO envie o campo data
 };
   console.log("🟢 Enviando doação:", payload); // deve mostrar tudo correto
 
