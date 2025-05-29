@@ -1,51 +1,58 @@
 package com.example.controle.controller
 
-import com.example.controle.model.Usuario
+import com.example.controle.model.Users
 import com.example.controle.service.FirebaseService
 import com.google.cloud.firestore.Firestore
+import org.springframework.stereotype.Controller
 
-class UsuarioController(private val firebaseService: FirebaseService) {
+@Controller
+class UsersController {
 
-    private val firestore: Firestore = firebaseService.firestore
-    private val colecao = firestore.collection("usuarios")
+    private val firestore: Firestore = FirebaseService().firestore
+    private val collectionName = "usuarios"
 
-    fun inserirUsuario(usuario: Usuario) {
-        try {
-            colecao.add(usuario).get()
-            println("✅ Usuário inserido com sucesso!")
+    fun inserirUsuario(usuario: Users): Pair<Boolean, String> {
+        return try {
+            val docId = if (usuario.uid.isNotBlank()) usuario.uid else usuario.email
+            firestore.collection(collectionName).document(docId).set(usuario).get()
+            Pair(true, docId)
         } catch (e: Exception) {
-            println("❌ Erro ao inserir usuário: ${e.message}")
+            Pair(false, e.message ?: "Erro desconhecido")
         }
     }
 
-    fun listarTodosUsuarios(): List<Pair<String, Usuario>> {
+    fun listarTodosUsuarios(): List<Users> {
         return try {
-            val snapshot = colecao.get().get()
-            snapshot.documents.mapNotNull { doc ->
-                val usuario = doc.toObject(Usuario::class.java)
-                if (usuario != null) Pair(doc.id, usuario) else null
-            }
+            val snapshot = firestore.collection(collectionName).get().get()
+            snapshot.documents.mapNotNull { it.toObject(Users::class.java) }
         } catch (e: Exception) {
-            println("❌ Erro ao listar usuários: ${e.message}")
             emptyList()
         }
     }
 
-    fun atualizarUsuario(id: String, usuario: Usuario) {
-        try {
-            colecao.document(id).set(usuario).get()
-            println("✅ Usuário atualizado com sucesso!")
+    fun atualizarUsuario(id: String, usuario: Users): Boolean {
+        return try {
+            firestore.collection(collectionName).document(id).set(usuario.copy(uid = id)).get()
+            true
         } catch (e: Exception) {
-            println("❌ Erro ao atualizar usuário: ${e.message}")
+            false
         }
     }
 
-    fun deletarUsuario(id: String) {
-        try {
-            colecao.document(id).delete().get()
-            println("✅ Usuário deletado com sucesso!")
+    fun deletarUsuario(id: String): Boolean {
+        return try {
+            firestore.collection(collectionName).document(id).delete().get()
+            true
         } catch (e: Exception) {
-            println("❌ Erro ao deletar usuário: ${e.message}")
+            false
+        }
+    }
+    fun buscarUsuarioPorId(id: String): Users? {
+        return try {
+            val doc = firestore.collection("usuarios").document(id).get().get()
+            doc.toObject(Users::class.java)?.copy(uid = doc.id)
+        } catch (e: Exception) {
+            null
         }
     }
 }

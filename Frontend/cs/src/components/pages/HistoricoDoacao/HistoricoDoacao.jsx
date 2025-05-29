@@ -4,8 +4,7 @@ import NavBar from '../../Navbar_Footer/NavbarDoador';
 import SearchBar from '../../SearchBar/SearchBar';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-import { db } from '../../../services/firebaseconfig';
+import api from "../../../services/api"; // axios com baseURL
 
 function HistoricoDoacao() {
   const [doacoes, setDoacoes] = useState([]);
@@ -15,23 +14,34 @@ function HistoricoDoacao() {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const q = query(collection(db, "doacao"), where("IdDoador", "==", user.uid));
-        const snapshot = await getDocs(q);
-        const lista = await Promise.all(snapshot.docs.map(async docSnap => {
-          const data = docSnap.data();
-          const ongRef = doc(db, "usuarios", data.IdOng);
-          const ongSnap = await getDoc(ongRef);
-          const ongData = ongSnap.exists() ? ongSnap.data() : {};
-          return {
-            id: docSnap.id,
-            ...data,
-            nomeONG: ongData.nome || "ONG desconhecida",
-            fotoONG: ongData.fotoPerfil || "src/assets/ONGS.png"
-          };
-        }));
-        setDoacoes(lista);
+        try {
+          const res = await api.get(`/doacoes/doador/${user.uid}`);
+
+          const enriquecidas = await Promise.all(res.data.map(async (d) => {
+            try {
+              const ongRes = await api.get(`/usuarios/${d.idOng}`);
+              const ong = ongRes.data;
+              return {
+                ...d,
+                nome: ong.nome || "ONG",
+                imagem: ong.fotoPerfil || "src/assets/ONGS.png"
+              };
+            } catch {
+              return {
+                ...d,
+                nome: "ONG",
+                imagem: "src/assets/ONGS.png"
+              };
+            }
+          }));
+
+          setDoacoes(enriquecidas);
+        } catch (error) {
+          console.error("Erro ao buscar doações:", error);
+        }
       }
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -39,7 +49,7 @@ function HistoricoDoacao() {
     const texto = filtro.toLowerCase();
     return (
       d.descricao?.toLowerCase().includes(texto) ||
-      d.Valor?.toString().includes(texto)
+      d.valor?.toString().includes(texto)
     );
   });
 
@@ -62,12 +72,12 @@ function HistoricoDoacao() {
               {doacoesFiltradas.map((d) => (
                 <CardHist
                   key={d.id}
-                  valor={d.Valor}
+                  valor={d.valor}
                   descricao={d.descricao}
-                  data={d.Data?.toDate().toLocaleDateString()}
+                  data={d.data?.seconds ? new Date(d.data.seconds * 1000).toLocaleDateString() : "Data inválida"}
                   tipo={d.tipo}
-                  nome={d.nomeONG}
-                  imagem={d.fotoONG}
+                  nome={d.nome}
+                  imagem={d.imagem}
                 />
               ))}
             </div>

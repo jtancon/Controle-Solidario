@@ -2,56 +2,48 @@ package com.example.controle.controller
 
 import com.example.controle.model.Acao
 import com.example.controle.service.FirebaseService
-import com.google.firebase.cloud.FirestoreClient
+import com.google.cloud.firestore.Firestore
+import org.springframework.stereotype.Controller
 
-class AcaoController(firebaseService: FirebaseService) {
+@Controller
+class AcaoController {
 
-    private val firestore = firebaseService.firestore
+    private val firestore: Firestore = FirebaseService().firestore
+    private val collectionName = "acoes"
 
-    fun inserirAcao(acao: Acao): Boolean {
+    fun inserirAcao(acao: Acao): Pair<Boolean, String> {
         return try {
-            val result = firestore.collection("acoes").add(acao).get()
-            println("✅ Ação registrada com sucesso!")
-            println("🆔 ID do documento: ${result.id}")
-            println("📦 Conteúdo: $acao")
-            true
+            val docRef = firestore.collection(collectionName).document()
+            docRef.set(acao.copy(id = docRef.id)).get()
+            Pair(true, docRef.id)
         } catch (e: Exception) {
-            println("❌ Erro ao registrar ação: ${e.message}")
-            false
+            Pair(false, e.message ?: "Erro ao inserir ação")
         }
     }
 
-    fun listarTodasAcoes(): List<Pair<String, Acao>> {
+    fun listarTodasAcoes(): List<Acao> {
         return try {
-            val snapshot = firestore.collection("acoes").get().get()
-            snapshot.documents.mapNotNull { doc ->
-                val acao = doc.toObject(Acao::class.java)
-                if (acao != null) Pair(doc.id, acao) else null
-            }
+            val snapshot = firestore.collection(collectionName).get().get()
+            snapshot.documents.mapNotNull { it.toObject(Acao::class.java)?.copy(id = it.id) }
         } catch (e: Exception) {
-            println("❌ Erro ao listar ações: ${e.message}")
             emptyList()
         }
     }
 
-    fun atualizarAcao(id: String, novaAcao: Acao): Boolean {
+    fun atualizarAcao(id: String, acao: Acao): Boolean {
         return try {
-            firestore.collection("acoes").document(id).set(novaAcao).get()
-            println("✅ Ação atualizada com sucesso!")
+            firestore.collection(collectionName).document(id).set(acao.copy(id = id)).get()
             true
         } catch (e: Exception) {
-            println("❌ Erro ao atualizar ação: ${e.message}")
             false
         }
     }
 
     fun deletarAcao(id: String): Boolean {
         return try {
-            firestore.collection("acoes").document(id).delete().get()
-            println("🗑️ Ação excluída com sucesso!")
+            firestore.collection(collectionName).document(id).delete().get()
             true
         } catch (e: Exception) {
-            println("❌ Erro ao deletar ação: ${e.message}")
             false
         }
     }

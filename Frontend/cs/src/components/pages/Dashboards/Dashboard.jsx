@@ -3,8 +3,7 @@ import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 import Footer from "../../Navbar_Footer/Footer";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../../services/firebaseconfig";
+import api from "../../../services/api";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   CartesianGrid, LineChart, Line, PieChart, Pie, Cell, Legend
@@ -33,56 +32,57 @@ const Dashboard = () => {
   }, [anoFiltro, mesFiltro, tipoFiltro, valorMin, valorMax]);
 
   const carregarDados = async (uid) => {
-    const doacoesRef = query(collection(db, "doacao"), where("IdOng", "==", uid));
-    const acoesRef = query(collection(db, "acoes"), where("IdOng", "==", uid));
+    try {
+      const doacoesRes = await api.get(`/doacoes/ong/${uid}`);
+      const acoesRes = await api.get(`/acoes/ong/${uid}`);
 
-    const doacoesSnap = await getDocs(doacoesRef);
-    const acoesSnap = await getDocs(acoesRef);
+      const doacoes = doacoesRes.data;
 
-    const doacoes = doacoesSnap.docs.map(doc => doc.data());
+      const doacoesFiltradas = doacoes.filter(d => {
+        const data = d?.data?.seconds ? new Date(d.data.seconds * 1000) : new Date(d.data);
+        const mes = data.getMonth() + 1;
+        const ano = data.getFullYear();
+        const tipo = d.tipo || "";
+        const valor = d.valor || 0;
 
-    const doacoesFiltradas = doacoes.filter(d => {
-      const data = d?.Data?.toDate?.() || new Date(d.Data);
-      const mes = data.getMonth() + 1;
-      const ano = data.getFullYear();
-      const tipo = d?.Tipo || "";
-      const valor = d?.Valor || 0;
+        return (
+          ano === parseInt(anoFiltro) &&
+          (!mesFiltro || mes === parseInt(mesFiltro)) &&
+          (!tipoFiltro || tipo === tipoFiltro) &&
+          (!valorMin || valor >= parseFloat(valorMin)) &&
+          (!valorMax || valor <= parseFloat(valorMax))
+        );
+      });
 
-      return (
-        ano === parseInt(anoFiltro) &&
-        (!mesFiltro || mes === parseInt(mesFiltro)) &&
-        (!tipoFiltro || tipo === tipoFiltro) &&
-        (!valorMin || valor >= parseFloat(valorMin)) &&
-        (!valorMax || valor <= parseFloat(valorMax))
-      );
-    });
+      const totalSoma = doacoesFiltradas.reduce((acc, cur) => acc + (cur.valor || 0), 0);
+      const doadoresUnicos = new Set(doacoesFiltradas.map(d => d.idDoador)).size;
 
-    const totalSoma = doacoesFiltradas.reduce((acc, cur) => acc + (cur.Valor || 0), 0);
-    const doadoresUnicos = new Set(doacoesFiltradas.map(d => d.IdDoador)).size;
+      const porMes = Array.from({ length: 12 }, (_, i) => {
+        const mes = i + 1;
+        const valorMes = doacoesFiltradas
+          .filter(d => {
+            const data = d?.data?.seconds ? new Date(d.data.seconds * 1000) : new Date(d.data);
+            return data.getMonth() + 1 === mes;
+          })
+          .reduce((acc, cur) => acc + (cur.valor || 0), 0);
+        return { mes: mes.toString().padStart(2, "0"), valor: valorMes };
+      });
 
-    const porMes = Array.from({ length: 12 }, (_, i) => {
-      const mes = i + 1;
-      const valorMes = doacoesFiltradas
-        .filter(d => {
-          const data = d?.Data?.toDate?.() || new Date(d.Data);
-          return data.getMonth() + 1 === mes;
-        })
-        .reduce((acc, cur) => acc + (cur.Valor || 0), 0);
-      return { mes: mes.toString().padStart(2, "0"), valor: valorMes };
-    });
+      const tipoContagem = {};
+      doacoesFiltradas.forEach(d => {
+        const tipo = d.tipo || "Outro";
+        tipoContagem[tipo] = (tipoContagem[tipo] || 0) + (d.valor || 0);
+      });
 
-    const tipoContagem = {};
-    doacoesFiltradas.forEach(d => {
-      const tipo = d?.Tipo || "Outro";
-      tipoContagem[tipo] = (tipoContagem[tipo] || 0) + (d.Valor || 0);
-    });
-
-    setTotal(totalSoma);
-    setDoadores(doadoresUnicos);
-    setQtdProjetos(acoesSnap.size);
-    setGraficoBarra(porMes);
-    setGraficoLinha(porMes);
-    setGraficoPizza(Object.entries(tipoContagem).map(([nome, valor]) => ({ nome, valor })));
+      setTotal(totalSoma);
+      setDoadores(doadoresUnicos);
+      setQtdProjetos(acoesRes.data.length);
+      setGraficoBarra(porMes);
+      setGraficoLinha(porMes);
+      setGraficoPizza(Object.entries(tipoContagem).map(([nome, valor]) => ({ nome, valor })));
+    } catch (error) {
+      console.error("Erro ao carregar dashboard:", error);
+    }
   };
 
   return (
@@ -98,7 +98,6 @@ const Dashboard = () => {
               {[2023, 2024, 2025].map(ano => <option key={ano}>{ano}</option>)}
             </select>
           </div>
-
           <div>
             <label>Mês:</label>
             <select value={mesFiltro} onChange={(e) => setMesFiltro(e.target.value)}>
@@ -109,22 +108,19 @@ const Dashboard = () => {
               })}
             </select>
           </div>
-
           <div>
             <label>Tipo:</label>
-              <select value={tipoFiltro} onChange={(e) => setTipoFiltro(e.target.value)}>
-                <option value="">Todos</option>
-                <option value="Pix">Pix</option>
-                <option value="Cartão">Cartão</option>
-                <option value="Boleto">Boleto</option>
-              </select>
+            <select value={tipoFiltro} onChange={(e) => setTipoFiltro(e.target.value)}>
+              <option value="">Todos</option>
+              <option value="Pix">Pix</option>
+              <option value="Cartão">Cartão</option>
+              <option value="Boleto">Boleto</option>
+            </select>
           </div>
-
           <div>
             <label>Valor mín.:</label>
             <input type="number" value={valorMin} onChange={(e) => setValorMin(e.target.value)} />
           </div>
-          
           <div>
             <label>Valor máx.:</label>
             <input type="number" value={valorMax} onChange={(e) => setValorMax(e.target.value)} />
@@ -141,7 +137,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
           <div className="card-kpi">
             <div className="conteudo-card">
               <div className="icone">👥</div>
@@ -151,7 +146,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
           <div className="card-kpi">
             <div className="conteudo-card">
               <div className="icone">📌</div>
