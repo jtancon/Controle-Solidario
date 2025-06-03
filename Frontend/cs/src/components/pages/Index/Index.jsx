@@ -129,7 +129,7 @@ function Index() {
               </div>
               <div>
                 <div className="logoContainer">
-                  <div className="imagecontainer">
+                  <div className="imageLogoContainer">
                     <img
                       className="imgLogo"
                       src={usuario.fotoPerfil || "src/assets/ONGS.png"}

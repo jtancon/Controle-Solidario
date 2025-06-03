@@ -64,11 +64,22 @@ function AdminONG() {
     return "Data inválida";
   };
 
+  const [abaSelecionada, setAbaSelecionada] = useState("doacoes");
+
   return (
     <>
       <NavbarDoador />
       <div className="AdminONG">
-        <div className="tabela">
+        <div className="menuTopo">
+          <h1 className={abaSelecionada === "doacoes" ? "aba ativa" : "aba"}
+          onClick={() => setAbaSelecionada("doacoes")}>Doações</h1>
+
+          <h1 className={abaSelecionada === "acoes" ? "aba ativa" : "aba"}
+          onClick={() => setAbaSelecionada("acoes")}>Ações</h1>
+        </div>
+        {abaSelecionada === "doacoes" && (
+        <>
+        <div className="menuDoacoes">
           <h1 className="titulo">Doações</h1>
           <div className="scroll-area">
             {doacoes.map((d) => (
@@ -84,8 +95,11 @@ function AdminONG() {
             ))}
           </div>
         </div>
-
-        <div className="tabela">
+        </>
+        )}
+        {abaSelecionada === "acoes" && (
+        <>
+        <div className="menuAcoes">
           <h1 className="titulo">Ações da ONG</h1>
           <div className="scroll-area">
             {acoes.map((a) => (
@@ -114,6 +128,8 @@ function AdminONG() {
             ))}
           </div>
         </div>
+        </>
+        )}
       </div>
     </>
   );
