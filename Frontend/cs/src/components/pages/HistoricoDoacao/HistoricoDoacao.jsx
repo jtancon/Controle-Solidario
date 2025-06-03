@@ -57,7 +57,7 @@ function HistoricoDoacao() {
     <>
       <NavBar />
       <div className="historico">
-        <div className="main">
+        <div className="mainHist">
           <h1>Minhas Doações</h1>
           <div className="pesquisa">
             <SearchBar placeholder="Pesquisa por nome ou valor" onChange={(e) => setFiltro(e.target.value)} />

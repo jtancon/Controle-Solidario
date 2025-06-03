@@ -3,7 +3,7 @@
     height: 55vh;
     background-color: #1A4D80;
     border-radius: 40px;
-    padding: 15px;
+    padding: 20px 15px 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +13,7 @@
 }
 
 
-.card:hover {
+.card-instituicao:hover {
     transform: translateY(-5px);  /* Levanta o card ao passar o mouse */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);  /* Aumenta a sombra para dar efeito de profundidade */
 }
@@ -40,16 +40,11 @@
 h2 {
     color: white;
     margin: 10px 0;
-    font-size: 2.5vw;  /* Ajuste o tamanho do título */
+    font-size: 2.5vw;
     font-weight: bold;
     letter-spacing: 1px;
-    text-align: center;  /* Centraliza o texto */
-    opacity: 0.8;  /* Deixa o título levemente transparente */
-    transition: opacity 0.3s ease;  /* Transição suave no hover */
-}
-
-.card:hover h2 {
-    opacity: 1;  /* Aumenta a opacidade do título ao passar o mouse */
+    text-align: center;
+    transition: opacity 0.3s ease;
 }
 
 .botao {
@@ -67,8 +62,8 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.3s ease-in-out;  /* Transição suave ao passar o mouse */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Adicionando sombra sutil */
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     cursor: pointer;
 }
 .botao:hover {

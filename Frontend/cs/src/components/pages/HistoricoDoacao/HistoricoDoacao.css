@@ -8,13 +8,13 @@
   justify-content: center;
 }
 
-.main {
+.mainHist {
   background-color: #E6EDF3;
   padding: 10px 40px 50px;
   border-radius: 10px;
 }
 
-.main h1 {
+.mainHist h1 {
   font-size: 40px;
   font-weight: 700;
   color: #1A4E80;

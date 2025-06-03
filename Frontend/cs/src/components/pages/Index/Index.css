@@ -1,3 +1,8 @@
+.doadorHome {
+    width: 100%;
+    overflow-x: hidden;;
+}
+
 .tituloDoadorbg {
     background-image: url('src/assets/homebg.jpg');
     background-attachment: fixed;
@@ -245,7 +250,6 @@
     border-radius: 20px;
     text-align: center;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
