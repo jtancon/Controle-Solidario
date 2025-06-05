@@ -1,0 +1,30 @@
+.cardHistorico {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.textoCard {
+  margin-right: 35px;
+}
+
+.nomeDoador {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 5px;
+}
+
+.dataHora {
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  margin-top: 5px;
+}
+
+.valor {
+  font-size: 20px;
+  color: #1A4E80;
+  margin-right: 10px;
+}

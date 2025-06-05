@@ -3,6 +3,7 @@ import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import api from "../../../services/api"; // <- Usa axios com baseURL já definida
+import CardONGDoacao from './DoacoesCard/CardONGDoacao';
 
 function AdminONG() {
   const [doacoes, setDoacoes] = useState([]);
@@ -80,8 +81,21 @@ function AdminONG() {
         {abaSelecionada === "doacoes" && (
         <>
         <div className="menuDoacoes">
-          <h1 className="titulo">Doações</h1>
-          <div className="scroll-area">
+          <div className="HistONG">
+            <div className="DoacaoOngContainer">
+              <h1 className="titulo">Doações para ONG</h1>
+              <CardONGDoacao/>
+              <CardONGDoacao/>
+            </div>
+          </div>
+          <div className="HistAcoes">
+            <div className="DoacaoOngContainer">
+              <h1 className="titulo">Doações para Acoes</h1>
+              <CardONGDoacao/>
+              <CardONGDoacao/>
+            </div>
+          </div>
+          {/* <div className="scroll-area">
             {doacoes.map((d) => (
               <div className="items" key={d.id}>
                 <div className="info-box">
@@ -93,7 +107,7 @@ function AdminONG() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
         </>
         )}

@@ -28,16 +28,35 @@
   margin: 0;
   padding: 20px;
   border-radius: 0 10px 10px 10px;
+  display: flex;
+}
+
+.menuDoacoes {
+  gap: 10px;
+}
+
+.DoacaoOngContainer {
+  background-color: #E6EDF3;
+  padding: 20px 40px;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.HistONG, .HistAcoes {
+  flex: 1; 
 }
 
 .titulo {
-  align-items: center;
+  color: black;
   width: 100%;
-  gap: 16px;
   box-sizing: border-box;
-  justify-items: center;
   justify-content: center;
-  margin-top: 0;
+  margin: 0 auto;
 }
 
 .scroll-area {
