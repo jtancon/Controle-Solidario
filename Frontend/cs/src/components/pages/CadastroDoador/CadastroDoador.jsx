@@ -224,7 +224,7 @@ function CadastroDoador() {
         <input
           type="password"
           name="senha"
-          placeholder="Mínimo 6 caracteres"
+          placeholder="Mínimo 6 caracteres"J
           value={form.senha}
           onChange={(e) => {
             handleChange(e);

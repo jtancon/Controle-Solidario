@@ -10,7 +10,7 @@
 }
 
 .menuTopo .aba {
-  font-size: 2vw;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   padding: 5px 10px;
   cursor: pointer;
   background-color: #D1DDED;
@@ -28,16 +28,143 @@
   margin: 0;
   padding: 20px;
   border-radius: 0 10px 10px 10px;
+  display: flex;
 }
 
-.titulo {
+.menuDoacoes {
+  gap: 15px;
+  flex-wrap: wrap;;
+}
+
+.menuAcoes {
+  flex-direction: column;
+}
+
+.pesquisaAcoes {
+  margin: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.DoacaoOngContainer {
+  background-color: #E6EDF3;
+  padding: 20px 40px;
+  gap: 20px;
+  display: flex;
   align-items: center;
+  flex-direction: column;
+  border-radius: 20px;
   width: 100%;
-  gap: 16px;
   box-sizing: border-box;
-  justify-items: center;
+}
+
+.HistONG, .HistAcoes {
+  flex: 1; 
+}
+
+.acoesONGContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+
+.titulo {
+  color: black;
   justify-content: center;
-  margin-top: 0;
+  margin: 0 auto;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+.btnNovaAcao, .btnCriarAcao {
+  padding: 12px;
+  background-color: #003866;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-size: 15px;
+  width: fit-content;
+  min-height: 3.5vw;
+}
+
+.btnNovaAcao:hover, .btnCriarAcao:hover {
+  background-color: #1a4d80;;
+}
+
+.novaAcaoContainer {
+  opacity: 0;
+  transform: translateY(-20px);
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #E6EDF3;
+  border-radius: 12px;
+  padding: 30px;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.novaAcaoContainer.aparecer {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 1000px;
+  overflow: visible;
+}
+
+.novaAcaoContainer.esconder {
+  opacity: 0;
+  transform: translateY(-20px);
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.cardNovaAcaoConteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  width: fit-content;
+}
+
+.novaAcaoContainer .tituloCardAcao {
+  text-align: start;
+  align-self: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.novaAcaoContainer input, .novaAcaoContainer textarea {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: 500;
+  margin-left: 5px;
+  background-color: #f9f9f9;
+  color: black;
+}
+
+.linhaTexto {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.linhaTexto label, .linhaTexto input, .linhaTexto textarea, .novaAcaoContainer.linhaTexto select {
+  max-width: fit-content;
+  margin: 0 5px;;
+  flex: 1;
+}
+
+.linhaTexto select {
+  max-width: 150px;
 }
 
 .scroll-area {
@@ -52,7 +179,7 @@
   display: none;
 }
 
-.items {
+/* .items {
   background-color: #f1f1f1;
   border-radius: 12px;
   padding: 16px 20px;
@@ -100,7 +227,6 @@
   background-color: #c0392b;
 }
 
-/* Select para editar status */
 .info select {
   padding: 6px 10px;
   border-radius: 6px;
@@ -116,4 +242,4 @@
   outline: none;
   border-color: #1a4e80;
   box-shadow: 0 0 0 2px rgba(26, 78, 128, 0.2);
-}
+} */
