@@ -2,6 +2,7 @@
   margin: 20px auto 60px;
   padding: 20px;
   max-width: 85%;
+  min-height: 100dvh;
 }
 
 .menuTopo {
@@ -165,6 +166,36 @@
 
 .linhaTexto select {
   max-width: 150px;
+}
+
+@media (max-width: 768px) {
+  .acoesONGContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .novaAcaoContainer {
+    width: 100%;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .novaAcaoContainer button {
+    margin-top: 5px;
+    align-self: flex-center;
+  }
+
+  .linhaTexto {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .linhaTexto label, .linhaTexto input, .linhaTexto textarea, .linhaTexto select {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 .scroll-area {

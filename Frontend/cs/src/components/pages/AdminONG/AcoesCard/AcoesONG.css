@@ -44,7 +44,7 @@
 
 .botoesContainer {
   display: flex;
-  justify-content: space-start;
+  justify-content: flex-start;
   gap: 10px;
   margin: 10px auto 5px;
 }
@@ -58,7 +58,12 @@
   cursor: pointer;
   font-weight: bold;
   transition: all 0.3s ease;
-  font-size: 15px;
+  font-size: clamp(13px, 1.5vw, 16px);
+}
+
+.cardAcoes button:focus {
+  outline: 2px solid #005fa3;
+  outline-offset: 2px;
 }
 
 .cardAcoes button:hover {
