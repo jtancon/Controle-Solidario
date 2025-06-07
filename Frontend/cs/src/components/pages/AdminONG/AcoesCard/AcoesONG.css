@@ -1,0 +1,74 @@
+.cardAcoes {
+  padding: 20px;
+  background-color: #E6EDF3;
+  border-radius: 12px;
+  max-width: 600px;
+}
+
+.nomeAcao {
+  margin: 5px 0;
+}
+
+.linhaTexto {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.linhaTexto strong {
+  min-width: 130px;
+  font-weight: bold;
+}
+
+.linhaTexto p, .linhaTexto select {
+  margin: 0;
+  flex: 1;
+}
+
+.statusSelect, select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: 500;
+  margin-left: 8px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  color: black;
+}
+
+.statusSelect select:focus {
+  outline: none;
+  border-color: #1a4e80;
+  box-shadow: 0 0 0 2px rgba(26, 78, 128, 0.2);
+}
+
+.botoesContainer {
+  display: flex;
+  justify-content: space-start;
+  gap: 10px;
+  margin: 10px auto 5px;
+}
+
+.cardAcoes button {
+  padding: 12px;
+  background-color: #003866;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+
+.cardAcoes button:hover {
+  background-color: #1a4d80;
+}
+
+.cardAcoes .btnExcluir {
+  background-color: #cc0000;
+}
+
+.btnExcluir:hover {
+  background-color: #a60000;
+}

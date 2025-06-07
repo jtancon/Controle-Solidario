@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import api from "../../../services/api"; // <- Usa axios com baseURL já definida
 import CardONGDoacao from './DoacoesCard/CardONGDoacao';
+import AcoesONG from './AcoesCard/AcoesONG';
+import SearchBar from '../../SearchBar/SearchBar';
 
 function AdminONG() {
   const [doacoes, setDoacoes] = useState([]);
@@ -66,6 +68,7 @@ function AdminONG() {
   };
 
   const [abaSelecionada, setAbaSelecionada] = useState("doacoes");
+  const [mostrarNovaAcao, setMostrarNovaAcao] = useState(false);
 
   return (
     <>
@@ -78,6 +81,7 @@ function AdminONG() {
           <h1 className={abaSelecionada === "acoes" ? "aba ativa" : "aba"}
           onClick={() => setAbaSelecionada("acoes")}>Ações</h1>
         </div>
+
         {abaSelecionada === "doacoes" && (
         <>
         <div className="menuDoacoes">
@@ -90,7 +94,7 @@ function AdminONG() {
           </div>
           <div className="HistAcoes">
             <div className="DoacaoOngContainer">
-              <h1 className="titulo">Doações para Acoes</h1>
+              <h1 className="titulo">Doações para Ações</h1>
               <CardONGDoacao/>
               <CardONGDoacao/>
             </div>
@@ -114,8 +118,57 @@ function AdminONG() {
         {abaSelecionada === "acoes" && (
         <>
         <div className="menuAcoes">
-          <h1 className="titulo">Ações da ONG</h1>
-          <div className="scroll-area">
+
+          <div className="pesquisaAcoes">
+            <SearchBar placeholder="Pesquisa por título ou status" />
+            <button className="btnNovaAcao"
+            onClick={() => setMostrarNovaAcao(!mostrarNovaAcao)}>
+              Nova Ação</button>
+          </div>
+
+          <div className={`novaAcaoContainer ${mostrarNovaAcao ? 'aparecer' : 'esconder'}`}>
+            <div className="cardNovaAcaoConteudo">
+              <h1 className="tituloCardAcao">Crie sua nova ação</h1>
+              <div className="inputsAcao">
+                {<>
+                <div className="linhaTexto">
+                  <label>Título: </label>
+                  <input type="text" placeholder="Título da ação" />
+                </div>
+                <div className="linhaTexto">
+                  <label>Descrição: </label>
+                  <textarea placeholder="Descreva sua ação"></textarea>
+                </div>
+                <div className="linhaTexto">
+                  <label>Data de Início: </label>
+                  <input type="date" />
+                </div>
+                <div className="linhaTexto">
+                  <label>Data de Fim: </label>
+                  <input type="date" />
+                </div>
+                <div className="linhaTexto">
+                  <label>Status: </label>
+                  <select>
+                    <option value="Planejada">Planejada</option>
+                    <option value="Em andamento">Em andamento</option>
+                    <option value="Ativa">Ativa</option>
+                    <option value="Encerrada">Encerrada</option>
+                  </select>
+                </div></>
+                  }
+              </div>
+            </div>
+            <button type="submit" className="btnCriarAcao">Criar Ação</button>
+          </div>
+
+          <div className="acoesONGContainer">
+            <AcoesONG />
+            <AcoesONG />
+            <AcoesONG />
+            <AcoesONG />
+          </div>
+          {/* <div className="scroll-area">
             {acoes.map((a) => (
               <div className="items" key={a.id}>
                 <div className="info-box">
@@ -140,7 +193,7 @@ function AdminONG() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
         </>
         )}
