@@ -2,7 +2,7 @@
   margin: 20px auto 60px;
   padding: 20px;
   max-width: 85%;
-  min-height: 100dvh;
+  min-height: 100vh;
 }
 
 .menuTopo {
@@ -34,7 +34,7 @@
 
 .menuDoacoes {
   gap: 15px;
-  flex-wrap: wrap;;
+  flex-wrap: wrap;
 }
 
 .menuAcoes {
@@ -169,6 +169,11 @@
 }
 
 @media (max-width: 768px) {
+  .menuDoacoes, .menuAcoes {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
   .acoesONGContainer {
     grid-template-columns: 1fr;
   }

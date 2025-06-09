@@ -113,7 +113,7 @@ function Index() {
             </div>
           </div>
         ) : usuario?.classificacao === "ONG" ? (
-          <div>
+          <div className="ongHome">
             <div className="bem-vindoBg">
               <div className="painel-ong-titulo">
                 <h1>Bem-vindo, </h1>
@@ -137,10 +137,12 @@ function Index() {
                     />
                   </div>
                 </div>
-                <Link to="/AdminONG" className="admnistrarBtn">Administrar ONG</Link>
-                <div className="ongBotoesContainer">
-                  <Link to="/PerfilONG" className="ongBotoes">Perfil</Link>
-                  <Link to="/Dashboard" className="ongBotoes">Dashboard</Link>
+                <div className="ONGBotoesGeral">
+                  <Link to="/AdminONG" className="admnistrarBtn">Administrar ONG</Link>
+                  <div className="ongBotoesContainer">
+                    <Link to="/PerfilONG" className="ongBotoes">Perfil</Link>
+                    <Link to="/Dashboard" className="ongBotoes">Dashboard</Link>
+                  </div>
                 </div>
               </div>
             </div>

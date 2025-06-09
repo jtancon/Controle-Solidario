@@ -120,9 +120,7 @@ function AdminONG() {
         <div className="menuAcoes">
 
           <div className="pesquisaAcoes">
-            <div className="searchWrapper">
               <SearchBar placeholder="Pesquisa por título ou status" />
-            </div>
             <button className="btnNovaAcao"
             onClick={() => setMostrarNovaAcao(!mostrarNovaAcao)}>
               Nova Ação</button>
