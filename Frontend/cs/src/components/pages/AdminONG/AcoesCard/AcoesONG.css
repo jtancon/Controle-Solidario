@@ -61,12 +61,12 @@
   font-size: clamp(13px, 1.5vw, 16px);
 }
 
-.cardAcoes button:focus {
+.btnEditar button:focus {
   outline: 2px solid #005fa3;
   outline-offset: 2px;
 }
 
-.cardAcoes button:hover {
+.btnEditar button:hover {
   background-color: #1a4d80;
 }
 
