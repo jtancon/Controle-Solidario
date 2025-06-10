@@ -1,5 +1,6 @@
 .footer {
-  position: fixed; /* fixa o rodapé */
+  position: relative;
+  margin-top: auto;
   bottom: 0;
   left: 0;
   display: flex;

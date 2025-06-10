@@ -1,8 +1,9 @@
-.cardHistorico {
+.cardHistoricoONG {
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .textoCard {
@@ -10,21 +11,21 @@
 }
 
 .nomeDoador {
-  font-size: 20px;
+  font-size: clamp(16px, 2.5vw, 20px);
   font-weight: bold;
   color: black;
   margin-bottom: 5px;
 }
 
 .dataHora {
-  font-size: 15px;
+  font-size: clamp(12px, 2vw, 15px);
   font-weight: bold;
   color: black;
   margin-top: 5px;
 }
 
 .valor {
-  font-size: 20px;
+  font-size: clamp(16px, 2.5vw, 20px);
   color: #1A4E80;
   margin-right: 10px;
 }

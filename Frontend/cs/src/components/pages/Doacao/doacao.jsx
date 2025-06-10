@@ -3,7 +3,7 @@ import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 import { useState, useRef, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import api from "../../../services/api";
+import api from "../../../services/api"; // usa a baseURL da API Kotlin
 
 function Doacao() {
   const [etapa, setEtapa] = useState('doacao');
@@ -14,30 +14,25 @@ function Doacao() {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
-  // 1. Busca o 'name' da ONG que foi passado na URL pelo CardInst.js
-  const ongName = searchParams.get("name");
+  const ongId = searchParams.get("id");
   const [dadosOng, setDadosOng] = useState(null);
-  const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserEmail(user.email);
-      }
+      if (user) setUserId(user.uid);
     });
+
     return () => unsubscribe();
   }, []);
 
   useEffect(() => {
     const buscarOng = async () => {
-      if (ongName) {
+      if (ongId) {
         try {
-          // 2. Chama o novo endpoint do backend para buscar pelo nome
-          const nomeCodificado = encodeURIComponent(ongName);
-          const res = await api.get(`/usuarios/by-name/${nomeCodificado}`);
-          setDadosOng(res.data); // Armazena todos os dados da ONG, incluindo o email
+          const res = await api.get(`/usuarios/${ongId}`);
+          setDadosOng(res.data);
         } catch (err) {
           console.error("Erro ao buscar ONG:", err);
           setDadosOng(null);
@@ -45,7 +40,7 @@ function Doacao() {
       }
     };
     buscarOng();
-  }, [ongName]); // A dependência do useEffect agora é o nome da ONG
+  }, [ongId]);
 
   const handleValorClick = (valor) => {
     setMostrarCampoOutro(false);
@@ -77,30 +72,32 @@ function Doacao() {
   };
 
   const registrarDoacao = async () => {
-    // 3. A validação agora checa se os dados da ONG (e seu email) foram carregados
-    if (!userEmail || !dadosOng?.email || !valorSelecionado || valorSelecionado === "R$ 0,00") {
-      alert("Usuário, ONG ou valor inválido.");
-      return;
-    }
+  if (!userId || !ongId || !valorSelecionado || valorSelecionado === "R$ 0,00") {
+    alert("Usuário, ONG ou valor inválido.");
+    return;
+  }
 
-    const payload = {
-      idDoador: userEmail,
-      // 4. Usa o email dos dados da ONG que foram buscados como o ID correto
-      idOng: dadosOng.email,
-      valor: parseFloat(valorSelecionado.replace("R$ ", "").replace(",", ".")),
-      descricao: dadosOng?.descricao || "",
-      tipo: metodoPagamento
-    };
-    console.log("🟢 Enviando doação:", payload);
+  const payload = {
+  idDoador: userId,
+  idOng: ongId,
+  valor: parseFloat(valorSelecionado.replace("R$ ", "").replace(",", ".")),
+  descricao: dadosOng?.descricao || "",
+  tipo: metodoPagamento
+};
+  console.log("🟢 Enviando doação:", payload); // deve mostrar tudo correto
 
-    try {
-      await api.post("/doacoes", payload);
-      navigate("/");
-    } catch (error) {
-      console.error("❌ Erro ao registrar doação:", error);
-      alert("Erro ao concluir a doação.");
-    }
-  };
+  try {
+    await api.post("/doacoes", payload);
+    navigate("/");
+  } catch (error) {
+    console.error("❌ Erro ao registrar doação:", error);
+    alert("Erro ao concluir a doação.");
+  }
+};
+console.log("userId:", userId);
+console.log("ongId:", ongId);
+console.log("valor:", valorSelecionado);
+
 
   return (
     <>
@@ -111,8 +108,7 @@ function Doacao() {
             <div className="doacao-valor-dados">
               <div className="dados-ong">
                 <img src={dadosOng?.fotoPerfil || "src/assets/ONGS.png"} alt="Logo ONG" className="logo-ong" />
-                <h3>{dadosOng?.nome || ongName}</h3>
-                <p>{dadosOng?.descricao || "Carregando descrição..."}</p>
+                <p>{dadosOng?.descricao || "Esta organização ainda não possui uma descrição cadastrada."}</p>
               </div>
               <div className="dados-valores">
                 <h3>Selecione o valor da Doação</h3>
@@ -145,7 +141,6 @@ function Doacao() {
           </div>
         )}
 
-        {/* ✅ Bloco de pagamento restaurado */}
         {etapa === 'pagamento' && (
           <div className={`pagamento ${metodoPagamento === 'Cartão' ? 'pagamento-expandido' : ''}`}>
             <div className={`pagamento-opcoes ${metodoPagamento === 'Cartão' ? 'pagamento-expandido' : ''}`}>
@@ -197,13 +192,13 @@ function Doacao() {
                 <span>Método:</span> <span><strong>{metodoPagamento}</strong></span>
               </div>
               <button
-                className="botao-concluir"
-                onClick={registrarDoacao}
-                // A validação continua correta, dependendo dos dados da ONG
-                disabled={!userEmail || !dadosOng?.email || valorSelecionado === "R$ 0,00"}
-              >
-                Concluir
-              </button>
+              className="botao-concluir"
+              onClick={registrarDoacao}
+              disabled={!userId || !ongId || valorSelecionado === "R$ 0,00"}
+            >
+              Concluir
+            </button>
+
             </div>
           </div>
         )}

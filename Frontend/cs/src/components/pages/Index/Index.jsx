@@ -56,12 +56,26 @@ function Index() {
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     dots: true,
     arrows: true,
     adaptiveHeight: false,
     initialSlide: 0,
+    responsive: [
+    {
+      breakpoint: 1024,    // até 1024px: tablet
+      settings: {
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 600,     // até 600px: celular
+      settings: {
+        slidesToShow: 1
+      }
+    }
+  ]
   };
 
   return (
@@ -113,7 +127,7 @@ function Index() {
             </div>
           </div>
         ) : usuario?.classificacao === "ONG" ? (
-          <div>
+          <div className="ongHome">
             <div className="bem-vindoBg">
               <div className="painel-ong-titulo">
                 <h1>Bem-vindo, </h1>
@@ -137,10 +151,12 @@ function Index() {
                     />
                   </div>
                 </div>
-                <Link to="/AdminONG" className="admnistrarBtn">Administrar ONG</Link>
-                <div className="ongBotoesContainer">
-                  <Link to="/PerfilONG" className="ongBotoes">Perfil</Link>
-                  <Link to="/Dashboard" className="ongBotoes">Dashboard</Link>
+                <div className="ONGBotoesGeral">
+                  <Link to="/AdminONG" className="admnistrarBtn">Administrar ONG</Link>
+                  <div className="ongBotoesContainer">
+                    <Link to="/PerfilONG" className="ongBotoes">Perfil</Link>
+                    <Link to="/Dashboard" className="ongBotoes">Dashboard</Link>
+                  </div>
                 </div>
               </div>
             </div>
