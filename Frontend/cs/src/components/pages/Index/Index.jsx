@@ -56,12 +56,26 @@ function Index() {
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     dots: true,
     arrows: true,
     adaptiveHeight: false,
     initialSlide: 0,
+    responsive: [
+    {
+      breakpoint: 1024,    // até 1024px: tablet
+      settings: {
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 600,     // até 600px: celular
+      settings: {
+        slidesToShow: 1
+      }
+    }
+  ]
   };
 
   return (
