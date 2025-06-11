@@ -1,10 +1,6 @@
-* {
-  box-sizing: border-box;
-}
-
 .doadorHome {
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden;;
 }
 
 .tituloDoadorbg {
@@ -27,11 +23,8 @@
     text-align: center;
     margin: 0 auto;
     font-weight: bold;
-    padding: 10vw 5vw;
-    font-size: 2vw;
+    padding: 150px;
     width: fit-content;
-    width: 100%;
-    max-width: 100%;
 }
 
 .divisor {
@@ -43,22 +36,12 @@
 
 .fraseImpacto {
     background-color: #D1DDED;
-    font-size: 1.8vw;
     color: #1A4D80;
     padding: 20px;
     margin: -45px auto 10px;
     border-radius: 60px;
     text-align: center;
     width: fit-content;
-    max-width: 90%;
-}
-
-.instituicoes {
-  width: 100%;
-  max-width: 100%;
-  margin: 50px auto 70px;
-  padding: 0 10px;
-  box-sizing: border-box;
 }
 
 .botoesDoadorContainer {
@@ -131,12 +114,6 @@
     padding: 10px;
 }
 
-.ongHome {
-    width: 100%;
-    min-height: 100dvh;
-    overflow-x: hidden;
-}
-
 .bem-vindoBg {
     background-color: #D1DDED;
     width: 100%;
@@ -150,7 +127,7 @@
 }
 
 .painel-ong-titulo h1 {
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: 3vw;
     font-weight: normal;
     padding: 0;
     margin: 0;
@@ -158,22 +135,19 @@
 
 .painel {
     display: flex;
-    width: 100%;
-    box-sizing: border-box;
-    gap: 20px;
 }
 
 .descricao {
     background-color: #D9D9D9;
     width: 65%;
     height: fit-content;
-    margin: 40px 10px 0 20px;
+    margin: 40px 20px 0;
     border-radius: 20px;
     padding: 10px;
 }
 
 .descricao h1 {
-    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-size: 1.5vw;
     font-family: Faustina;
     font-weight: normal;
     color: #000000;
@@ -182,26 +156,21 @@
 }
 
 .painel-ong-descricao {
-    font-size: clamp(1rem, 1.8vw, 1.3rem);
-    margin: 10px 10px 15px;
+    font-size: 1.8vw;
+    margin: 10px 0 10px 15px;
     font-weight: lighter;
 }
 
 .logoContainer {
     background-color: #D9D9D9;
     border-radius: 20px;
-    padding: 10px;
-    margin: -20px 20px 0 0;
-    flex: 0 0 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 10px;  
+    margin: -20px 20px 0 10px;
 }
 
 .imageLogoContainer {
-  width: 100%;
-  max-width: 350px;
-  aspect-ratio: 3 / 2;
+  width: 350px;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -216,23 +185,19 @@
     max-height: 100%;
     height: auto;
     width: auto;
-    object-fit: contain;
+    object-fit: scale-down;
     display: block;
 }
 
-.ONGBotoesGeral {
-      margin: 10px 20px 0 0;
-}
-
 .admnistrarBtn {
-    width: 95%;
+    width: 85%;
     margin: 10px auto;
     display: block;
     background-color: #1a4e80;
     color: white;
     padding: 10px 20px;
     border-radius: 10px;
-    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    font-size: 1.2vw;
     cursor: pointer;
     border: solid 2px #1a4e80;
     font-weight: bold;
@@ -303,131 +268,4 @@
 .ongBotoes:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(26, 78, 128, 0.4);
-}
-
-@media (max-width: 1024px) {
-    .tituloDoador {
-        padding: 80px 20px;
-        font-size: 5vw;
-    }
-
-    .fraseImpacto {
-        padding: 15px 30px;
-        font-size: 4vw;
-    }
-
-    .botoesDoadorMenu {
-        font-size: 3vw;
-        padding: 10px 15px;
-    }
-
-    .texto {
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        font-size: 3.5vw;
-    }
-
-    .imgBotao {
-        width: 24px;
-    }
-}
-
-@media (max-width: 600px) {
-    .tituloDoador {
-        padding: 60px 15px;
-        font-size: 6vw;
-    }
-
-    .fraseImpacto {
-        font-size: 5vw;
-    }
-
-    .botoesDoadorContainer {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .botoesDoadorMenu {
-        font-size: 4vw;
-        width: 80%;
-        justify-content: center;
-    }
-
-    .texto {
-        font-size: 4vw;
-    }
-}
-
-@media (max-width: 768px) {
-  .bem-vindoBg {
-    background-color: #D1DDED;
-    padding: 0 20px;
-    text-align: center;
-  }
-
-  .painel-ong-titulo {
-    background-color: #E6EEF4;
-    margin: 0 auto;
-    padding: 20px;
-    width: 70%;
-    text-align: center;
-  }
-
-  .painel-ong-titulo h1 {
-    font-size: 5vw;
-  }
-
-  .painel {
-    flex-direction: column-reverse;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .descricao {
-    width: 90%;
-    margin: 20px auto 50px;
-    padding: 15px;
-    word-wrap: break-word;
-  }
-
-  .descricao h1 {
-    font-size: 5vw;
-  }
-
-  .painel-ong-descricao {
-    font-size: 4.5vw;
-  }
-
-  .logoContainer {
-    width: 80%;
-    margin: 20px auto;
-  }
-
-  .imageLogoContainer {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3 / 2;
-  }
-  
-  .admnistrarBtn {
-    width: 90%;
-    margin: 15px auto;
-    font-size: 4.2vw;
-    padding: 10px;
-  }
-
-  .ongBotoesContainer {
-    width: 90%;
-    flex-direction: column;
-    margin: 15px auto;
-    gap: 10px;
-  }
-
-  .ongBotoes {
-    width: 100%;
-    font-size: 4vw;
-    padding: 10px;
-  }
 }

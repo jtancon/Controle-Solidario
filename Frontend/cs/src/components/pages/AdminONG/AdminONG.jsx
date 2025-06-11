@@ -2,7 +2,7 @@ import './AdminONG.css';
 import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import api from "../../../services/api";
+import api from "../../../services/api"; // <- Usa axios com baseURL já definida
 import CardONGDoacao from './DoacoesCard/CardONGDoacao';
 import AcoesONG from './AcoesCard/AcoesONG';
 import SearchBar from '../../SearchBar/SearchBar';
@@ -85,16 +85,33 @@ function AdminONG() {
         {abaSelecionada === "doacoes" && (
         <>
         <div className="menuDoacoes">
+          <div className="HistONG">
             <div className="DoacaoOngContainer">
               <h1 className="titulo">Doações para ONG</h1>
-              {doacoes.map((d) => (
-              <div className="scroll-area">
-                <div className="items" key={d.id}>
-                  <CardONGDoacao/>
+              <CardONGDoacao/>
+              <CardONGDoacao/>
+            </div>
+          </div>
+          <div className="HistAcoes">
+            <div className="DoacaoOngContainer">
+              <h1 className="titulo">Doações para Ações</h1>
+              <CardONGDoacao/>
+              <CardONGDoacao/>
+            </div>
+          </div>
+          {/* <div className="scroll-area">
+            {doacoes.map((d) => (
+              <div className="items" key={d.id}>
+                <div className="info-box">
+                  <div className="info"><strong>ID:</strong> {d.id}</div>
+                  <div className="info"><strong>Valor:</strong> R$ {d.valor?.toFixed(2)}</div>
+                  <div className="info"><strong>Tipo:</strong> {d.tipo}</div>
+                  <div className="info"><strong>Data:</strong> {formatarData(d.data)}</div>
+                  <div className="info full-width"><strong>Descrição:</strong> {d.descricao}</div>
                 </div>
               </div>
-              ))}
-            </div>
+            ))}
+          </div> */}
         </div>
         </>
         )}
@@ -103,7 +120,7 @@ function AdminONG() {
         <div className="menuAcoes">
 
           <div className="pesquisaAcoes">
-              <SearchBar placeholder="Pesquisa por título ou status" />
+            <SearchBar placeholder="Pesquisa por título ou status" />
             <button className="btnNovaAcao"
             onClick={() => setMostrarNovaAcao(!mostrarNovaAcao)}>
               Nova Ação</button>

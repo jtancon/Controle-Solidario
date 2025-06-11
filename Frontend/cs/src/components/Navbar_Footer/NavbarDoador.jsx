@@ -1,4 +1,4 @@
-import './NavbarDoador.css';
+import './NavFooter.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 
