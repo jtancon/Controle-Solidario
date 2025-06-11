@@ -85,7 +85,7 @@ function Index() {
               <h1 className="fraseImpacto">
                 Doe para quem faz a diferença.
               </h1>
-              <div className="instituicoes">
+              <div className="instituicoesIndex">
                 <Slider {...settings}>
                   {ongs.map((ong) => (
                     <Card1 key={ong.uid} ong={ong} />
