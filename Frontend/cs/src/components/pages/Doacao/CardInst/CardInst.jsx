@@ -5,10 +5,13 @@ function CardInst({ ong }) {
     const navigate = useNavigate();
 
     const handleSelecionar = () => {
-        // ✅ ALTERAÇÃO: Passa o nome da ONG na URL, em vez do email.
-        // Usamos encodeURIComponent para garantir que nomes com espaços ou caracteres especiais funcionem.
-        const nomeCodificado = encodeURIComponent(ong.nome);
-        navigate(`/doacao?name=${nomeCodificado}`);
+        // Passa o email da ONG na URL, que é um identificador único.
+        if (ong.email) {
+            navigate(`/doacao?email=${ong.email}`);
+        } else {
+            console.error("Esta ONG não possui um email para realizar a doação.");
+            alert("Não foi possível selecionar esta ONG.");
+        }
     };
 
     return (

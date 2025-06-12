@@ -54,7 +54,25 @@ class UsersController {
             null
         }
     }
+    fun buscarUsuarioPorNome(nome: String): Users? {
+        return try {
+            val querySnapshot = firestore.collection(collectionName)
+                .whereEqualTo("nome", nome) // Cria a query para buscar pelo campo "nome"
+                .limit(1) // Limita ao primeiro resultado, para o caso de nomes duplicados
+                .get()
+                .get()
 
+            // Se a busca retornar algum documento, converte o primeiro para o objeto Users
+            if (!querySnapshot.isEmpty) {
+                querySnapshot.documents.first().toObject(Users::class.java)
+            } else {
+                null // Retorna nulo se nenhum usuário for encontrado com aquele nome
+            }
+        } catch (e: Exception) {
+            // Em caso de erro na consulta, retorna nulo
+            null
+        }
+    }
     /**
      * Atualiza os dados de um usuário, identificado pelo seu email.
      */
