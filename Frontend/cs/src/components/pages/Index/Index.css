@@ -57,6 +57,17 @@
   box-sizing: border-box;
 }
 
+.slick-dots div {
+  font-size: clamp(12px, 4vw, 20px); /* cresce entre 12px e 20px dependendo da tela */
+  line-height: 1;
+  color: #1A4D80;
+  opacity: 0.5;
+}
+
+.slick-dots li.slick-active div {
+  opacity: 1;
+}
+
 .botoesDoadorContainer {
     display: flex;
     justify-content: center;
