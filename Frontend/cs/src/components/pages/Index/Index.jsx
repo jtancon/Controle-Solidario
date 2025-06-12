@@ -56,13 +56,53 @@ function Index() {
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
-    dots: true,
     arrows: true,
     adaptiveHeight: false,
     initialSlide: 0,
+    dots: true,
+    customPaging: (i) => (
+      <div
+        style={{
+          fontSize: "clamp(14px, 1.2vw, 24px)", // responsivo
+          lineHeight: "1",
+          color: "#1A4D80",
+          opacity: 0.5,
+        }}
+      >
+        •
+      </div>
+    ),
+    dotsClass: "slick-dots slick-thumb",
+    responsive: [
+      {
+        breakpoint: 2560, // acima de 1920px até 2560px
+        settings: {
+          slidesToShow: 5
+        }
+      },
+      {
+        breakpoint: 1920,
+        settings: {
+          slidesToShow: 4
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1
+        }
+      }
+    ]
   };
+
 
   return (
     <>
@@ -85,7 +125,7 @@ function Index() {
               <h1 className="fraseImpacto">
                 Doe para quem faz a diferença.
               </h1>
-              <div className="instituicoes">
+              <div className="instituicoesIndex">
                 <Slider {...settings}>
                   {ongs.map((ong) => (
                     <Card1 key={ong.uid} ong={ong} />

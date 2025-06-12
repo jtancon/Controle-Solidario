@@ -23,8 +23,11 @@
     text-align: center;
     margin: 0 auto;
     font-weight: bold;
-    padding: 150px;
+    padding: 10vw 5vw;
+    font-size: 2vw;
     width: fit-content;
+    width: 100%;
+    max-width: 100%;
 }
 
 .divisor {
@@ -36,12 +39,33 @@
 
 .fraseImpacto {
     background-color: #D1DDED;
+    font-size: 1.8vw;
     color: #1A4D80;
     padding: 20px;
     margin: -45px auto 10px;
     border-radius: 60px;
     text-align: center;
     width: fit-content;
+    max-width: 90%;
+}
+
+.instituicoesIndex {
+  width: 100%;
+  max-width: 100%;
+  margin: 50px auto 70px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.slick-dots div {
+  font-size: clamp(12px, 4vw, 20px); /* cresce entre 12px e 20px dependendo da tela */
+  line-height: 1;
+  color: #1A4D80;
+  opacity: 0.5;
+}
+
+.slick-dots li.slick-active div {
+  opacity: 1;
 }
 
 .botoesDoadorContainer {
@@ -268,4 +292,216 @@
 .ongBotoes:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(26, 78, 128, 0.4);
+}
+
+@media (min-width: 1920px) {
+  .tituloDoador {
+    font-size: 1.5vw;
+    padding: 7vw 3vw;
+  }
+
+  .fraseImpacto {
+    font-size: 1.2vw;
+    padding: 30px 60px;
+  }
+
+  .botoesDoadorMenu {
+    font-size: 0.9vw;
+    padding: 14px 28px;
+  }
+
+  .texto {
+    font-size: 0.95vw;
+    width: 35%;
+    padding: 20px;
+  }
+
+  .imgBotao {
+    width: 36px;
+  }
+
+  .botoesDoadorContainer {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+    .tituloDoador {
+        padding: 80px 20px;
+        font-size: 5vw;
+    }
+
+    .fraseImpacto {
+        padding: 15px 30px;
+        font-size: 4vw;
+    }
+
+    .botoesDoadorMenu {
+        font-size: 3vw;
+        padding: 10px 15px;
+    }
+
+    .texto {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 3.5vw;
+    }
+
+    .imgBotao {
+        width: 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .tituloDoador {
+        padding: 60px 15px;
+        font-size: 6vw;
+    }
+
+    .fraseImpacto {
+        font-size: 5vw;
+    }
+
+    .botoesDoadorContainer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .botoesDoadorMenu {
+        font-size: 4vw;
+        width: 80%;
+        justify-content: center;
+    }
+
+    .texto {
+        font-size: 4vw;
+    }
+}
+
+@media (max-width: 1024px) {
+    .tituloDoador {
+        padding: 80px 20px;
+        font-size: 5vw;
+    }
+
+    .fraseImpacto {
+        padding: 15px 30px;
+        font-size: 4vw;
+    }
+
+    .botoesDoadorMenu {
+        font-size: 3vw;
+        padding: 10px 15px;
+    }
+
+    .texto {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 3.5vw;
+    }
+
+    .imgBotao {
+        width: 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .tituloDoador {
+        padding: 60px 15px;
+        font-size: 6vw;
+    }
+
+    .fraseImpacto {
+        font-size: 5vw;
+    }
+
+    .botoesDoadorContainer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .botoesDoadorMenu {
+        font-size: 4vw;
+        width: 80%;
+        justify-content: center;
+    }
+
+    .texto {
+        font-size: 4vw;
+    }
+}
+
+@media (max-width: 768px) {
+  .bem-vindoBg {
+    background-color: #D1DDED;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .painel-ong-titulo {
+    background-color: #E6EEF4;
+    margin: 0 auto;
+    padding: 20px;
+    width: 70%;
+    text-align: center;
+  }
+
+  .painel-ong-titulo h1 {
+    font-size: 5vw;
+  }
+
+  .painel {
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .descricao {
+    width: 90%;
+    margin: 20px auto 50px;
+    padding: 15px;
+    word-wrap: break-word;
+  }
+
+  .descricao h1 {
+    font-size: 5vw;
+  }
+
+  .painel-ong-descricao {
+    font-size: 4.5vw;
+  }
+
+  .logoContainer {
+    width: 80%;
+    margin: 20px auto;
+  }
+
+  .imageLogoContainer {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+  
+  .admnistrarBtn {
+    width: 90%;
+    margin: 15px auto;
+    font-size: 4.2vw;
+    padding: 10px;
+  }
+
+  .ongBotoesContainer {
+    width: 90%;
+    flex-direction: column;
+    margin: 15px auto;
+    gap: 10px;
+  }
+
+  .ongBotoes {
+    width: 100%;
+    font-size: 4vw;
+    padding: 10px;
+  }
 }

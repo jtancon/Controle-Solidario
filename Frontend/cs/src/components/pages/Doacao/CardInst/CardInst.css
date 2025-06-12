@@ -1,5 +1,5 @@
 .card-instituicao {
-    width: 55%;
+    width: 70%;
     height: 55vh;
     background-color: #1A4D80;
     border-radius: 40px;
@@ -10,6 +10,7 @@
     justify-content: space-between;
     box-shadow: 5px 5px 5px #1A4E802B;
     cursor: pointer;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 }
 
 
@@ -28,6 +29,7 @@
     align-items: center;
     overflow: hidden;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .imgs {
@@ -35,6 +37,7 @@
     height: 100%;
     object-fit: contain;
     display: block;
+    object-position: center;
 }
 
 h2 {
@@ -83,4 +86,90 @@ h2 {
 .botao:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(26, 78, 128, 0.4);
+}
+
+@media (max-width: 1024px) {
+    .card-instituicao {
+        width: 80%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .imagecontainer {
+        width: 140px;
+        height: 140px;
+    }
+
+    .card-instituicao h2 {
+        font-size: 1.8rem;
+    }
+
+    .botao {
+        font-size: 1.2rem;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .card-instituicao {
+        width: 70%;
+        height: auto;
+        border-radius: 20px;
+    }
+
+    .imagecontainer {
+        width: 120px;
+        height: 120px;
+    }
+
+    .card-instituicao h2 {
+        font-size: 1.2rem;
+    }
+
+    .botao {
+        font-size: 1rem;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .card-instituicao {
+        width: 300px;
+        height: 420px;
+    }
+
+    .imagecontainer {
+        width: 200px;
+        height: 200px;
+    }
+
+    .card-instituicao h2 {
+        font-size: 1.8rem;
+    }
+
+    .botao {
+        font-size: 1.1rem;
+        height: 60px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .card-instituicao {
+        width: 320px;
+        height: 450px;
+    }
+
+    .imagecontainer {
+        width: 220px;
+        height: 220px;
+    }
+
+    .card-instituicao h2 {
+        font-size: 2rem;
+    }
+
+    .botao {
+        font-size: 1.2rem;
+        height: 65px;
+    }
 }
