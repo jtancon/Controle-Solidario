@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = ["http://localhost:3000"]) // Libera o frontend React local
+@CrossOrigin(origins = ["http://localhost:3000", "http://localhost:5173"]) // Adicionada a porta do Vite
 class UsuarioRestController(
     private val usersController: UsersController
 ) {
@@ -16,7 +16,6 @@ class UsuarioRestController(
     fun criarUsuario(@RequestBody usuario: Users): ResponseEntity<Any> {
         val (sucesso, resultado) = usersController.inserirUsuario(usuario)
         return if (sucesso)
-        // Alterado de "id" para "email" para maior clareza na resposta da API.
             ResponseEntity.ok(mapOf("message" to "✅ Usuário criado com sucesso", "email" to resultado))
         else
             ResponseEntity.internalServerError().body(mapOf("error" to resultado))
@@ -32,10 +31,15 @@ class UsuarioRestController(
         }
     }
 
-    // Endpoint que busca por email (ID do documento)
+    /**
+     * Endpoint que busca um usuário pelo seu email.
+     * Agora chama o método correto no controller que busca pelo CAMPO 'email'.
+     */
     @GetMapping("/{email}")
     fun buscarUsuarioPorEmail(@PathVariable email: String): ResponseEntity<Any> {
+        // ✅ CORRIGIDO: Chama o método com o nome correto.
         val usuario = usersController.buscarUsuarioPorEmail(email)
+
         return if (usuario != null)
             ResponseEntity.ok(usuario)
         else
@@ -43,8 +47,7 @@ class UsuarioRestController(
     }
 
     /**
-     * ✅ NOVO: Endpoint que busca pelo nome do usuário/ONG.
-     * A URL é diferente para não conflitar com a busca por email.
+     * Endpoint que busca pelo nome do usuário/ONG.
      */
     @GetMapping("/by-name/{nome}")
     fun buscarUsuarioPorNome(@PathVariable nome: String): ResponseEntity<Any> {
@@ -56,7 +59,9 @@ class UsuarioRestController(
         }
     }
 
-    // O endpoint agora espera um email para saber qual usuário atualizar.
+    /**
+     * Endpoint para atualizar um usuário, identificado pelo seu email.
+     */
     @PutMapping("/{email}")
     fun atualizarUsuario(@PathVariable email: String, @RequestBody usuario: Users): ResponseEntity<String> {
         return if (usersController.atualizarUsuario(email, usuario))
@@ -65,10 +70,11 @@ class UsuarioRestController(
             ResponseEntity.internalServerError().body("❌ Erro ao atualizar usuário")
     }
 
-    // O endpoint agora espera um email para saber qual usuário deletar.
+    /**
+     * Endpoint para deletar um usuário, identificado pelo seu email.
+     */
     @DeleteMapping("/{email}")
     fun deletarUsuario(@PathVariable email: String): ResponseEntity<String> {
-        // Passa o email para o método de deleção do controller.
         return if (usersController.deletarUsuario(email))
             ResponseEntity.ok("🗑️ Usuário deletado com sucesso")
         else

@@ -12,10 +12,13 @@ class DoacaoController {
     private val firestore: Firestore = FirebaseService().firestore
     private val collectionName = "doacao"
 
+    /**
+     * Insere uma nova doação, gerando um ID e data de criação automaticamente.
+     */
     fun inserirDoacao(doacao: Doacao): Pair<Boolean, String> {
         return try {
             val docRef = firestore.collection(collectionName).document()
-            val novaDoacao = doacao.copy(id = docRef.id, data = Timestamp.now()) // 🕒 adiciona a data aqui
+            val novaDoacao = doacao.copy(id = docRef.id, data = Timestamp.now())
             docRef.set(novaDoacao).get()
             Pair(true, docRef.id)
         } catch (e: Exception) {
@@ -23,26 +26,53 @@ class DoacaoController {
         }
     }
 
-    fun listarTodasDoacoes(): List<Doacao> {
-        println("🚨 Método listarTodasDoacoes foi chamado") // <-- debug
+    /**
+     * ✅ NOVO: Busca doações de um doador específico de forma eficiente.
+     * Usa uma consulta 'whereEqualTo' para filtrar diretamente no Firestore.
+     */
+    fun listarDoacoesPorDoador(idDoador: String): List<Doacao> {
         return try {
-            val snapshot = firestore.collection(collectionName).get().get()
+            val snapshot = firestore.collection(collectionName)
+                .whereEqualTo("idDoador", idDoador) // Filtro direto no banco de dados
+                .get()
+                .get()
             snapshot.documents.mapNotNull { it.toObject(Doacao::class.java)?.copy(id = it.id) }
         } catch (e: Exception) {
-            println("❌ Erro ao listar doações: ${e.message}") // <-- debug erro
             emptyList()
         }
     }
 
-    fun atualizarDoacao(id: String, doacao: Doacao): Boolean {
+    /**
+     * ✅ NOVO: Busca doações para uma ONG específica de forma eficiente.
+     * Usa uma consulta 'whereEqualTo' para filtrar diretamente no Firestore.
+     */
+    fun listarDoacoesPorOng(idOng: String): List<Doacao> {
         return try {
-            firestore.collection(collectionName).document(id).set(doacao.copy(id = id)).get()
-            true
+            val snapshot = firestore.collection(collectionName)
+                .whereEqualTo("idOng", idOng) // Filtro direto no banco de dados
+                .get()
+                .get()
+            snapshot.documents.mapNotNull { it.toObject(Doacao::class.java)?.copy(id = it.id) }
         } catch (e: Exception) {
-            false
+            emptyList()
         }
     }
 
+    /**
+     * Lista todas as doações existentes. Útil para fins administrativos.
+     */
+    fun listarTodasDoacoes(): List<Doacao> {
+        return try {
+            val snapshot = firestore.collection(collectionName).get().get()
+            snapshot.documents.mapNotNull { it.toObject(Doacao::class.java)?.copy(id = it.id) }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    /**
+     * Deleta uma doação específica pelo seu ID.
+     */
     fun deletarDoacao(id: String): Boolean {
         return try {
             firestore.collection(collectionName).document(id).delete().get()

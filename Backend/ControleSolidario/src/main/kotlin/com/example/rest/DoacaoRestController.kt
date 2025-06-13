@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/doacoes")
-@CrossOrigin(origins = ["http://localhost:5173"])
+@CrossOrigin(origins = ["http://localhost:5173"]) // ou o endereço do seu frontend
 class DoacaoRestController(
     private val doacaoController: DoacaoController
 ) {
@@ -20,6 +20,7 @@ class DoacaoRestController(
         else
             ResponseEntity.internalServerError().body(mapOf("error" to resultado))
     }
+
     @GetMapping
     fun listarDoacoes(): ResponseEntity<Any> {
         val doacoes = doacaoController.listarTodasDoacoes()
@@ -33,17 +34,24 @@ class DoacaoRestController(
         else
             ResponseEntity.internalServerError().body("❌ Erro ao deletar doação")
     }
+
+    /**
+     * ✅ CORRIGIDO: Endpoint para listar doações de uma ONG.
+     * Agora chama o método otimizado que consulta o banco de dados diretamente.
+     */
     @GetMapping("/ong/{id}")
     fun listarDoacoesPorOng(@PathVariable id: String): ResponseEntity<Any> {
-        println("🔗 Endpoint /api/doacoes/ong/$id foi chamado") // <-- DEBUG!
-        val todas = doacaoController.listarTodasDoacoes()
-        val filtradas = todas.filter { it.idOng == id }
-        return ResponseEntity.ok(filtradas)
+        val doacoesFiltradas = doacaoController.listarDoacoesPorOng(id)
+        return ResponseEntity.ok(doacoesFiltradas)
     }
+
+    /**
+     * ✅ CORRIGIDO: Endpoint para listar doações de um doador.
+     * Agora chama o método otimizado que consulta o banco de dados diretamente.
+     */
     @GetMapping("/doador/{id}")
     fun listarDoacoesPorDoador(@PathVariable id: String): ResponseEntity<Any> {
-        val todas = doacaoController.listarTodasDoacoes()
-        val filtradas = todas.filter { it.idDoador == id }
-        return ResponseEntity.ok(filtradas)
+        val doacoesFiltradas = doacaoController.listarDoacoesPorDoador(id)
+        return ResponseEntity.ok(doacoesFiltradas)
     }
 }

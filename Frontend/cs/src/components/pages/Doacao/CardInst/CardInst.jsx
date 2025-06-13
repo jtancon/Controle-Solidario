@@ -5,12 +5,16 @@ function CardInst({ ong }) {
     const navigate = useNavigate();
 
     const handleSelecionar = () => {
-        // Passa o email da ONG na URL, que é um identificador único.
-        if (ong.email) {
-            navigate(`/doacao?email=${ong.email}`);
+        // Verifica se o objeto 'ong' existe e se tem a propriedade 'nome'
+        if (ong && ong.nome) {
+            // ✅ ALTERAÇÃO: Usa o nome da ONG na URL.
+            // encodeURIComponent garante que nomes com espaços ou caracteres especiais funcionem.
+            const nomeCodificado = encodeURIComponent(ong.nome);
+            navigate(`/doacao?name=${nomeCodificado}`);
         } else {
-            console.error("Esta ONG não possui um email para realizar a doação.");
-            alert("Não foi possível selecionar esta ONG.");
+            // Informa um erro claro se o nome não estiver disponível
+            console.error("Não foi possível navegar: o objeto ONG não contém um nome.", ong);
+            alert("Erro: Não foi possível selecionar esta ONG pois ela não possui um nome cadastrado.");
         }
     };
 
@@ -23,7 +27,6 @@ function CardInst({ ong }) {
                     alt={ong.nome || "ONG"}
                 />
             </div>
-            
             <h2>{ong.nome || "Nome da ONG"}</h2>
             <button className="botao" onClick={handleSelecionar}>
                 Selecionar ONG
