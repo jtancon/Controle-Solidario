@@ -136,26 +136,31 @@ export const AuthGoogleProvider = ({ children }) => {
   };
 
   const deletarConta = async () => {
-    try {
-      const currentUser = auth.currentUser;
-      const userRef = auth.currentUser.classificacao === "ONG" ? "ongs" : "doador";
-      if (currentUser) {
-        if (userRef === "doador") {
-          await deleteDoc(doc(db, "usuarios", currentUser.uid));
-        }
-        if (userRef === "ongs") {
-          await deleteDoc(doc(db, "ongs", currentUser.uid));
-        }
-        await deleteUser(currentUser);
-        sessionStorage.clear();
-        setUser(null);
-        alert("Conta deletada com sucesso.");
-      }
-    } catch (error) {
-      console.error("Erro ao deletar conta:", error);
-      alert("Erro ao deletar a conta. Refaça o login e tente novamente.");
+  try {
+    const currentUser = auth.currentUser;
+    const uid = currentUser?.uid;
+
+    if (!uid) throw new Error("Usuário não autenticado.");
+
+    // Aqui usamos o user do contexto, que carrega os dados do Firestore
+    const userData = JSON.parse(sessionStorage.getItem("@AuthFirebase:user"));
+    const classificacao = userData?.classificacao;
+
+    if (classificacao === "doador") {
+      await deleteDoc(doc(db, "usuarios", uid));
+    } else if (classificacao === "ong" || classificacao === "ONG") {
+      await deleteDoc(doc(db, "usuarios", uid)); // se sua coleção for 'usuarios' mesmo para ONGs
     }
-  };
+
+    await deleteUser(currentUser);
+    sessionStorage.clear();
+    setUser(null);
+    alert("Conta deletada com sucesso.");
+  } catch (error) {
+    console.error("Erro ao deletar conta:", error);
+    alert("Erro ao deletar a conta. Refaça o login e tente novamente.");
+  }
+};
 
   return (
     <AuthGoogleContext.Provider
