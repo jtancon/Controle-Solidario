@@ -1,127 +1,188 @@
-.PerfilDoador {
-  background-color: #f9fbfd;
-  color: #003866;
+/* PerfilDoador.css com modal de confirmação mais compacto */
+
+:root {
+  --azul: #003866;
+  --azul-claro: #1a4d80;
+  --cinza-fundo: #f5f7fa;
+  --branco: #ffffff;
+  --destaque: #00b894;
+  --texto-claro: #333;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--cinza-fundo);
+}
+
+body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--texto-claro);
+}
+
+.PerfilDoador {
+  background-color: var(--branco);
+  color: var(--texto-claro);
   padding: 40px;
-  max-width: 700px;
-  margin: 40px auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 56, 102, 0.15);
-}
-
-.PerfilDoador h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #1a4d80;
-  font-size: 28px;
-}
-
-.PerfilDoador form {
+  max-width: 1000px;
+  width: 100%;
+  margin: 40px auto 80px auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 56, 102, 0.1);
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
-.PerfilDoador label {
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-.PerfilDoador input {
-  padding: 10px;
-  border: 1px solid #c2d4e0;
-  border-radius: 6px;
-  background-color: #ffffff;
-  color: #003866;
-  font-size: 14px;
-}
-
-input:disabled {
-  background-color: #f0f4f8;
-  color: #003866;
-  cursor: not-allowed;
-}
-
-.PerfilDoador p {
-  margin: 0 0 15px;
-  padding: 10px;
-  background-color: #f0f4f8;
-  border: 1px solid #c2d4e0;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  min-height: 40px;
-}
-
-.PerfilDoador .button-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 30px;
-}
-
-.PerfilDoador button {
+.perfil-left {
   flex: 1;
-  padding: 12px;
-  background-color: #003866;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  font-size: 15px;
-}
-
-.PerfilDoador button:hover {
-  background-color: #1a4d80;
-}
-
-.PerfilDoador .cancel-button {
-  background-color: #cc0000;
-}
-
-.PerfilDoador .cancel-button:hover {
-  background-color: #a60000;
-}
-
-.PerfilDoador input:disabled {
-  background-color: #e3e9f1;
-}
-
-@media (max-width: 600px) {
-  .PerfilDoador {
-    padding: 30px 20px;
-    margin: 20px;
-    max-width: 90%;
-  }
-
-  .PerfilDoador .button-group {
-    flex-direction: column;
-  }
-}
-
-.foto-perfil-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
   text-align: center;
-  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .foto-perfil {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  width: 140px;
+  height: 140px;
   object-fit: cover;
-  border: 2px solid #ccc;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.foto-perfil:hover {
+  transform: scale(1.05);
+}
+
+.botao-foto-perfil {
+  background-color: var(--azul);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-block;
+}
+
+.botao-foto-perfil:hover {
+  background-color: var(--azul-claro);
+}
+
+.botao-foto-perfil input {
+  display: none;
+}
+
+.data-criacao {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #555;
+  font-style: italic;
+}
+
+.perfil-right {
+  flex: 2;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.perfil-right h2 {
+  font-size: 24px;
+  color: var(--azul);
+  margin-bottom: 1rem;
+}
+
+.perfil-visualizacao p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.perfil-editar-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.coluna-esquerda,
+.coluna-direita {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  padding: 10px;
+  border: 1px solid #c2d4e0;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #f3f7fa;
+  color: var(--texto-claro);
+}
+
+input:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+label {
+  font-weight: 600;
+  color: var(--azul);
+}
+
+.botao-atualizar-wrapper {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.botao-atualizar,
+.cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.botao-atualizar {
+  background-color: var(--azul);
+  color: white;
+}
+
+.botao-atualizar:hover {
+  background-color: var(--azul-claro);
+}
+
+.cancel-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+.cancel-button:hover {
+  background-color: #b3b3b3;
 }
 
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -130,32 +191,62 @@ input:disabled {
 
 .modal {
   background: white;
-  padding: 2rem;
-  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  max-width: 380px;
+  width: 100%;
   text-align: center;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: var(--azul);
+}
+
+.modal p {
+  font-size: 15px;
+  color: #555;
+  margin: 0.5rem 0 1.5rem;
 }
 
 .modal-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+.modal-buttons .confirm,
+.modal-buttons .cancel {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .modal-buttons .confirm {
-  background-color: #e53935;
+  background-color: var(--azul);
   color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
 }
 
 .modal-buttons .cancel {
   background-color: #ccc;
-  color: black;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .PerfilDoador {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .perfil-editar-form {
+    flex-direction: column;
+  }
+
+  .botao-atualizar-wrapper {
+    justify-content: center;
+  }
 }
