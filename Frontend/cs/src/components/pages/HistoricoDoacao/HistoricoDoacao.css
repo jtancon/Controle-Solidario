@@ -54,23 +54,6 @@
   gap: 10px;
 }
 
-.btnFiltro {
-  background-color: white;
-  border: none;
-  padding: 10px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.btnFiltro:hover {
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
-}
-
 .imgHist {
   height: 100%;
   max-height: 100px;
@@ -98,6 +81,7 @@
   font-size: 20px;
   font-weight: bold;
   color: black;
+  margin-top: 0;
   margin-bottom: 5px;
 }
 
@@ -115,10 +99,107 @@
   white-space: nowrap;
 }
 
+@media (min-width: 1367px) and (max-width: 2560px) {
+  .mainHist {
+    padding: 40px 80px 80px;
+  }
+
+  .mainHist h1 {
+    font-size: 3rem;
+  }
+
+  .nomeONG {
+    font-size: 2.5rem;
+  }
+
+  .dataHora {
+    font-size: 1.8rem;
+  }
+
+  .valor {
+    font-size: 2.5rem;
+  }
+
+  .textoCard {
+    margin-right: 50px;
+  }
+
+  .cardHistorico {
+    padding: 25px;
+    max-width: 800px;
+  }
+
+  .cardContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 40px;
+  }
+
+  .pesquisa input {
+    width: 600px;
+    font-size: 1.5rem;
+    padding: 15px 25px;
+  }
+
+  .imgHist {
+    max-height: 130px;
+    max-width: 150px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .mainHist {
+    padding: 60px 120px 100px;
+  }
+
+  .mainHist h1 {
+    font-size: 4rem;
+  }
+
+  .nomeONG {
+    font-size: 2.5rem; 
+  }
+
+  div.cardHistorico p.dataHora {
+    font-size: 1.8rem;
+  }
+
+  div.cardHistorico p.valor {
+    font-size: 2.2rem;
+  }
+
+  .btnFiltro {
+    width: 80px;
+    height: 80px;
+  }
+
+  .cardContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+  }
+
+  .cardHistorico {
+    max-width: 700px;
+    padding: 25px;
+  }
+
+  .pesquisa {
+    margin-bottom: 3rem;
+  }
+
+  .imgHist {
+    max-height: 160px;
+    max-width: 180px;
+  }
+}
+
 @media (max-width: 768px) {
   .historico {
     max-width: 95%;
-    margin: 20px auto 60px;
+    margin: 20px auto 70px;
   }
 
   .mainHist {
@@ -168,11 +249,11 @@
 @media (max-width: 480px) {
   .historico {
     padding: 5px;
-    margin: 15px auto 40px;
+    margin-bottom: 70px;
   }
 
   .mainHist {
-    padding: 5px 15px 20px;
+    padding: 5px 20px 20px;
   }
 
   .mainHist h1 {

@@ -1,0 +1,17 @@
+.input-error {
+  color: #b30000;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fadeIn 0.4s ease forwards;
+  background-color: #ffe0e0;
+  border: 1px solid #ff4d4d;
+  padding: 5px;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
