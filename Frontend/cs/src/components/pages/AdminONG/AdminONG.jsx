@@ -87,13 +87,8 @@ function AdminONG() {
         <div className="menuDoacoes">
             <div className="DoacaoOngContainer">
               <h1 className="titulo">Doações para ONG</h1>
-              {doacoes.map((d) => (
-              <div className="scroll-area">
-                <div className="items" key={d.id}>
-                  <CardONGDoacao/>
-                </div>
-              </div>
-              ))}
+              <CardONGDoacao/>
+              <CardONGDoacao/>
             </div>
         </div>
         </>
