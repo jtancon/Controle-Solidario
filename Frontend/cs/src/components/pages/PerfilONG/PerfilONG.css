@@ -1,142 +1,133 @@
 .PerfilONG {
-  background-color: #f9fbfd;
-  color: #003866;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 40px;
-  max-width: 700px;
-  margin: 40px auto 70px;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 56, 102, 0.15);
-}
-
-.PerfilONG h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #1a4d80;
-  font-size: 28px;
-}
-
-.PerfilONG form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.PerfilONG label {
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-.PerfilONG input {
-  padding: 10px;
-  border: 1px solid #c2d4e0;
-  border-radius: 6px;
   background-color: #ffffff;
-  color: #003866;
-  font-size: 14px;
-}
-
-.PerfilONG p {
-  margin: 0 0 15px;
-  padding: 10px;
-  background-color: #f0f4f8;
-  border: 1px solid #c2d4e0;
-  border-radius: 6px;
+  padding: 40px;
+  max-width: 1000px;
+  margin: 40px auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,56,102,0.1);
   display: flex;
-  align-items: center;
-  font-size: 14px;
-  min-height: 40px;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
-
-.PerfilONG .button-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 30px;
-}
-
-.PerfilONG button {
+.perfil-left {
   flex: 1;
-  padding: 12px;
+  text-align: center;
+}
+.foto-perfil {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+.botao-foto-perfil {
+  display: inline-block;
+  margin: 0.5rem 0;
+  padding: 10px 20px;
   background-color: #003866;
   color: #fff;
-  border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  font-size: 15px;
 }
-
-.PerfilONG button:hover {
-  background-color: #1a4d80;
+.data-criacao {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.5rem;
 }
-
-.PerfilONG .cancel-button {
-  background-color: #cc0000;
+.perfil-right {
+  flex: 2;
 }
-
-.PerfilONG .cancel-button:hover {
-  background-color: #a60000;
+.perfil-right h2 {
+  color: #003866;
+  margin-bottom: 1rem;
 }
-
-.PerfilONG input:disabled {
-  background-color: #e3e9f1;
+.perfil-visualizacao p {
+  background-color: #fff;
+  color: #000;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
 }
-
-@media (max-width: 600px) {
-  .PerfilONG {
-    padding: 30px 20px;
-    margin: 20px;
-    max-width: 90%;
-  }
-
-  .PerfilONG .button-group {
-    flex-direction: column;
-  }
+input, textarea {
+  background-color: #fff;
+  color: #000;
+  padding: 10px;
+  border: 1px solid #c2d4e0;
+  border-radius: 8px;
 }
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
+.perfil-editar-form {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.coluna-esquerda, .coluna-direita {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.botao-atualizar-wrapper {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: space-between;
+  gap: 1rem;
   margin-top: 1.5rem;
 }
-
-.modal-buttons .confirm {
-  background-color: #e53935;
-  color: white;
-  padding: 0.5rem 1rem;
+.botao-atualizar, .cancel-button, .delete-button {
+  flex: 1;
+  padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
 }
-
-.modal-buttons .cancel {
-  background-color: #ccc;
-  color: black;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
+.botao-atualizar { background-color: #003866; color: #fff; }
+.cancel-button { background-color: #ccc; color: #000; }
+.delete-button { background-color: #e53935; color: #fff; }
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 }
+.modal {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.confirm { background: #003866; color: #fff; padding: 10px; border-radius: 8px; }
+.cancel { background: #ccc; padding: 10px; border-radius: 8px; }
+@media (max-width: 768px) {
+  .PerfilONG { flex-direction: column; }
+  .perfil-editar-form { flex-direction: column; }
+}
+a.PerfilONG { background:#fff;padding:40px;max-width:1000px;margin:40px auto;border-radius:16px;box-shadow:0 4px 16px rgba(0,56,102,0.1);display:flex;gap:2rem;flex-wrap:wrap; }
+.perfil-left { flex:1;text-align:center; }
+.foto-perfil { width:140px;height:140px;border-radius:50%;object-fit:cover;margin-bottom:1rem; }
+.botao-foto-perfil { display:inline-block;margin:0.5rem 0;padding:10px 20px;background:#003866;color:#fff;border-radius:8px;cursor:pointer; }
+.data-criacao { font-size:0.85rem;color:#555;margin-top:0.5rem; }
+.perfil-right { flex:2; }
+.perfil-right h2 { color:#003866;margin-bottom:1rem; }
+.perfil-visualizacao p { background:#fff;color:#000;padding:8px;border-radius:6px;margin-bottom:0.5rem; }
+input,textarea { background:#fff;color:#000;padding:10px;border:1px solid #c2d4e0;border-radius:8px; }
+.perfil-editar-form { display:flex;gap:2rem;flex-wrap:wrap; }
+.coluna-esquerda,.coluna-direita { flex:1;display:flex;flex-direction:column;gap:1rem; }
+.botao-atualizar-wrapper { width:100%;display:flex;gap:1rem;margin-top:1.5rem; }
+.botao-atualizar,.cancel-button,.delete-button { flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer;font-weight:bold; }
+.botao-atualizar { background:#003866;color:#fff; }
+.cancel-button { background:#ccc;color:#000; }
+.delete-button { background:#e53935;color:#fff; }
+.modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999; }
+.modal { background:#fff;padding:1.5rem;border-radius:12px;text-align:center; }
+.modal-buttons { display:flex;gap:1rem;margin-top:1rem; }
+.confirm { background:#003866;color:#fff;padding:10px;border-radius:8px; }
+.cancel { background:#ccc;padding:10px;border-radius:8px; }
+@media(max-width:768px){ .PerfilONG{flex-direction:column;} .perfil-editar-form{flex-direction:column;} }
