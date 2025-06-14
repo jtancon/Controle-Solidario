@@ -1,8 +1,23 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e6eef4;
+  margin-bottom: 60px;
+}
+
+
 .login-container {
   background-color: #e6eef4;
   color: #003866;
   font-family: Arial, sans-serif;
-  padding: 40px;
+  padding: 40px 60px;
   max-width: 400px;
   margin: 40px auto 100px;
   border-radius: 10px;
@@ -16,8 +31,8 @@
 }
 
 .login-form input {
-  width: 100%;
-  max-width: 300px;
+  width: 90%;
+  max-width: 320px;
   margin: 0 auto 15px;
   padding: 12px;
   border: 1px solid #ccc;
@@ -26,6 +41,7 @@
   border-radius: 6px;
   font-size: 14px;
   display: block;
+  box-sizing: border-box;
 }
 
 .login-form button {
@@ -76,23 +92,75 @@
   font-weight: bold;
 }
 
-.erro {
-  color: #d00000;
-  font-size: 14px;
-  margin-top: -10px;
-  margin-bottom: 20px;
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Responsividade */
-@media (max-width: 500px) {
+
+@media (max-width: 480px) {
   .login-container {
     padding: 30px 20px;
-    margin: 20px;
     max-width: 90%;
   }
 
+  .login-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .login-form input,
+  .login-form button,
   .login-button {
-    font-size: 14px;
-    padding: 10px 16px;
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .login-button img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+  .login-container {
+    padding: 40px 30px;
+    max-width: 450px;
+  }
+
+  .login-container h1 {
+    font-size: 2.2rem;
+  }
+
+  .login-form input,
+  .login-form button,
+  .login-button {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .login-container {
+    max-width: 500px;
+    padding: 50px 70px;
+  }
+
+  .login-container h1 {
+    font-size: 2.8rem;
+  }
+
+  .login-form input,
+  .login-form button,
+  .login-button {
+    font-size: 1.1rem;
+    padding: 14px;
+  }
+
+  .login-button img {
+    width: 24px;
+    height: 24px;
   }
 }

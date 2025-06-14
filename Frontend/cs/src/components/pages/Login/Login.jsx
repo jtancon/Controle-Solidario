@@ -5,13 +5,16 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
-import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
+import MensagemErro from "../../Erros/MensagemErro.jsx";
+import ErrorMessages from "../../../constants/ErrorMessages.js";
+import InputError from "../../Erros/InputError.jsx";
 
 const Login = () => {
   const { signInGoogle, signed, signUpOng, signUpDoador } = useContext(AuthGoogleContext);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
+  const [errosCampos, setErrosCampos] = useState({ email: "", senha: "" });
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -20,13 +23,28 @@ const Login = () => {
       await signInGoogle();
     } catch (error) {
       console.error("Erro no login com Google:", error);
-      alert("Erro ao fazer login com Google.");
+      alert(ErrorMessages.googleLoginError);
     }
   };
 
   const loginEmailSenha = async (e) => {
-    e.preventDefault();
-    setErro("");
+  e.preventDefault();
+  setErro("");
+  setErrosCampos({ email: "", senha: "" });
+
+  let temErro = false;
+
+  if (!email.trim()) {
+    setErrosCampos((prev) => ({ ...prev, email: "O campo de email é obrigatório." }));
+    temErro = true;
+  }
+
+  if (!senha.trim()) {
+    setErrosCampos((prev) => ({ ...prev, senha: "O campo de senha é obrigatório." }));
+    temErro = true;
+  }
+
+  if (temErro) return;
   
     try {
       const result = await signInWithEmailAndPassword(auth, email, senha);
@@ -48,10 +66,10 @@ const Login = () => {
         }
       }
   
-      setErro("Perfil de ONG ou Doador não encontrado.");
+      setErro(ErrorMessages.userNaoEncontrado);
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
-      setErro("Email ou senha incorretos.");
+      console.error(ErrorMessages.userNaoEncontrado);
+      setErro(ErrorMessages.loginInvalido);
     }
   };  
 
@@ -67,20 +85,26 @@ const Login = () => {
           <h1>Login</h1>
 
           <form onSubmit={loginEmailSenha} className="login-form">
-            <input
-              type="email"
-              placeholder="E-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required
-            />
+            <div className="input-group">
+              <input
+                type="email"
+                placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {errosCampos.email && <InputError message={errosCampos.email} />}
+            </div>
+
+            <div className="input-group">
+              <input
+                type="password"
+                placeholder="Senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
+              {errosCampos.senha && <InputError message={errosCampos.senha} />}
+            </div>
+
             <button type="submit">Entrar com E-mail</button>
           </form>
 
@@ -94,7 +118,7 @@ const Login = () => {
             Login com Google
           </button>
 
-          {erro && <p className="erro">{erro}</p>}
+          {erro && <MensagemErro message={erro} />}
 
           <p>
             Não tem uma conta?

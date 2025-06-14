@@ -21,7 +21,7 @@ function Index() {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         try {
-          const res = await api.get(`/usuarios/${user.uid}`);
+          const res = await api.get(`/usuarios/${user.email}`);
           const dados = res.data;
           setUsuario(dados);
           if (dados.classificacao === "Não definido") {

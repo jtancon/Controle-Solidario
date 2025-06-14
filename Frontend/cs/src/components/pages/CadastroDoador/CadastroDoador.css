@@ -4,7 +4,7 @@
     font-family: Arial, sans-serif;
     padding: 40px;
     max-width: 500px;
-    margin: 40px auto;
+    margin: 40px auto 80px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 56, 102, 0.2);
   }
@@ -80,3 +80,68 @@
     }
   }
   
+  @media (min-width: 1200px) {
+  .CadastroDoador {
+    padding: 60px 70px;
+  }
+
+  .CadastroDoador h1 {
+    font-size: 2.4rem;
+    margin-bottom: 40px;
+  }
+
+  .CadastroDoador label {
+    font-size: 1.1rem;
+  }
+
+  .CadastroDoador input {
+    font-size: 1.1rem;
+    padding: 14px;
+  }
+
+  .CadastroDoador button {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+
+  .CadastroDoador p {
+    font-size: 1rem;
+  }
+
+  .CadastroDoador .forca-senha {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .CadastroDoador {
+    padding: 60px 70px;
+  }
+
+  .CadastroDoador h1 {
+    font-size: 2.4rem;
+    margin-bottom: 40px;
+  }
+
+  .CadastroDoador label {
+    font-size: 1.1rem;
+  }
+
+  .CadastroDoador input {
+    font-size: 1.1rem;
+    padding: 14px;
+  }
+
+  .CadastroDoador button {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+
+  .CadastroDoador p {
+    font-size: 1rem;
+  }
+
+  .CadastroDoador .forca-senha {
+    font-size: 0.95rem;
+  }
+}
