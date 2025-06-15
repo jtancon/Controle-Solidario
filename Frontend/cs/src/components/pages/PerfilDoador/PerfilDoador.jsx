@@ -1,4 +1,3 @@
-// PerfilDoador.jsx atualizado com campos redistribuídos igualmente entre colunas
 import { useContext, useState, useEffect } from "react";
 import { AuthGoogleContext } from "../../../context/authGoogle";
 import { doc, updateDoc } from "firebase/firestore";
@@ -67,10 +66,16 @@ function PerfilDoador() {
 
   const verificarForcaSenha = (senha) => {
     if (!senha) return "";
-    const forte = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const medio = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    if (forte.test(senha)) return "forte";
-    if (medio.test(senha)) return "media";
+    const temMaiuscula = /[A-Z]/.test(senha);
+    const temMinuscula = /[a-z]/.test(senha);
+    const temNumero = /[0-9]/.test(senha);
+    const temEspecial = /[@$!%*?&#]/.test(senha);
+    const temSequencia = /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i.test(senha);
+
+    const criterios = [temMaiuscula, temMinuscula, temNumero, temEspecial].filter(Boolean).length;
+
+    if (senha.length < 6 || temSequencia || (!temNumero && !temEspecial)) return "fraca";
+    if (senha.length >= 6 && criterios >= 2 && !temSequencia) return criterios === 4 ? "forte" : "media";
     return "fraca";
   };
 
@@ -149,7 +154,7 @@ function PerfilDoador() {
                 />
                 Trocar foto de perfil
               </label>
-              <p className="data-criacao">Perfil criado em 27/04/2020</p>
+              <p className="data-criacao">Perfil criado em {dados.criadoEm}</p>
             </div>
           )}
         </div>
@@ -195,6 +200,7 @@ function PerfilDoador() {
               <div className="botao-atualizar-wrapper">
                 <button type="button" className="botao-atualizar" onClick={handleSalvar}>Salvar</button>
                 <button type="button" className="cancel-button" onClick={() => { setEditando(false); toast.warn("Edição cancelada."); }}>Cancelar</button>
+                <button type="button" onClick={() => setMostrarConfirmacao(true)} className="delete-button">Deletar Conta</button>
               </div>
             </form>
           )}

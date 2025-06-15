@@ -58,7 +58,7 @@ function CadastroDoador() {
     const temMaiuscula = /[A-Z]/.test(senha);
     const temMinuscula = /[a-z]/.test(senha);
     const temNumero = /[0-9]/.test(senha);
-    const temEspecial = /[@$!%*?&]/.test(senha);
+    const temEspecial = /[@$!%*?&#]/.test(senha);
     const temSequencia = /(012|123|234|345|456|567|678|789|890|abc|bcd)/i.test(
       senha
     );
@@ -164,9 +164,12 @@ function CadastroDoador() {
         form.senha
       );
 
-      const { senha, ...dadosParaSalvar } = form;
+   const { senha, ...dadosParaSalvar } = form;
 
-      await setDoc(doc(db, "usuarios", user.uid), dadosParaSalvar);
+    await setDoc(doc(db, "usuarios", user.uid), {
+      ...dadosParaSalvar,
+      criadoEm: serverTimestamp()
+    });
 
       navigate("/");
     } catch (error) {

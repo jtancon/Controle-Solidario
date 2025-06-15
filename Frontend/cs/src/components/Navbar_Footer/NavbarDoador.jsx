@@ -1,31 +1,57 @@
 import './NavFooter.css';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
+import { Menu, Moon } from 'lucide-react';
 
 function NavbarDoador() {
+    const [menuAberto, setMenuAberto] = useState(false);
+    const menuRef = useRef(null);
     const navigate = useNavigate();
     const auth = getAuth();
 
     const handleLogout = async () => {
         try {
             await signOut(auth);
-            navigate("/Login"); // redireciona após logout
+            navigate("/Login");
         } catch (error) {
             console.error("Erro ao sair:", error);
         }
     };
 
+    // Fecha o menu ao clicar fora
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setMenuAberto(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
     return (
         <div className="navbar">
-            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                <h1 className="logo">Controle Solidário</h1>
-            </Link>
-            <div className="nav-links">
-                <Link to="/HistoricoDoacao" className="nav-button">Histórico</Link>
-                <Link to="/PerfilDoador" className="nav-button">Perfil</Link>
-                <button className="nav-button logout" onClick={handleLogout}>
-                    Sair
-                </button>
+            <div className="navbar-top">
+                <Link to="/" className="logo-link">
+                    <h1 className="logo">Controle Solidário</h1>
+                </Link>
+                <div className="navbar-icons">
+                    <button className="icon-button menu-button" onClick={() => setMenuAberto(!menuAberto)}>
+                        <Menu size={28} />
+                    </button>
+                    <button className="icon-button moon-button" title="Modo escuro (futuro)">
+                        <Moon size={24} />
+                    </button>
+                </div>
+
+                {menuAberto && (
+                    <div className="nav-dropdown" ref={menuRef}>
+                        <Link to="/HistoricoDoacao" className="nav-button" onClick={() => setMenuAberto(false)}>Histórico</Link>
+                        <Link to="/PerfilDoador" className="nav-button" onClick={() => setMenuAberto(false)}>Perfil</Link>
+                        <button className="nav-button logout" onClick={handleLogout}>Sair</button>
+                    </div>
+                )}
             </div>
         </div>
     );
