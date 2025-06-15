@@ -192,7 +192,7 @@ function CadastroONG() {
         email: form.email,
         fotoPerfil: CS,
         classificacao: "ONG",
-        descricao: ""
+        descricao: "" //VERIFICA ISSO SE TA QUEBRANDO OU NÃO JOAOZITO
       };
 
       await setDoc(doc(db, "usuarios", uid), ongData);
