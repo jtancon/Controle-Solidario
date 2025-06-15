@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "lucide-react": "^0.515.0",
     "react-slick": "^0.30.3",
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.3",
