@@ -17,7 +17,8 @@ function PerfilDoador() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [forcaSenha, setForcaSenha] = useState("");
   const [editando, setEditando] = useState(false);
-  const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
+  const [mostrarConfirmacaoEdicao, setMostrarConfirmacaoEdicao] = useState(false);
+  const [mostrarConfirmacaoDelete, setMostrarConfirmacaoDelete] = useState(false);
   const [camposEditaveis, setCamposEditaveis] = useState({ email: false, nomeCompleto: false, cpf: false });
   const navigate = useNavigate();
 
@@ -94,7 +95,7 @@ function PerfilDoador() {
 
   const handleSalvar = () => {
     if (!validarCampos()) return;
-    setMostrarConfirmacao(true);
+    setMostrarConfirmacaoEdicao(true);
   };
 
   const confirmarEdicao = async () => {
@@ -121,6 +122,15 @@ function PerfilDoador() {
       console.error("Erro ao atualizar:", error);
       toast.error("Erro ao atualizar os dados.");
     }
+  };
+
+  const handleConfirmarDelete = async () => {
+    setMostrarConfirmacao(false);
+    setEditando(false);
+    await deleteDoc(doc(db, "usuarios", uid));
+    toast.error('Conta deletada.');
+    signOut();
+    sessionStorage.clear();
   };
 
   return (
@@ -200,20 +210,43 @@ function PerfilDoador() {
               <div className="botao-atualizar-wrapper">
                 <button type="button" className="botao-atualizar" onClick={handleSalvar}>Salvar</button>
                 <button type="button" className="cancel-button" onClick={() => { setEditando(false); toast.warn("Edição cancelada."); }}>Cancelar</button>
-                <button type="button" onClick={() => setMostrarConfirmacao(true)} className="delete-button">Deletar Conta</button>
+                <button type="button" onClick={() => setMostrarConfirmacaoDelete(true)} className="delete-button">Deletar Conta</button>
               </div>
             </form>
           )}
         </div>
 
-        {mostrarConfirmacao && (
+        {mostrarConfirmacaoEdicao && (
           <div className="modal-overlay">
             <div className="modal">
               <h2>Confirmar alterações?</h2>
-              <p>Deseja realmente salvar as mudanças realizadas no perfil?</p>
+              <p>Deseja prosseguir?</p>
               <div className="modal-buttons">
-                <button className="confirm" onClick={confirmarEdicao}>Confirmar</button>
-                <button className="cancel" onClick={() => setMostrarConfirmacao(false)}>Cancelar</button>
+                <button className="atualizar-confirm" onClick={confirmarEdicao}>Confirmar</button>
+                <button className="cancel-confirm" onClick={() => setMostrarConfirmacaoEdicao(false)}>Cancelar</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {mostrarConfirmacaoDelete && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2>Atenção!</h2>
+              <p>Você está prestes a <strong>deletar sua conta</strong>. <br />Essa ação é <strong>irreversível</strong>. <br />Deseja continuar?</p>
+              <div className="modal-buttons">
+                <button 
+                  className="delete-confirm" 
+                  onClick={handleConfirmarDelete}
+                >
+                  Deletar Conta
+                </button>
+                <button 
+                  className="cancel-confirm" 
+                  onClick={() => setMostrarConfirmacaoDelete(false)}
+                >
+                  Cancelar
+                </button>
               </div>
             </div>
           </div>

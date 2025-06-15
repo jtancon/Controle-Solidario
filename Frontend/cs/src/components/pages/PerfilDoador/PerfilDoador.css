@@ -139,40 +139,97 @@ body {
   color: var(--azul);
 }
 
-.botao-atualizar-wrapper {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.botao-atualizar,
-.cancel-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
+.PerfilDoador button {
+  padding: 0.75rem;
+  flex: 1;
+  background-color: #003866;
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 0.9375rem;
   cursor: pointer;
-  font-size: 14px;
-  transition: 0.3s ease;
+  font-weight: bold;
+  font-size: clamp(0.8125rem, 1.5vw, 1rem);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.botao-atualizar {
-  background-color: var(--azul);
-  color: white;
+.PerfilDoador .cancel-button {
+  background-color: #cc0000;
 }
 
-.botao-atualizar:hover {
-  background-color: var(--azul-claro);
+.PerfilDoador button:hover {
+  background-color: #ffffff;
+  color: #003866;
+  border: 2px solid #003866;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
-.cancel-button {
-  background-color: #ccc;
+.PerfilDoador button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.PerfilDoador button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 63, 123, 0.4);
+}
+
+.PerfilDoador .botao-atualizar button:hover {
+  background-color: #ffffff;
+  color: #003866;
+  border: 2px solid #003866;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.botao-atualizar button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 95, 163, 0.4);
+}
+
+.PerfilDoador .delete-button {
+  background-color: #cc0000;
+}
+
+.PerfilDoador .delete-button:hover {
+  background-color: #ffffff;
+  color: #cc0000;
+  border: 2px solid #cc0000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.PerfilDoador .delete-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.PerfilDoador .delete-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.4);
+}
+
+.PerfilDoador .cancel-button {
+  background-color: #333;
+}
+
+.PerfilDoador .cancel-button:hover {
+  background-color: #ffffff;
   color: #333;
+  border: 2px solid #333;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
-.cancel-button:hover {
-  background-color: #b3b3b3;
+.PerfilDoador .cancel-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.PerfilDoador .cancel-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(33, 0, 0, 0.4);
 }
 
 .modal-overlay {
@@ -216,23 +273,48 @@ body {
   gap: 1rem;
 }
 
-.modal-buttons .confirm,
-.modal-buttons .cancel {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
+.modal-buttons .delete-confirm {
+  background-color: #cc0000;
 }
 
-.modal-buttons .confirm {
-  background-color: var(--azul);
-  color: white;
+.modal-buttons .delete-confirm:hover {
+  background-color: #ffffff;
+  color: #cc0000;
+  border: 2px solid #cc0000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
-.modal-buttons .cancel {
-  background-color: #ccc;
+.modal-buttons .delete-confirm:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons .delete-confirm:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.4);
+}
+
+.modal-buttons .cancel-confirm {
+  background-color: #333;
+}
+
+.modal-buttons .cancel-confirm:hover {
+  background-color: #ffffff;
   color: #333;
+  border: 2px solid #333;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-buttons .cancel-confirm:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons .cancel-confirm:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(33, 0, 0, 0.4);
 }
 
 /* Responsividade para tablets e celulares */

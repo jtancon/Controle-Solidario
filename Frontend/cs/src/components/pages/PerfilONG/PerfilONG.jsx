@@ -14,7 +14,8 @@ function PerfilONG() {
   const [editando, setEditando] = useState(false);
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
+  const [mostrarConfirmacaoEdicao, setMostrarConfirmacaoEdicao] = useState(false);
+  const [mostrarConfirmacaoDelete, setMostrarConfirmacaoDelete] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -100,8 +101,9 @@ function PerfilONG() {
 
   const handleSalvar = () => {
     if (!validarCampos()) return;
-    setMostrarConfirmacao(true);
+    setMostrarConfirmacaoEdicao(true);
   };
+
 
   const confirmarEdicao = async () => {
     setMostrarConfirmacao(false);
@@ -181,20 +183,43 @@ function PerfilONG() {
               <div className="botao-atualizar-wrapper">
                 <button type="button" onClick={handleSalvar} className="botao-atualizar">Salvar</button>
                 <button type="button" onClick={() => { setEditando(false); toast.warn('Cancelado'); }} className="cancel-button">Cancelar</button>
-                <button type="button" onClick={() => setMostrarConfirmacao(true)} className="delete-button">Deletar Conta</button>
+                <button type="button" onClick={() => setMostrarConfirmacaoDelete(true)} className="delete-button">Deletar Conta</button>
               </div>
             </form>
           )}
         </div>
 
-        {mostrarConfirmacao && (
+        {mostrarConfirmacaoEdicao && (
           <div className="modal-overlay">
             <div className="modal">
               <h2>Confirmar alterações?</h2>
               <p>Deseja prosseguir?</p>
               <div className="modal-buttons">
-                <button className="confirm" onClick={confirmarEdicao}>Confirmar</button>
-                <button className="cancel" onClick={() => setMostrarConfirmacao(false)}>Cancelar</button>
+                <button className="atualizar-confirm" onClick={confirmarEdicao}>Confirmar</button>
+                <button className="cancel-confirm" onClick={() => setMostrarConfirmacaoEdicao(false)}>Cancelar</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {mostrarConfirmacaoDelete && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2>Atenção!</h2>
+              <p>Você está prestes a <strong>deletar sua conta</strong>. <br />Essa ação é <strong>irreversível</strong>. <br />Deseja continuar?</p>
+              <div className="modal-buttons">
+                <button 
+                  className="delete-confirm" 
+                  onClick={handleConfirmarDelete}
+                >
+                  Deletar Conta
+                </button>
+                <button 
+                  className="cancel-confirm" 
+                  onClick={() => setMostrarConfirmacaoDelete(false)}
+                >
+                  Cancelar
+                </button>
               </div>
             </div>
           </div>

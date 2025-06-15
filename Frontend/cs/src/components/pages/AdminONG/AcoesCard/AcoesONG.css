@@ -62,7 +62,6 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Hover - borda destacada e leve elevação */
 .cardAcoes button:hover {
   background-color: #ffffff;
   color: #003866;
@@ -71,19 +70,16 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
-/* Active - botão pressionado */
 .cardAcoes button:active {
   transform: translateY(1px);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Focus - glow leve */
 .cardAcoes button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 63, 123, 0.4);
 }
 
-/* Botão Editar */
 .btnEditar button:hover {
   background-color: #ffffff;
   color: #003866;
