@@ -1,3 +1,14 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+main {
+  min-height: 100vh;
+  background-color: #e6eef4;
+  padding-bottom: 70px;
+}
+
 .CadastroDoador {
     background-color: #e6eef4;
     color: #003866;
@@ -71,51 +82,27 @@
     color: green;
   }
   
-  
-  @media (max-width: 600px) {
-    .CadastroDoador {
-      padding: 30px 20px;
-      margin: 20px;
-      max-width: 90%;
-    }
-  }
-  
-  @media (min-width: 1200px) {
+@media (max-width: 600px) {
   .CadastroDoador {
-    padding: 60px 70px;
-  }
-
-  .CadastroDoador h1 {
-    font-size: 2.4rem;
-    margin-bottom: 40px;
-  }
-
-  .CadastroDoador label {
-    font-size: 1.1rem;
-  }
-
-  .CadastroDoador input {
-    font-size: 1.1rem;
-    padding: 14px;
-  }
-
-  .CadastroDoador button {
-    font-size: 1.1rem;
-    padding: 16px;
-  }
-
-  .CadastroDoador p {
-    font-size: 1rem;
-  }
-
-  .CadastroDoador .forca-senha {
-    font-size: 0.95rem;
+    padding: 30px 20px;
+    max-width: 80%;
+    margin: 40px auto 70px;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 601px) and (max-width: 1199px) {
   .CadastroDoador {
+    max-width: 600px;
+    padding: 50px;
+    margin: 40px auto 70px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .CadastroDoador {
+    max-width: 700px;
     padding: 60px 70px;
+    margin: 40px auto 70px;
   }
 
   .CadastroDoador h1 {
@@ -123,25 +110,77 @@
     margin-bottom: 40px;
   }
 
-  .CadastroDoador label {
+  .CadastroDoador label,
+  .CadastroDoador input,
+  .CadastroDoador button,
+  .CadastroDoador p,
+  .CadastroDoador .forca-senha {
     font-size: 1.1rem;
   }
 
   .CadastroDoador input {
-    font-size: 1.1rem;
     padding: 14px;
   }
 
   .CadastroDoador button {
-    font-size: 1.1rem;
+    padding: 16px;
+  }
+}
+
+@media (min-width: 1920px) and (max-width: 2999px) {
+  .CadastroDoador {
+    max-width: 900px;
+    padding: 70px 80px;
+    margin: 40px auto 70px;
+  }
+
+  .CadastroDoador h1 {
+    font-size: 2.8rem;
+    margin-bottom: 50px;
+  }
+
+  .CadastroDoador label,
+  .CadastroDoador input,
+  .CadastroDoador button,
+  .CadastroDoador p,
+  .CadastroDoador .forca-senha {
+    font-size: 1.3rem;
+  }
+
+  .CadastroDoador input {
     padding: 16px;
   }
 
-  .CadastroDoador p {
-    font-size: 1rem;
+  .CadastroDoador button {
+    padding: 18px;
+  }
+}
+
+@media (min-width: 3000px) {
+  .CadastroDoador {
+    max-width: 1200px;
+    padding: 100px 120px;
+    margin: 10vh auto 70px;
   }
 
+  .CadastroDoador h1 {
+    font-size: 3.5rem;
+    margin-bottom: 60px;
+  }
+
+  .CadastroDoador label,
+  .CadastroDoador input,
+  .CadastroDoador button,
+  .CadastroDoador p,
   .CadastroDoador .forca-senha {
-    font-size: 0.95rem;
+    font-size: 1.6rem;
+  }
+
+  .CadastroDoador input {
+    padding: 20px;
+  }
+
+  .CadastroDoador button {
+    padding: 22px;
   }
 }
