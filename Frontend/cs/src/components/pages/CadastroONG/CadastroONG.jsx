@@ -191,7 +191,6 @@ function CadastroONG() {
         telefone: form.telefone,
         email: form.email,
         fotoPerfil: CS,
-        criadoEm:  new Date().toLocaleDateString("pt-BR"),
         classificacao: "ONG",
         descricao: ""
       };

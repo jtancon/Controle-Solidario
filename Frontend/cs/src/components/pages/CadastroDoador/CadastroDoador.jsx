@@ -164,12 +164,9 @@ function CadastroDoador() {
         form.senha
       );
 
-   const { senha, ...dadosParaSalvar } = form;
+  const { senha, ...dadosParaSalvar } = form;
 
-    await setDoc(doc(db, "usuarios", user.uid), {
-      ...dadosParaSalvar,
-      criadoEm: serverTimestamp()
-    });
+  await setDoc(doc(db, "usuarios", user.uid), dadosParaSalvar);
 
       navigate("/");
     } catch (error) {
