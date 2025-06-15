@@ -1,0 +1,353 @@
+/* Tema escuro inspirado no ChatGPT */
+body.dark-mode {
+  background-color: #171717;
+  color: #e0e0e0;
+}
+
+/* Navbar e Footer */
+body.dark-mode .navbar,
+body.dark-mode .footer {
+  background-color: #212121;
+  color: #ffffff;
+}
+
+/* Containers, inputs e cards */
+body.dark-mode .PerfilDoador,
+body.dark-mode .perfil-left,
+body.dark-mode .perfil-right,
+body.dark-mode .card,
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select,
+body.dark-mode .modal,
+body.dark-mode .nav-dropdown {
+  background-color: #424242;
+  color: #e0e0e0;
+  border: 1px solid #b160fc !important;
+}
+
+/* Força botões padrão e personalizados */
+body.dark-mode button,
+body.dark-mode .nav-button,
+body.dark-mode .botao-atualizar,
+body.dark-mode .cancel-button,
+body.dark-mode .delete-button,
+body.dark-mode .icon-button {
+  background-color: transparent !important;
+  color: #b160fc !important;
+  border: 2px solid #b160fc !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+body.dark-mode button:hover,
+body.dark-mode .nav-button:hover,
+body.dark-mode .botao-atualizar:hover,
+body.dark-mode .cancel-button:hover,
+body.dark-mode .delete-button:hover,
+body.dark-mode .icon-button:hover {
+  background-color: #b160fc !important;
+  color: #ffffff !important;
+  border-color: #b160fc !important;
+}
+
+/* Links */
+body.dark-mode a {
+  color: #b160fc !important;
+}
+body.dark-mode .botao-foto-perfil {
+  background-color: transparent !important;
+  color: #b160fc !important;
+  border: 2px solid #b160fc !important;
+}
+
+body.dark-mode .botao-foto-perfil:hover {
+  background-color: #b160fc !important;
+  color: white !important;
+}
+body.dark-mode h2 {
+  color: #b160fc !important;
+}
+body.dark-mode .foto-perfil {
+  border: 3px solid #b160fc !important;
+}
+body.dark-mode .modal {
+  color: #ffffff !important;
+}
+
+body.dark-mode .modal h2,
+body.dark-mode .modal p {
+  color: #ffffff !important;
+}
+body.dark-mode label {
+  color: #b160fc !important;
+  font-weight: 500;
+}
+body.dark-mode strong {
+  color: #b160fc !important;
+}
+body.dark-mode .banner-home {
+  position: relative;
+}
+
+body.dark-mode .banner-home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+body.dark-mode .card-ong {
+  background-color: #2a2a2a;
+  border: 1px solid #b160fc;
+  border-radius: 16px;
+  padding: 1rem;
+  text-align: center;
+  color: #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+
+body.dark-mode .card-ong:hover {
+  transform: translateY(-5px);
+}
+
+body.dark-mode .card-ong h3 {
+  color: #b160fc;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+  font-size: 1rem;
+}
+
+body.dark-mode .card-ong img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+}
+
+body.dark-mode .card-ong button {
+  margin-top: 1rem;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .card-ong button:hover {
+  background-color: #b160fc;
+  color: white;
+}
+body.dark-mode .tituloDoadorbg .transparencia {
+  background-color: rgba(0, 0, 0, 0.6); /* escurece o banner */
+}
+
+body.dark-mode .fraseImpacto {
+  background-color: #2a2a2a;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .botoesDoadorMenu {
+  background-color: transparent !important;
+  color: #b160fc !important;
+  border: 2px solid #b160fc !important;
+}
+
+body.dark-mode .botoesDoadorMenu:hover {
+  background-color: #b160fc !important;
+  color: white !important;
+}
+
+body.dark-mode .textoBg {
+  background-color: transparent;
+}
+
+body.dark-mode .texto {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #b160fc;
+  padding: 20px;
+  border-radius: 12px;
+}body.dark-mode .card-instituicao {
+  background-color: #2a2a2a;
+  border: 1px solid #b160fc;
+  border-radius: 16px;
+  padding: 1rem;
+  text-align: center;
+  color: #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+
+body.dark-mode .card-instituicao:hover {
+  transform: translateY(-5px);
+}
+
+body.dark-mode .card-instituicao h3 {
+  color: #b160fc;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+  font-size: 1rem;
+}
+
+body.dark-mode .card-instituicao img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+}
+
+body.dark-mode .card-instituicao button {
+  margin-top: 1rem;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .card-instituicao button:hover {
+  background-color: #b160fc;
+  color: white;
+}
+body.dark-mode .divisor {
+  background-color: #2a2a2a;
+}body.dark-mode .historico {
+  background-color: #212121;
+  color: #e0e0e0;
+}
+
+body.dark-mode .mainHist {
+  background-color: #171717;
+}
+
+body.dark-mode .mainHist h1 {
+  color: #ffffff;
+}
+
+body.dark-mode .cardHistorico {
+  background-color: #2a2a2a;
+  border: 1px solid #b160fc;
+  color: #e0e0e0;
+}
+
+body.dark-mode .imgHist {
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .nomeONG {
+  color: #b160fc;
+}
+
+body.dark-mode .dataHora {
+  color: #ccc;
+}
+
+body.dark-mode .valor {
+  color: #ffffff;
+}
+
+body.dark-mode .pesquisa input {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #b160fc;
+}
+body.dark-mode {
+  background-color: #212121; /* fundo da página */
+}
+
+body.dark-mode .mainHist {
+  background-color: #2a2a2a;     /* fundo interno da div */
+  border: 2px solid #b160fc;     /* borda roxa */
+  border-radius: 10px;
+  padding: 20px 40px 50px;
+}
+
+body.dark-mode .historico {
+  background-color: transparent; /* fundo da caixa externa removido para visualizar a mainHist */
+  box-shadow: none;
+}
+body.dark-mode .search-bar {
+  background-color: #3a3a3a;        /* cinza mais claro para o input wrapper */
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .search-bar input {
+  color: #ffffff;
+  background-color: #3a3a3a;        /* mesma cor para interior do input */
+}
+
+body.dark-mode .search-bar input::placeholder {
+  color: #bbbbbb;                   /* tom claro e suave */
+}
+
+body.dark-mode .search-bar svg {
+  color: #b160fc;
+}
+body.dark-mode .saq {
+  color: #e0e0e0;
+}
+
+body.dark-mode .saq h1,
+body.dark-mode .saq h2,
+body.dark-mode .saq h3 {
+  color: #ffffff;
+}
+
+body.dark-mode .saq p,
+body.dark-mode .saq ul li {
+  color: #cccccc;
+}
+
+body.dark-mode .saq ul li::before {
+  color: #b160fc;
+}
+
+body.dark-mode .linha {
+  background-color: #b160fc;
+}
+
+body.dark-mode .sobreNosTexto,
+body.dark-mode .doadoresTexto,
+body.dark-mode .ongTexto {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  box-shadow: 7px 10px 4px #b160fc55;
+}
+
+body.dark-mode .imgSobre,
+body.dark-mode .imgValores,
+body.dark-mode .imgDoadores,
+body.dark-mode .imgOngs {
+  box-shadow: 7px 10px 4px #b160fc55;
+}
+
+body.dark-mode .faixaFundo,
+body.dark-mode .ongFrase {
+  background-color: #333333;
+}
+
+body.dark-mode .ongFrase h3 {
+  color: #b160fc;
+}
+/* Fundo geral do body */
+body.dark-mode {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}

@@ -1,4 +1,7 @@
 import './NavFooter.css';
+import "../../theme/dark.css";
+
+
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
@@ -19,7 +22,16 @@ function NavbarDoador() {
         }
     };
 
-    // Fecha o menu ao clicar fora
+    const toggleDarkMode = () => {
+        const isDark = document.body.classList.toggle("dark-mode");
+        localStorage.setItem("tema", isDark ? "escuro" : "claro");
+    };
+
+    useEffect(() => {
+        const dark = localStorage.getItem("tema") === "escuro";
+        document.body.classList.toggle("dark-mode", dark);
+    }, []);
+
     useEffect(() => {
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -40,7 +52,7 @@ function NavbarDoador() {
                     <button className="icon-button menu-button" onClick={() => setMenuAberto(!menuAberto)}>
                         <Menu size={28} />
                     </button>
-                    <button className="icon-button moon-button" title="Modo escuro (futuro)">
+                    <button className="icon-button moon-button" onClick={toggleDarkMode} title="Alternar tema">
                         <Moon size={24} />
                     </button>
                 </div>
