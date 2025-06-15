@@ -5,7 +5,7 @@ import { db } from "../../../services/firebaseconfig";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { getAuth, updatePassword } from "firebase/auth";
-import NavbarDoador from '../../Navbar_Footer/NavbarDoador';
+import NavbarONG from '../../Navbar_Footer/NavbarONG';
 import './PerfilONG.css';
 
 function PerfilONG() {
@@ -136,7 +136,7 @@ function PerfilONG() {
 
   return (
     <>
-      <NavbarDoador />
+      <NavbarONG />
       <div className="PerfilONG">
         <ToastContainer position="top-right" autoClose={3000} />
 

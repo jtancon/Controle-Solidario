@@ -1,5 +1,5 @@
 import './AdminONG.css';
-import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
+import NavbarONG from "../../Navbar_Footer/NavbarONG";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import api from "../../../services/api";
@@ -72,7 +72,7 @@ function AdminONG() {
 
   return (
     <>
-      <NavbarDoador />
+      <NavbarONG />
       <div className="AdminONG">
         <div className="menuTopo">
           <h1 className={abaSelecionada === "doacoes" ? "aba ativa" : "aba"}
