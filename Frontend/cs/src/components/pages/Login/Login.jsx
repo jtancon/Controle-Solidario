@@ -6,7 +6,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
 import MensagemErro from "../../Erros/MensagemErro.jsx";
-import ErrorMessages from "../../../constants/ErrorMessages.js";
+import ErrorMessages from "../../../constants/errorMessages.js";
 import InputError from "../../Erros/InputError.jsx";
 
 const Login = () => {

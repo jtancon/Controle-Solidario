@@ -1,6 +1,7 @@
 .input-error {
   color: #b30000;
   font-size: 13px;
+  margin: 4px auto 8px;
   margin-top: 4px;
   margin-bottom: 8px;
   opacity: 0;
@@ -8,6 +9,7 @@
   background-color: #ffe0e0;
   border: 1px solid #ff4d4d;
   padding: 5px;
+  max-width: 40vh;
 }
 
 @keyframes fadeIn {
