@@ -9,6 +9,7 @@
   gap: 2rem;
   flex-wrap: wrap;
 }
+
 .perfil-left {
   flex: 1;
   text-align: center;
@@ -72,17 +73,100 @@ input, textarea {
   gap: 1rem;
   margin-top: 1.5rem;
 }
-.botao-atualizar, .cancel-button, .delete-button {
+
+.PerfilONG button {
+  padding: 0.75rem;
   flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
+  background-color: #003866;
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 0.9375rem;
   cursor: pointer;
   font-weight: bold;
+  font-size: clamp(0.8125rem, 1.5vw, 1rem);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
-.botao-atualizar { background-color: #003866; color: #fff; }
-.cancel-button { background-color: #ccc; color: #000; }
-.delete-button { background-color: #e53935; color: #fff; }
+
+.PerfilONG .cancel-button {
+  background-color: #cc0000;
+}
+
+.PerfilONG button:hover {
+  background-color: #ffffff;
+  color: #003866;
+  border: 2px solid #003866;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.PerfilONG button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.PerfilONG button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 63, 123, 0.4);
+}
+
+.botao-atualizar button:hover {
+  background-color: #ffffff;
+  color: #003866;
+  border: 2px solid #003866;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.botao-atualizar button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 95, 163, 0.4);
+}
+
+.PerfilONG .delete-button {
+  background-color: #cc0000;
+}
+
+.PerfilONG .delete-button:hover {
+  background-color: #ffffff;
+  color: #cc0000;
+  border: 2px solid #cc0000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.PerfilONG .delete-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.PerfilONG .delete-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.4);
+}
+
+.PerfilONG .cancel-button {
+  background-color: #333;
+}
+
+.PerfilONG .cancel-button:hover {
+  background-color: #ffffff;
+  color: #333;
+  border: 2px solid #333;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.PerfilONG .cancel-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.PerfilONG .cancel-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(33, 0, 0, 0.4);
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -100,11 +184,54 @@ input, textarea {
 }
 .modal-buttons {
   display: flex;
+  justify-content: space-between;
   gap: 1rem;
-  margin-top: 1rem;
 }
-.confirm { background: #003866; color: #fff; padding: 10px; border-radius: 8px; }
-.cancel { background: #ccc; padding: 10px; border-radius: 8px; }
+
+.modal-buttons .delete-confirm {
+  background-color: #cc0000;
+}
+
+.modal-buttons .delete-confirm:hover {
+  background-color: #ffffff;
+  color: #cc0000;
+  border: 2px solid #cc0000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-buttons .delete-confirm:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons .delete-confirm:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.4);
+}
+
+.modal-buttons .cancel-confirm {
+  background-color: #333;
+}
+
+.modal-buttons .cancel-confirm:hover {
+  background-color: #ffffff;
+  color: #333;
+  border: 2px solid #333;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-buttons .cancel-confirm:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons .cancel-confirm:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(33, 0, 0, 0.4);
+}
+
 @media (max-width: 768px) {
   .PerfilONG { flex-direction: column; }
   .perfil-editar-form { flex-direction: column; }
@@ -122,12 +249,7 @@ input,textarea { background:#fff;color:#000;padding:10px;border:1px solid #c2d4e
 .coluna-esquerda,.coluna-direita { flex:1;display:flex;flex-direction:column;gap:1rem; }
 .botao-atualizar-wrapper { width:100%;display:flex;gap:1rem;margin-top:1.5rem; }
 .botao-atualizar,.cancel-button,.delete-button { flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer;font-weight:bold; }
-.botao-atualizar { background:#003866;color:#fff; }
-.cancel-button { background:#ccc;color:#000; }
-.delete-button { background:#e53935;color:#fff; }
 .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999; }
 .modal { background:#fff;padding:1.5rem;border-radius:12px;text-align:center; }
 .modal-buttons { display:flex;gap:1rem;margin-top:1rem; }
-.confirm { background:#003866;color:#fff;padding:10px;border-radius:8px; }
-.cancel { background:#ccc;padding:10px;border-radius:8px; }
 @media(max-width:768px){ .PerfilONG{flex-direction:column;} .perfil-editar-form{flex-direction:column;} }

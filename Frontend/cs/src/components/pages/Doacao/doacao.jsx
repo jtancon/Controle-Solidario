@@ -22,6 +22,7 @@ function Doacao() {
     const [userEmail, setUserEmail] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [mostrarModal, setMostrarModal] = useState(false);
 
     useEffect(() => {
         // ✅ ALTERAÇÃO: Busca o 'name' da URL em vez do 'email'.
@@ -76,7 +77,10 @@ function Doacao() {
     const selecionarMetodo = (metodo) => setMetodoPagamento(metodo);
     
     // Função para registrar a doação
-    const registrarDoacao = async () => { if (!userEmail || !dadosOng?.email || valorSelecionado === "R$ 0,00") { alert("Um erro ocorreu. Verifique se o valor da doação é válido."); return; } const payload = { idDoador: userEmail, idOng: dadosOng.email, valor: parseFloat(valorSelecionado.replace("R$ ", "").replace(",", ".")), descricao: `Doação para ${dadosOng.nome}`, tipo: metodoPagamento }; try { await api.post("/doacoes", payload); alert("Doação realizada com sucesso! Obrigado."); navigate("/"); } catch (error) { console.error("❌ Erro ao registrar doação:", error); alert("Erro ao concluir a doação."); } };
+    const registrarDoacao = async () => { if (!userEmail || !dadosOng?.email || valorSelecionado === "R$ 0,00") { alert("Um erro ocorreu. Verifique se o valor da doação é válido."); 
+        return; } const payload = { idDoador: userEmail, idOng: dadosOng.email, valor: parseFloat(valorSelecionado.replace("R$ ", "").replace(",", ".")), descricao: `Doação para ${dadosOng.nome}`, tipo: metodoPagamento }; 
+        try { await api.post("/doacoes", payload); setMostrarModal(true); } 
+        catch (error) { console.error("❌ Erro ao registrar doação:", error); alert("Erro ao concluir a doação."); } };
 
     if (loading) {
         return (
@@ -197,6 +201,21 @@ function Doacao() {
                              Concluir Doação de {valorSelecionado}
                          </button>
                        </div>
+                    </div>
+                )}
+
+                {mostrarModal && (
+                    <div className="overlay">
+                        <div className="modal">
+                            <h2>Doação realizada com sucesso!</h2>
+                            <p>Obrigado pela sua contribuição.</p>
+                            <button onClick={() => {
+                                setMostrarModal(false);
+                                navigate("/");
+                            }}>
+                                Fechar
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
