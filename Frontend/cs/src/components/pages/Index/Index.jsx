@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import api from "../../../services/api";
 import EscolherClassificacao from "../EscolherClassificacao/EscolherClassificacao";
 import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
+import NavbarONG from "../../Navbar_Footer/NavbarONG";
 import Slider from "react-slick";
 import Card1 from "../Doacao/CardInst/CardInst";
 import "../Doacao/doacao.css";
@@ -16,6 +18,7 @@ function Index() {
   const [ongs, setOngs] = useState([]);
 
   const auth = getAuth();
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -30,6 +33,8 @@ function Index() {
         } catch (error) {
           console.error("Erro ao carregar usuário:", error);
         }
+      } else {
+        navigate("/Login");
       }
     });
 
@@ -46,7 +51,7 @@ function Index() {
     buscarOngs();
 
     return () => unsubscribe();
-  }, []);
+  }, [auth, navigate]);
 
   const handleClassificacaoEscolhida = (tipo) => {
     setUsuario((prev) => ({ ...prev, classificacao: tipo }));
@@ -65,8 +70,7 @@ function Index() {
     customPaging: (i) => (
       <div
         style={{
-          fontSize: "clamp(14px, 1.2vw, 24px)", // responsivo
-          lineHeight: "1",
+          fontSize: "clamp(14px, 1.2vw, 24px)",
           color: "#1A4D80",
           opacity: 0.5,
         }}
@@ -77,7 +81,7 @@ function Index() {
     dotsClass: "slick-dots slick-thumb",
     responsive: [
       {
-        breakpoint: 2560, // acima de 1920px até 2560px
+        breakpoint: 2560,
         settings: {
           slidesToShow: 5
         }
@@ -106,7 +110,6 @@ function Index() {
 
   return (
     <>
-      <NavbarDoador />
       <div>
         {mostrarEscolha ? (
           <EscolherClassificacao
@@ -114,7 +117,8 @@ function Index() {
             onClassificacaoEscolhida={handleClassificacaoEscolhida}
           />
         ) : usuario?.classificacao === "doador" ? (
-          <div>
+          <><NavbarDoador />
+        <div>
             <div className="doadorHome">
               <div className="tituloDoadorbg">
                 <div className="transparencia">
@@ -151,9 +155,10 @@ function Index() {
                 </p>
               </div>
             </div>
-          </div>
-        ) : usuario?.classificacao === "ONG" ? (
-          <div>
+          </div></>
+      ) : usuario?.classificacao === "ONG" ? (
+        <><NavbarONG />
+        <div>
             <div className="bem-vindoBg">
               <div className="painel-ong-titulo">
                 <h1>Bem-vindo, </h1>
@@ -173,8 +178,7 @@ function Index() {
                     <img
                       className="imgLogo"
                       src={usuario.fotoPerfil || "src/assets/ONGS.png"}
-                      alt="Logo da ONG"
-                    />
+                      alt="Logo da ONG" />
                   </div>
                 </div>
                 <Link to="/AdminONG" className="admnistrarBtn">Administrar ONG</Link>
@@ -184,7 +188,7 @@ function Index() {
                 </div>
               </div>
             </div>
-          </div>
+          </div></>
         ) : null}
       </div>
     </>

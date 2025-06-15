@@ -1,5 +1,5 @@
 import "./Dashboard.css";
-import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
+import NavbarONG from "../../Navbar_Footer/NavbarONG";
 import Footer from "../../Navbar_Footer/Footer";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -87,7 +87,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <NavbarDoador />
+      <NavbarONG />
       <div className="pagina-relatorios fade-in">
         <div className="titulo">Painel da ONG</div>
 
