@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import "./CadastroDoador.css";
 import { useState } from "react";
 import { db } from "../../../services/firebaseconfig";
@@ -12,8 +11,9 @@ import {
 } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import errorMessages from "../../../constants/errorMessages";
+import InputError from "../../Erros/InputError";
+import MensagemErro from "../../Erros/MensagemErro";
 import CS from "../../../assets/CS.jpg";
 
 function CadastroDoador() {
@@ -28,6 +28,7 @@ function CadastroDoador() {
     classificacao: "doador",
   });
   const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [errors, setErrors] = useState({});
   const [forcaSenha, setForcaSenha] = useState("");
   const navigate = useNavigate();
   const auth = getAuth();
@@ -50,6 +51,7 @@ function CadastroDoador() {
     }
 
     setForm({ ...form, [name]: formattedValue });
+    setErrors({ ...errors, [name]: "" }); // Limpa o erro desse campo quando altera
   };
 
   const verificarForcaSenha = (senha) => {
@@ -87,15 +89,18 @@ function CadastroDoador() {
       getDocs(cpfQuery),
     ]);
 
+    const errosTemp = {};
+
     if (!emailSnap.empty) {
-      toast.error("Este e-mail já está cadastrado.");
-      return true;
+      errosTemp.email = errorMessages.emailJaCadastrado;
     }
     if (!cpfSnap.empty) {
-      toast.error("Este CPF já está cadastrado.");
-      return true;
+      errosTemp.cpf = "CPF já cadastrado."; // Você pode adicionar essa mensagem no errorMessages também se quiser
     }
-    return false;
+
+    setErrors((prev) => ({ ...prev, ...errosTemp }));
+
+    return Object.keys(errosTemp).length > 0;
   };
 
   const validarCampos = async () => {
@@ -104,47 +109,48 @@ function CadastroDoador() {
     const telefoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
     const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
 
-    if (
-      !nomeCompleto ||
-      !usuario ||
-      !email ||
-      !cpf ||
-      !telefone ||
-      !senha ||
-      !confirmarSenha
-    ) {
-      toast.error("Todos os campos são obrigatórios.");
+    const errosTemp = {};
+
+    if (!nomeCompleto) errosTemp.nomeCompleto = errorMessages.camposObrigatorios;
+    if (!usuario) errosTemp.usuario = errorMessages.camposObrigatorios;
+    if (!email) {
+      errosTemp.email = errorMessages.camposObrigatorios;
+    } else if (!emailRegex.test(email)) {
+      errosTemp.email = errorMessages.emailInvalido;
+    }
+
+    if (!cpf) {
+      errosTemp.cpf = errorMessages.camposObrigatorios;
+    } else if (!cpfRegex.test(cpf)) {
+      errosTemp.cpf = "CPF inválido.";
+    }
+
+    if (!telefone) {
+      errosTemp.telefone = errorMessages.camposObrigatorios;
+    } else if (!telefoneRegex.test(telefone)) {
+      errosTemp.telefone = errorMessages.telefoneInvalido;
+    }
+
+    if (!senha) {
+      errosTemp.senha = errorMessages.camposObrigatorios;
+    } else if (verificarForcaSenha(senha) === "fraca") {
+      errosTemp.senha = errorMessages.erroCadastro;
+    }
+
+    if (!confirmarSenha) {
+      errosTemp.confirmarSenha = errorMessages.camposObrigatorios;
+    } else if (senha !== confirmarSenha) {
+      errosTemp.confirmarSenha = errorMessages.senhaNaoConfere;
+    }
+
+    setErrors(errosTemp);
+
+    if (Object.keys(errosTemp).length > 0) {
       return false;
     }
 
-    if (!emailRegex.test(email)) {
-      toast.error("E-mail inválido.");
-      return false;
-    }
-
-    if (!cpfRegex.test(cpf)) {
-      toast.error("CPF inválido.");
-      return false;
-    }
-
-    if (!telefoneRegex.test(telefone)) {
-      toast.error("Telefone inválido.");
-      return false;
-    }
-
-    if (await verificarEmailOuCPFExistente()) return false;
-
-    if (senha !== confirmarSenha) {
-      toast.error("As senhas não coincidem.");
-      return false;
-    }
-
-    if (verificarForcaSenha(senha) === "fraca") {
-      toast.error("A senha é muito fraca.");
-      return false;
-    }
-
-    return true;
+    const existem = await verificarEmailOuCPFExistente();
+    return !existem;
   };
 
   const handleSubmit = async (e) => {
@@ -162,18 +168,17 @@ function CadastroDoador() {
 
       await setDoc(doc(db, "usuarios", user.uid), dadosParaSalvar);
 
-      toast.success("Cadastro realizado com sucesso!");
       navigate("/");
     } catch (error) {
       console.error("Erro ao cadastrar doador:", error);
-      toast.error("Erro ao cadastrar. Email já cadastrado.");
+      setErrors({ general: errorMessages.erroCadastro });
     }
   };
 
   return (
     <div className="CadastroDoador">
-      <ToastContainer autoClose={3000} />
       <h1>Cadastro de Doador</h1>
+      {errors.general && <MensagemErro message={errors.general} />}
       <form onSubmit={handleSubmit}>
         <label>Nome Completo</label>
         <input
@@ -183,6 +188,7 @@ function CadastroDoador() {
           value={form.nomeCompleto}
           onChange={handleChange}
         />
+        {errors.nomeCompleto && <InputError message={errors.nomeCompleto} />}
 
         <label>Nome de Usuário</label>
         <input
@@ -192,6 +198,7 @@ function CadastroDoador() {
           value={form.usuario}
           onChange={handleChange}
         />
+        {errors.usuario && <InputError message={errors.usuario} />}
 
         <label>E-mail</label>
         <input
@@ -201,15 +208,17 @@ function CadastroDoador() {
           value={form.email}
           onChange={handleChange}
         />
+        {errors.email && <InputError message={errors.email} />}
 
         <label>CPF</label>
         <input
           type="text"
           name="cpf"
-          placeholder="00.000.000-00"
+          placeholder="000.000.000-00"
           value={form.cpf}
           onChange={handleChange}
         />
+        {errors.cpf && <InputError message={errors.cpf} />}
 
         <label>Telefone</label>
         <input
@@ -219,12 +228,13 @@ function CadastroDoador() {
           value={form.telefone}
           onChange={handleChange}
         />
+        {errors.telefone && <InputError message={errors.telefone} />}
 
         <label>Senha</label>
         <input
           type="password"
           name="senha"
-          placeholder="Mínimo 6 caracteres"J
+          placeholder="Mínimo 6 caracteres"
           value={form.senha}
           onChange={(e) => {
             handleChange(e);
@@ -236,6 +246,7 @@ function CadastroDoador() {
             Força da senha: {forcaSenha}
           </p>
         )}
+        {errors.senha && <InputError message={errors.senha} />}
 
         <label>Confirmar Senha</label>
         <input
@@ -243,10 +254,14 @@ function CadastroDoador() {
           name="confirmarSenha"
           placeholder="Confirme sua senha"
           value={confirmarSenha}
-          onChange={(e) => setConfirmarSenha(e.target.value)}
+          onChange={(e) => {
+            setConfirmarSenha(e.target.value);
+            setErrors({ ...errors, confirmarSenha: "" });
+          }}
         />
-
-        <input type="hidden" name="classificacao" value="doador" />
+        {errors.confirmarSenha && (
+          <InputError message={errors.confirmarSenha} />
+        )}
 
         <button type="submit">Cadastrar</button>
       </form>

@@ -1,10 +1,21 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+main {
+  min-height: 100vh;
+  background-color: #e6eef4;
+  padding-bottom: 70px;
+}
+
 .CadastroONG {
   background-color: #e6eef4;
   color: #003866;
   font-family: Arial, sans-serif;
   padding: 40px;
   max-width: 500px;
-  margin: 40px auto 100px;
+  margin: 40px auto;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 56, 102, 0.2);
 }
@@ -79,7 +90,8 @@
 @media (max-width: 600px) {
   .CadastroONG {
     padding: 30px 20px;
-    max-width: 90%;
+    max-width: 80%;
+    margin: 20px auto;
   }
 
   .CadastroONG .button-group {
@@ -88,10 +100,48 @@
   }
 }
 
+@media (min-width: 601px) and (max-width: 1199px) {
+  .CadastroONG {
+    padding: 40px 50px;
+    max-width: 700px;
+  }
+
+  .CadastroONG .button-group {
+    gap: 15px;
+  }
+}
+
 @media (min-width: 1200px) {
   .CadastroONG {
-    padding: 50px 60px;
+    padding: 60px 80px;
     max-width: 1000px;
+  }
+
+  .CadastroONG h1 {
+    font-size: 2.4rem;
+    margin-bottom: 40px;
+  }
+
+  .CadastroONG label {
+    font-size: 1.1rem;
+  }
+
+  .CadastroONG input {
+    font-size: 1.1rem;
+    padding: 14px;
+  }
+
+  .CadastroONG button {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+
+  .CadastroONG p {
+    font-size: 1rem;
+  }
+
+  .CadastroONG .forca-senha {
+    font-size: 0.95rem;
   }
 
   .CadastroONG .button-group {

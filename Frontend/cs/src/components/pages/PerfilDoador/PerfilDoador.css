@@ -119,9 +119,9 @@ body {
   gap: 1rem;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+.PerfilDoador input[type="text"],
+.PerfilDoador input[type="email"],
+.PerfilDoador input[type="password"] {
   padding: 10px;
   border: 1px solid #c2d4e0;
   border-radius: 8px;

@@ -16,6 +16,9 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CS from "../../../assets/CS.jpg";
+import errorMessages from "../../../constants/errorMessages.js";
+import InputError from "../../Erros/InputError.jsx";
+import MensagemErro from "../../Erros/MensagemErro.jsx";
 
 function CadastroONG() {
   const [form, setForm] = useState({
@@ -35,6 +38,10 @@ function CadastroONG() {
   const navigate = useNavigate();
   const auth = getAuth();
 
+  const [inputErrors, setInputErrors] = useState({});
+  const [mensagemErroGeral, setMensagemErroGeral] = useState("");
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     let formattedValue = value;
@@ -42,10 +49,7 @@ function CadastroONG() {
     if (name === "cnpj") {
       formattedValue = value.replace(/\D/g, "").slice(0, 14);
       formattedValue = formattedValue.replace(/^(\d{2})(\d)/, "$1.$2");
-      formattedValue = formattedValue.replace(
-        /^(\d{2})\.(\d{3})(\d)/,
-        "$1.$2.$3"
-      );
+      formattedValue = formattedValue.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
       formattedValue = formattedValue.replace(/\.(\d{3})(\d)/, ".$1/$2");
       formattedValue = formattedValue.replace(/(\d{4})(\d)/, "$1-$2");
     }
@@ -60,8 +64,11 @@ function CadastroONG() {
       formattedValue = formattedValue.replace(/^(\d{2})(\d)/, "($1) $2");
       formattedValue = formattedValue.replace(/(\d{5})(\d)/, "$1-$2");
     }
-
     setForm({ ...form, [name]: formattedValue });
+
+    if (inputErrors[name]) {
+      setInputErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   const verificarForcaSenha = (senha) => {
@@ -98,70 +105,69 @@ function CadastroONG() {
   };
 
   const validarCampos = async () => {
+    const errors = {};
+    setMensagemErroGeral(""); // Limpa erro geral anterior
+
     const { nome, cnpj, cep, endereco, representante, telefone, email, senha } =
       form;
+
     const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
     const cepRegex = /^\d{5}-\d{3}$/;
     const telefoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (
-      !nome ||
-      !cnpj ||
-      !cep ||
-      !endereco ||
-      !representante ||
-      !telefone ||
-      !email ||
-      !senha ||
-      !confirmarSenha
-    ) {
-      toast.error("Todos os campos são obrigatórios.");
-      return false;
+    if (!nome) errors.nome = errorMessages.camposObrigatorios;
+    if (!cnpj) errors.cnpj = errorMessages.camposObrigatorios;
+    if (!cep) errors.cep = errorMessages.camposObrigatorios;
+    if (!endereco) errors.endereco = errorMessages.camposObrigatorios;
+    if (!representante) errors.representante = errorMessages.camposObrigatorios;
+    if (!telefone) errors.telefone = errorMessages.camposObrigatorios;
+    if (!email) errors.email = errorMessages.camposObrigatorios;
+    if (!senha) errors.senha = errorMessages.camposObrigatorios;
+    if (!confirmarSenha) errors.confirmarSenha = errorMessages.camposObrigatorios;
+
+    if (senha && confirmarSenha && senha !== confirmarSenha) {
+      errors.confirmarSenha = errorMessages.senhaNaoConfere;
     }
 
-    if (!cnpjRegex.test(cnpj)) {
-      toast.error("CNPJ inválido.");
-      return false;
+    if (senha && verificarForcaSenha(senha) === "fraca") {
+      errors.senha = "A senha é muito fraca.";
     }
 
-    if (!cepRegex.test(cep)) {
-      toast.error("CEP inválido.");
-      return false;
-    }
-
-    if (!telefoneRegex.test(telefone)) {
-      toast.error("Telefone inválido.");
-      return false;
-    }
-
-    if (!emailRegex.test(email)) {
-      toast.error("E-mail inválido.");
-      return false;
-    }
+    if (!cnpjRegex.test(cnpj)) errors.cnpj = errorMessages.cnpjInvalido;
+    if (!cepRegex.test(cep)) errors.cep = errorMessages.cepInvalido;
+    if (!telefoneRegex.test(telefone))
+      errors.telefone = errorMessages.telefoneInvalido;
+    if (!emailRegex.test(email)) errors.email = errorMessages.emailInvalido;
 
     if (await verificarEmailExistente(email)) {
-      toast.error("Este e-mail já está cadastrado.");
+      setMensagemErroGeral(errorMessages.emailJaCadastrado);
+      setInputErrors(errors);
       return false;
     }
 
     if (senha.length < 6) {
       toast.error("A senha deve conter no mínimo 6 caracteres.");
+      setInputErrors(errors);
       return false;
     }
 
     if (senha !== confirmarSenha) {
-      toast.error("As senhas não coincidem.");
+      toast.error(errorMessages.senhaNaoConfere);
+      setInputErrors(errors);
       return false;
     }
 
     if (verificarForcaSenha(senha) === "fraca") {
       toast.error("A senha é muito fraca.");
+      setInputErrors(errors);
       return false;
     }
 
+    setInputErrors({});
     return true;
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -193,7 +199,7 @@ function CadastroONG() {
       navigate("/");
     } catch (error) {
       console.error("Erro ao cadastrar ONG:", error);
-      toast.error("E-mail já cadastrado.");
+      setMensagemErroGeral(errorMessages.erroCadastro);
     }
   };
 
@@ -211,6 +217,7 @@ function CadastroONG() {
         theme="light"
       />
       <h1>Cadastro de ONG</h1>
+      {mensagemErroGeral && <MensagemErro message={mensagemErroGeral} />}
       <form onSubmit={handleSubmit}>
         <label htmlFor="nome">Nome da ONG</label>
         <input
@@ -221,6 +228,7 @@ function CadastroONG() {
           value={form.nome}
           onChange={handleChange}
         />
+        {inputErrors.nome && <InputError message={inputErrors.nome} />}
 
         <label htmlFor="email">E-mail</label>
         <input
@@ -231,6 +239,7 @@ function CadastroONG() {
           value={form.email}
           onChange={handleChange}
         />
+        {inputErrors.email && <InputError message={inputErrors.email} />}
 
         <label htmlFor="cnpj">CNPJ</label>
         <input
@@ -241,6 +250,7 @@ function CadastroONG() {
           value={form.cnpj}
           onChange={handleChange}
         />
+        {inputErrors.cnpj && <InputError message={inputErrors.cnpj} />}
 
         <label htmlFor="cep">CEP</label>
         <input
@@ -251,6 +261,7 @@ function CadastroONG() {
           value={form.cep}
           onChange={handleChange}
         />
+        {inputErrors.cep && <InputError message={inputErrors.cep} />}
 
         <label htmlFor="endereco">Endereço</label>
         <input
@@ -261,6 +272,7 @@ function CadastroONG() {
           value={form.endereco}
           onChange={handleChange}
         />
+        {inputErrors.endereco && <InputError message={inputErrors.endereco} />}
 
         <label htmlFor="representante">Representante</label>
         <input
@@ -271,6 +283,7 @@ function CadastroONG() {
           value={form.representante}
           onChange={handleChange}
         />
+        {inputErrors.representante && <InputError message={inputErrors.representante} />}
 
         <label htmlFor="telefone">Telefone</label>
         <input
@@ -281,6 +294,7 @@ function CadastroONG() {
           value={form.telefone}
           onChange={handleChange}
         />
+        {inputErrors.telefone && <InputError message={inputErrors.telefone} />}
 
         <label htmlFor="senha">Senha</label>
         <input
@@ -294,7 +308,7 @@ function CadastroONG() {
             setForcaSenha(verificarForcaSenha(e.target.value));
           }}
         />
-
+        {inputErrors.senha && <InputError message={inputErrors.senha} />}
         {form.senha && (
           <p className={`forca-senha forca-${forcaSenha}`}>
             Força da senha: {forcaSenha}
@@ -308,8 +322,13 @@ function CadastroONG() {
           name="confirmarSenha"
           placeholder="Confirme sua senha"
           value={confirmarSenha}
-          onChange={(e) => setConfirmarSenha(e.target.value)}
+          onChange={(e) => {setConfirmarSenha(e.target.value);
+            if (inputErrors.confirmarSenha) {
+              setInputErrors((prev) => ({ ...prev, confirmarSenha: undefined }));
+            }
+          }}
         />
+        {inputErrors.confirmarSenha && <InputError message={inputErrors.confirmarSenha} />}
 
         <br />
 
