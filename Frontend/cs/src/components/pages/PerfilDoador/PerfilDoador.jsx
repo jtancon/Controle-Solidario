@@ -70,24 +70,12 @@ function PerfilDoador() {
     const temMinuscula = /[a-z]/.test(senha);
     const temNumero = /[0-9]/.test(senha);
     const temEspecial = /[@$!%*?&#]/.test(senha);
-    const temSequencia =
-      /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i.test(
-        senha
-      );
+    const temSequencia = /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i.test(senha);
 
-    const criterios = [
-      temMaiuscula,
-      temMinuscula,
-      temNumero,
-      temEspecial,
-    ].filter(Boolean).length;
+    const criterios = [temMaiuscula, temMinuscula, temNumero, temEspecial].filter(Boolean).length;
 
-    if (senha.length < 6 || temSequencia || (!temNumero && !temEspecial)) {
-      return "fraca";
-    }
-    if (senha.length >= 6 && criterios >= 2 && !temSequencia) {
-      return criterios === 4 ? "forte" : "media";
-    }
+    if (senha.length < 6 || temSequencia || (!temNumero && !temEspecial)) return "fraca";
+    if (senha.length >= 6 && criterios >= 2 && !temSequencia) return criterios === 4 ? "forte" : "media";
     return "fraca";
   };
 
@@ -212,6 +200,7 @@ function PerfilDoador() {
               <div className="botao-atualizar-wrapper">
                 <button type="button" className="botao-atualizar" onClick={handleSalvar}>Salvar</button>
                 <button type="button" className="cancel-button" onClick={() => { setEditando(false); toast.warn("Edição cancelada."); }}>Cancelar</button>
+                <button type="button" onClick={() => setMostrarConfirmacao(true)} className="delete-button">Deletar Conta</button>
               </div>
             </form>
           )}

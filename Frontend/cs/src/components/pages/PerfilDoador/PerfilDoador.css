@@ -1,5 +1,3 @@
-/* PerfilDoador.css com modal de confirmação mais compacto */
-
 :root {
   --azul: #003866;
   --azul-claro: #1a4d80;
@@ -61,7 +59,7 @@ body {
 
 .botao-foto-perfil {
   background-color: var(--azul);
-  color: #fff;
+  color: white !important; /* força a cor branca */
   padding: 10px 18px;
   border-radius: 8px;
   font-weight: bold;
@@ -70,6 +68,7 @@ body {
   transition: background-color 0.3s;
   display: inline-block;
 }
+
 
 .botao-foto-perfil:hover {
   background-color: var(--azul-claro);
@@ -119,9 +118,9 @@ body {
   gap: 1rem;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+.PerfilDoador input[type="text"],
+.PerfilDoador input[type="email"],
+.PerfilDoador input[type="password"] {
   padding: 10px;
   border: 1px solid #c2d4e0;
   border-radius: 8px;
@@ -130,12 +129,12 @@ input[type="password"] {
   color: var(--texto-claro);
 }
 
-input:disabled {
+.PerfilDoador input:disabled {
   background-color: #e0e0e0;
   cursor: not-allowed;
 }
 
-label {
+.PerfilDoador label {
   font-weight: 600;
   color: var(--azul);
 }
@@ -236,6 +235,7 @@ label {
   color: #333;
 }
 
+/* Responsividade para tablets e celulares */
 @media (max-width: 768px) {
   .PerfilDoador {
     flex-direction: column;
@@ -246,7 +246,167 @@ label {
     flex-direction: column;
   }
 
+  .coluna-esquerda,
+  .coluna-direita {
+    width: 100%;
+  }
+
   .botao-atualizar-wrapper {
     justify-content: center;
+  }
+
+  .perfil-left,
+  .perfil-right {
+    padding: 1.5rem 1rem;
+  }
+
+  .foto-perfil {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .PerfilDoador {
+    padding: 16px;
+  }
+
+  .perfil-right h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .PerfilDoador label {
+    font-size: 14px;
+  }
+
+  .PerfilDoador input[type="text"],
+  .PerfilDoador input[type="email"],
+  .PerfilDoador input[type="password"] {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .botao-atualizar,
+  .cancel-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .modal {
+    padding: 1rem;
+    max-width: 90%;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  .modal-buttons .confirm,
+  .modal-buttons .cancel {
+    width: 100%;
+    padding: 10px;
+    margin-top: 0.5rem;
+  }
+}
+/* Responsividade para tablets e celulares */
+@media (max-width: 1024px) {
+  .PerfilDoador {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .perfil-editar-form {
+    flex-direction: column;
+  }
+
+  .coluna-esquerda,
+  .coluna-direita {
+    width: 100%;
+  }
+
+  .botao-atualizar-wrapper {
+    justify-content: center;
+  }
+
+  .perfil-left,
+  .perfil-right {
+    padding: 1.5rem 1rem;
+  }
+
+  .foto-perfil {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  .PerfilDoador {
+    padding: 16px;
+  }
+
+  .perfil-right h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .PerfilDoador label {
+    font-size: 14px;
+  }
+
+  .PerfilDoador input[type="text"],
+  .PerfilDoador input[type="email"],
+  .PerfilDoador input[type="password"] {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .botao-atualizar,
+  .cancel-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .modal {
+    padding: 1rem;
+    max-width: 90%;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  .modal-buttons .confirm,
+  .modal-buttons .cancel {
+    width: 100%;
+    padding: 10px;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Responsividade para telas grandes (monitores acima de 1440px) */
+@media (min-width: 1441px) {
+  .PerfilDoador {
+    max-width: 1200px;
+    padding: 60px;
+    margin-top: 60px;
+    margin-bottom: 100px;
+  }
+
+  .perfil-right h2 {
+    font-size: 28px;
+  }
+
+  .foto-perfil {
+    width: 160px;
+    height: 160px;
+  }
+
+  .botao-atualizar,
+  .cancel-button {
+    font-size: 16px;
+    padding: 12px 24px;
   }
 }

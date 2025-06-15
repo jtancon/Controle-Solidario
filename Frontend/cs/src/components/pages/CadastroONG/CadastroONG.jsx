@@ -187,6 +187,7 @@ function CadastroONG() {
         fotoPerfil: CS,
         criadoEm:  new Date().toLocaleDateString("pt-BR"),
         classificacao: "ONG",
+        descricao: ""
       };
 
       await setDoc(doc(db, "usuarios", uid), ongData);
