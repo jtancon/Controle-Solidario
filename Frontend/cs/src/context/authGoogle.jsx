@@ -92,7 +92,7 @@ export const AuthGoogleProvider = ({ children }) => {
           representante: "",
           telefone: "",
           criadoEm: new Date(),
-          classificacao: "Não definido",
+          classificacao: "doador",
         };
         await setDoc(userRef, userData);
       } else {

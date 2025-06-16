@@ -1,8 +1,8 @@
-// ✅ CORREÇÃO: Usando caminhos relativos que têm a maior probabilidade de funcionar
-// com base na estrutura de pastas de componentes.
+// ✅ CORREÇÃO: Usando caminhos absolutos a partir da pasta 'src' e adicionando extensões
+// para garantir que o Vite encontre os ficheiros corretamente.
 import "./CadastroONG.css";
 import { useState } from "react";
-import { db } from "../../../services/firebaseconfig";
+import { db } from "/src/services/firebaseconfig.js";
 import {
   doc,
   setDoc,
@@ -16,17 +16,16 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import errorMessages from "../../../constants/errorMessages";
-import InputError from "../../Erros/InputError";
-import MensagemErro from "../../Erros/MensagemErro";
-import CS from "../../../assets/CS.jpg";
+import errorMessages from "/src/constants/errorMessages.js";
+import InputError from "/src/components/Erros/InputError.jsx";
+import MensagemErro from "/src/components/Erros/MensagemErro.jsx";
+import CS from "/src/assets/CS.jpg";
 
 function CadastroONG() {
-  // ✅ 1. Adicionar todos os campos do formulário ao estado inicial
   const [form, setForm] = useState({
     nome: "",
-    nomeCompleto: "", 
-    nomeUsuario: "", 
+    nomeCompleto: "",
+    nomeUsuario: "",
     cnpj: "",
     cep: "",
     endereco: "",
@@ -34,7 +33,7 @@ function CadastroONG() {
     telefone: "",
     email: "",
     senha: "",
-    // Campos com valores padrão
+    descricao: "", 
     fotoPerfil: CS,
     classificacao: "ONG",
   });
@@ -45,7 +44,6 @@ function CadastroONG() {
   const auth = getAuth();
   const [errors, setErrors] = useState({});
 
-  // ✅ 2. Atualizar a função handleChange para lidar com os novos campos e a formatação
   const handleChange = (e) => {
     const { name, value } = e.target;
     let formattedValue = value;
@@ -103,7 +101,6 @@ function CadastroONG() {
     return Object.keys(errosTemp).length > 0;
   };
 
-  // ✅ 3. Atualizar a validação para incluir todos os campos obrigatórios
   const validarCampos = async () => {
     const errosTemp = {};
     const { nome, nomeCompleto, nomeUsuario, cnpj, cep, endereco, representante, telefone, email, senha } = form;
@@ -142,7 +139,6 @@ function CadastroONG() {
     return !existem;
   };
 
-  // ✅ 4. Atualizar a função de submit para salvar o objeto completo
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!(await validarCampos())) {
@@ -156,10 +152,9 @@ function CadastroONG() {
       const { senha, ...dadosDoForm } = form;
 
       const dadosParaSalvar = {
-        ...dadosDoForm, // Inclui nome, nomeCompleto, nomeUsuario, cnpj, cep, endereco, representante, telefone, email, fotoPerfil, classificacao
+        ...dadosDoForm,
         uid: user.uid,
         usuario: form.email,
-        descricao: "", // Descrição inicia vazia para ser preenchida depois
         criadoEm: serverTimestamp()
       };
 
@@ -178,7 +173,6 @@ function CadastroONG() {
       <ToastContainer autoClose={3000} hideProgressBar={false} />
       <h1>Cadastro de ONG</h1>
       
-      {/* Formulário com todos os campos */}
       <form onSubmit={handleSubmit}>
         <label htmlFor="nome">Nome Fantasia da ONG</label>
         <input type="text" id="nome" name="nome" placeholder="Ex: Instituto Esperança" value={form.nome} onChange={handleChange}/>
@@ -192,6 +186,17 @@ function CadastroONG() {
         <input type="text" id="nomeUsuario" name="nomeUsuario" placeholder="Ex: inst_esperanca" value={form.nomeUsuario} onChange={handleChange}/>
         {errors.nomeUsuario && <InputError message={errors.nomeUsuario} />}
         
+        <label htmlFor="descricao">Descrição da ONG</label>
+        <textarea
+          id="descricao"
+          name="descricao"
+          placeholder="Conte-nos sobre a missão e as atividades da sua ONG."
+          value={form.descricao}
+          onChange={handleChange}
+          rows="4"
+        />
+        {errors.descricao && <InputError message={errors.descricao} />}
+
         <label htmlFor="email">E-mail de Contato</label>
         <input type="email" id="email" name="email" placeholder="contato@ong.org" value={form.email} onChange={handleChange}/>
         {errors.email && <InputError message={errors.email} />}
