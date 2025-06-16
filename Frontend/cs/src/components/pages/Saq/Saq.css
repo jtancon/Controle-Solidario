@@ -206,8 +206,212 @@
     max-width: 900px;
     width: 100%;
     border-radius: 12px;
-    transform: translateX(50px); /* Ajuste esse valor conforme o efeito desejado */
+    transform: translateX(50px);
     display: block;
     box-shadow: 7px 10px 4px #1A4E802B;
     margin-bottom: 10px;
   }
+
+@media (max-width: 767px) {
+  /* Celulares */
+  .saq h1 {
+    font-size: 28px;
+  }
+  .saq h2 {
+    font-size: 24px;
+  }
+  .saq h3 {
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  .saq p, .saq ul li {
+    font-size: 16px;
+  }
+  .topicos, .topicosONG {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+  }
+  .imgSobre, .imgValores, .imgDoadores, .imgOngs {
+    max-width: 100%;
+    transform: none;
+  }
+  .ongConteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  .ongFrase {
+    margin: 0;
+    width: 100%;
+    padding: 5px;
+  }
+  .containerImgOngs {
+    margin: 0;
+    width: 100%;
+  }
+  .imgOngs {
+    box-shadow: none;
+  }
+  .sobreNosTexto, .doadoresTexto, .ongTexto {
+    margin: 10px 5px;
+    padding: 15px;
+  }
+  .linha {
+    height: 6px;
+  }
+  .oferecemosContainer, .containerComFaixa {
+    padding: 20px 10px;
+  }
+  .faixaFundo {
+    height: 150px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Tablets */
+  .saq h1 {
+    font-size: 36px;
+  }
+  .saq h2 {
+    font-size: 28px;
+  }
+  .saq h3 {
+    font-size: 24px;
+  }
+  .saq p, .saq ul li {
+    font-size: 18px;
+  }
+  .topicos{
+    gap: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .imgSobre {
+    max-width: 500px;
+  }
+  .imgValores {
+    max-width: 450px;
+  }
+  .imgDoadores {
+    max-width: 550px;
+  }
+  .imgOngs {
+    max-width: 700px;
+    transform: translateX(30px);
+  }
+  .linha {
+    height: 8px;
+  }
+  .oferecemosContainer, .containerComFaixa {
+    padding: 30px 15px;
+  }
+  .faixaFundo {
+    height: 200px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1919px) {
+  .saq h1 {
+    font-size: 48px;
+  }
+  .saq h2 {
+    font-size: 38px;
+  }
+  .saq h3 {
+    font-size: 34px;
+  }
+  .saq p, .saq ul li {
+    font-size: 20px;
+  }
+  .topicos{
+    gap: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .topicosONG  {
+    display: flex;
+    justify-content: space-between;
+  }
+  .imgSobre {
+    max-width: 650px;
+  }
+  .imgValores {
+    max-width: 575px;
+  }
+  .imgDoadores {
+    max-width: 700px;
+  }
+  .imgOngs {
+    max-width: 900px;
+    transform: translateX(50px);
+  }
+  .linha {
+    height: 10px;
+  }
+  .oferecemosContainer, .containerComFaixa {
+    padding: 40px 20px;
+  }
+  .faixaFundo {
+    height: 250px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .saq h1 {
+    font-size: 4.5rem;
+  }
+  .saq h2 {
+    font-size: 4rem;
+  }
+  .saq h3 {
+    font-size: 3.25rem;
+  }
+  .saq p, .saq ul li {
+    font-size: 2rem;
+  }
+
+  .topicos {
+    gap: 6rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .topicosONG {
+    display: flex;
+    justify-content: space-between;
+    gap: 6rem;
+  }
+
+  .imgSobre {
+    max-width: 70rem;
+  }
+
+  .imgValores {
+    max-width: 62.5rem;
+  }
+
+  .imgDoadores {
+    max-width: 70rem;
+  }
+
+  .imgOngs {
+    max-width: 85rem;
+    transform: translateX(6rem);
+  }
+
+  .linha {
+    height: 1.2rem;
+  }
+
+  .oferecemosContainer, 
+  .containerComFaixa {
+    padding: 5rem 4rem;
+  }
+
+  .faixaFundo {
+    height: 26rem;
+  }
+}

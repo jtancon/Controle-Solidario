@@ -3,24 +3,19 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 
-// ✅ CORREÇÃO: Usando a estrutura de importação que você indicou que compila sem erros.
-// Se estes caminhos ainda derem erro, eles precisarão ser ajustados manualmente
-// com base na localização exata dos seus arquivos no projeto.
 import api from "../../../services/api";
 import EscolherClassificacao from "../EscolherClassificacao/EscolherClassificacao";
 import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 import NavbarONG from "../../Navbar_Footer/NavbarONG";
 import Card1 from "../Doacao/CardInst/CardInst";
 
-// SLIDER E ESTILOS
-// Lembrete: Se houver erros aqui, execute `npm install react-slick slick-carousel` no seu terminal.
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // ESTILOS PRÓPRIOS
 import "../Doacao/doacao.css";
-import "../Index/Index.css"; // Usando o caminho que você indicou que funciona.
+import "../Index/Index.css";
 
 function Index() {
   const [usuario, setUsuario] = useState(null);
