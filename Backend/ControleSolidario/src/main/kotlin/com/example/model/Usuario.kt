@@ -17,5 +17,6 @@ data class Users(
     val representante: String = "",
     val classificacao: String = "",
     val fotoPerfil: String = "",
+    val usuario: String = "",
     val criadoEm: Timestamp? = null
 )
