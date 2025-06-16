@@ -138,6 +138,10 @@
     padding: 10px;
 }
 
+.ongHome {
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
 .bem-vindoBg {
     background-color: #D1DDED;
     width: 100%;
@@ -146,8 +150,9 @@
 .painel-ong-titulo {
     background-color: #E6EEF4;
     padding: 35px;
-    width: fit-content;
-    margin-left: 72%;
+    width: 30%;
+    margin-left: 60%;
+    text-align: center;
 }
 
 .painel-ong-titulo h1 {
@@ -251,6 +256,17 @@
 }
 
 .ongBotoesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    gap: 0;
+}
+
+.ongBotoesPainelContainer {
     width: 95%;
     margin: 15px 10px;
     display: flex;
@@ -433,10 +449,28 @@
     }
 }
 
+@media (min-width: 1920px) {
+    .imageLogoContainer {
+        width: clamp(300px, 30vw, 800px);
+        height: clamp(200px, 20vw, 500px);
+    }
+
+    .painel {
+        gap: 20px;
+    }
+
+    .logoContainer {
+        max-width: fit-content;
+    }
+
+    .admnistrarBtn, .ongBotoesPainelContainer {
+        max-width: 800px;
+    }
+}
+
 @media (max-width: 768px) {
   .bem-vindoBg {
     background-color: #D1DDED;
-    padding: 0 20px;
     text-align: center;
   }
 
@@ -444,7 +478,7 @@
     background-color: #E6EEF4;
     margin: 0 auto;
     padding: 20px;
-    width: 70%;
+    width: 65%;
     text-align: center;
   }
 
@@ -460,7 +494,7 @@
   }
 
   .descricao {
-    width: 90%;
+    width: 85%;
     margin: 20px auto 50px;
     padding: 15px;
     word-wrap: break-word;
@@ -493,9 +527,22 @@
   }
 
   .ongBotoesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    gap: 0;
+}
+
+  .ongBotoesPainelContainer {
     width: 90%;
     flex-direction: column;
-    margin: 15px auto;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
     gap: 10px;
   }
 
@@ -503,5 +550,6 @@
     width: 100%;
     font-size: 4vw;
     padding: 10px;
+    text-align: center;
   }
 }

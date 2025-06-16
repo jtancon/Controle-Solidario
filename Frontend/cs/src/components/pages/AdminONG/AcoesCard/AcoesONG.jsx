@@ -1,27 +1,27 @@
 import "./AcoesONG.css";
 
-function AcoesONG() {
+function AcoesONG({titulo, descricao, status, dataInicio, dataFim, }) {
   return (
     <div className="cardAcoes">
-        <h1 className="nomeAcao">Nome da Ação</h1>
+        <h1 className="nomeAcao">{titulo || "titulo"}</h1>
         <div className="linhaTexto">
             <strong>Descrição:</strong>
-            <p>Sed sit amet mattis ante, et pharetra augue. Phasellus bibendum ipsum odio, sed fermentum erat hendrerit at...</p>
+            <p>{descricao || "descrição"}</p>
         </div>
 
         <div className="linhaTexto">
             <strong>Data de Início:</strong>
-            <p>01/01/2023</p>
+            <p>{dataInicio || "XX/XX/XXXX"}</p>
         </div>
 
         <div className="linhaTexto">
             <strong>Data de Fim:</strong>
-            <p>31/12/2023</p>
+            <p>{dataFim || "XX/XX/XXXX"}</p>
         </div>
 
         <div className="linhaTexto">
             <strong>Status:</strong>
-            <select className="statusSelect">
+            <select className="statusSelect" value={status} onChange={handleStatusChange}>
             <option value="Planejada">Planejada</option>
             <option value="Em andamento">Em andamento</option>
             <option value="Ativa">Ativa</option>
