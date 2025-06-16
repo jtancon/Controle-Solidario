@@ -9,6 +9,6 @@ data class Acao(
     val status: String = "",          // Planejada, Em andamento, etc
     val dataInicio: Timestamp? = null,
     val dataFim: Timestamp? = null,
-    val IdOng: String = ""            // <- esse campo é essencial
+    val idOng: String = ""            // <- esse campo é essencial
 )
 

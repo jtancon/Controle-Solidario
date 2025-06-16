@@ -30,7 +30,7 @@ function PerfilONG() {
         cep: user.cep || "",
         email: user.email || "",
         fotoPerfil: user.fotoPerfil || "",
-        criadoEm: user.criadoEm || "",
+        criadoEm: user.criadoEm?.seconds ? new Date(user.criadoEm.seconds * 1000).toLocaleDateString() : 'Não disponível',
         descricao: user.descricao || ""
       });
     }
@@ -106,7 +106,7 @@ function PerfilONG() {
 
 
   const confirmarEdicao = async () => {
-    setMostrarConfirmacao(false);
+    setMostrarConfirmacaoEdicao(false);
     if (senha) {
       if (senha !== confirmarSenha) return toast.error("Senhas não coincidem.");
       if (verificarForcaSenha(senha) === "fraca") return toast.warn("Senha muito fraca.");
@@ -128,7 +128,7 @@ function PerfilONG() {
   };
 
   const handleConfirmarDelete = async () => {
-    setMostrarConfirmacao(false);
+    setMostrarConfirmacaoDelete(false);
     setEditando(false);
     await deleteDoc(doc(db, "usuarios", uid));
     toast.error('Conta deletada.');
@@ -149,7 +149,7 @@ function PerfilONG() {
             <input type="file" accept="image/*" onChange={() => { }} />
             Trocar foto
           </label>
-          <p className="data-criacao">Perfil criado em {dados.criadoEm}</p>
+          <p className="data-criacao">Perfil criado em: {dados.criadoEm}</p>
         </div>
 
         <div className="perfil-right">
