@@ -172,19 +172,47 @@ function Index() {
                 </div>
                 <div className="textoBg">
                   <p className="texto">
-                    Controle Solidário é uma plataforma dedicada a conectar
-                    pessoas dispostas a ajudar com ONGs que realmente fazem a
-                    diferença...
+                    Controle Solidário é uma plataforma dedicada a conectar pessoas dispostas a ajudar com ONGs que realmente fazem a diferença. Nosso propósito é tornar o ato de doar
+                    mais acessível, seguro e transparente, permitindo que cada contribuição chegue a quem mais precisa. Ao apoiar uma instituição, você fortalece projetos sociais, amplia
+                    o alcance de ações humanitárias e transforma vidas. Pequenos gestos constroem grandes mudanças e você pode ser parte disso.
                   </p>
                 </div>
               </div>
             </div>
           </>
         ) : usuario?.classificacao === "ONG" ? (
-          <>
-            <NavbarONG />
-            {/* O resto da sua view de ONG aqui */}
-          </>
+        <><NavbarONG />
+        <div>
+            <div className="bem-vindoBg">
+              <div className="painel-ong-titulo">
+                <h1>Bem-vindo, </h1>
+                <h1>{usuario.nome || "ONG"}!</h1>
+              </div>
+            </div>
+            <div className="painel">
+              <div className="descricao">
+                <h1>Descrição</h1>
+                <p className="painel-ong-descricao">
+                  {usuario.descricao || "Sua ONG ainda não possui uma descrição cadastrada."}
+                </p>
+              </div>
+              <div>
+                <div className="logoContainer">
+                  <div className="imageLogoContainer">
+                    <img
+                      className="imgLogo"
+                      src={usuario.fotoPerfil || "src/assets/ONGS.png"}
+                      alt="Logo da ONG" />
+                  </div>
+                </div>
+                <Link to="/AdminONG" className="admnistrarBtn">Administrar ONG</Link>
+                <div className="ongBotoesContainer">
+                  <Link to="/PerfilONG" className="ongBotoes">Perfil</Link>
+                  <Link to="/Dashboard" className="ongBotoes">Dashboard</Link>
+                </div>
+              </div>
+            </div>
+          </div></>
         ) : null}
       </div>
     </>
