@@ -10,31 +10,60 @@ import SearchBar from '../../SearchBar/SearchBar';
 function AdminONG() {
   const [doacoes, setDoacoes] = useState([]);
   const [acoes, setAcoes] = useState([]);
-  const [uidOng, setUidOng] = useState("");
+  const [filtro, setFiltro] = useState("");
+  const [todosUsuarios, setTodosUsuarios] = useState([]);
 
   useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const id = user.uid;
-        setUidOng(id);
-        await carregarDados(id);
-      }
+  const auth = getAuth();
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user && user.email) {
+      console.log(`4. [ADMONG] Usuário logado encontrado: ${user.email}`);
+      await carregarDados(user.email);
+    } else {
+      console.log("4. [ADMONG] Nenhuma ONG logada, não é possível buscar dados.");
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
+
+const carregarDados = async (emailOng) => {
+  try {
+    console.log("1. [ADMONG] Buscando todos os usuários...");
+    const usuariosRes = await api.get('/usuarios');
+    console.log("2. [ADMONG] Usuários recebidos:", usuariosRes.data);
+    const listaUsuarios = usuariosRes.data;
+    setTodosUsuarios(listaUsuarios);
+
+    console.log(`5. [ADMONG] Buscando doações para: /doacoes/ong/${encodeURIComponent(emailOng)}`);
+    const doacoesRes = await api.get(`/doacoes/ong/${encodeURIComponent(emailOng)}`);
+    console.log("6. [ADMONG] DADOS BRUTOS de doações recebidos:", doacoesRes.data);
+
+    if (!doacoesRes.data || doacoesRes.data.length === 0) {
+      console.log("7. [ADMONG] Nenhuma doação foi retornada pela API para este usuário.");
+    }
+
+    const enriquecidas = doacoesRes.data.map((doacao) => {
+      const doadorInfo = listaUsuarios.find(u => u.email === doacao.idDoador);
+      return {
+        ...doacao,
+        nomeDoador: doadorInfo?.nome || "Doador Desconhecido",
+        imagemDoador: doadorInfo?.fotoPerfil || "src/assets/ONGS.png"
+      };
     });
 
-    return () => unsubscribe();
-  }, []);
+    console.log("8. [ADMONG] Doações enriquecidas:", enriquecidas);
+    setDoacoes(enriquecidas);
 
-  const carregarDados = async (id) => {
-    try {
-      const doacoesRes = await api.get(`/doacoes/ong/${id}`);
-      const acoesRes = await api.get(`/acoes/ong/${id}`);
-      setDoacoes(doacoesRes.data);
-      setAcoes(acoesRes.data);
-    } catch (error) {
-      console.error("Erro ao carregar dados:", error);
-    }
-  };
+    console.log(`9. [ADMONG] Buscando ações para: /acoes/ong/${encodeURIComponent(emailOng)}`);
+    const acoesRes = await api.get(`/acoes/ong/${encodeURIComponent(emailOng)}`);
+    console.log("10. [ADMONG] Ações recebidas:", acoesRes.data);
+    setAcoes(acoesRes.data);
+
+  } catch (error) {
+    console.error("[ADMONG] Erro ao carregar dados:", error);
+  }
+};
 
   const excluirAcao = async (idAcao) => {
     if (window.confirm("Deseja realmente excluir esta ação?")) {
@@ -85,11 +114,22 @@ function AdminONG() {
         {abaSelecionada === "doacoes" && (
         <>
         <div className="menuDoacoes">
-            <div className="DoacaoOngContainer">
-              <h1 className="titulo">Doações para ONG</h1>
-              <CardONGDoacao/>
-              <CardONGDoacao/>
-            </div>
+          <div className="DoacaoOngContainer">
+            <h1 className="titulo">Doações para ONG</h1>
+            
+            {doacoes.length === 0 ? (
+              <h2 className="semDadosONG">Sem doações no momento.</h2>
+            ) : (
+              doacoes.map((doacao) => (
+                <CardONGDoacao
+                  key={doacao.id}
+                  nome={doacao.nomeDoador}
+                  data={formatarData(doacao.data)}
+                  valor={`R$ ${Number(doacao.valor).toFixed(2)}`}
+                />
+              ))
+            )}
+          </div>
         </div>
         </>
         )}
@@ -141,37 +181,22 @@ function AdminONG() {
           </div>
 
           <div className="acoesONGContainer">
-            <AcoesONG />
-            <AcoesONG />
-            <AcoesONG />
-            <AcoesONG />
+            {acoes.length === 0 ? (
+              <h2 className="semDadosONG">Sem ações cadastradas.</h2>
+            ) : (
+              acoes.map(acao => (
+                <CardAcao
+                  key={acao.id}
+                  titulo={acao.titulo}
+                  descricao={acao.descricao}
+                  data={formatarData(acao.data)}
+                  status={acao.status}
+                  onEditar={() => editarAcao(acao.id,)}
+                  onExcluir={() => excluirAcao(acao.id)}
+                />
+              ))
+            )}
           </div>
-          {/* <div className="scroll-area">
-            {acoes.map((a) => (
-              <div className="items" key={a.id}>
-                <div className="info-box">
-                  <div className="info"><strong>ID:</strong> {a.id}</div>
-                  <div className="info"><strong>Título:</strong> {a.titulo}</div>
-                  <div className="info">
-                    <strong>Status:</strong>
-                    <select
-                      value={a.status}
-                      onChange={(e) => editarStatus(a.id, e.target.value)}
-                    >
-                      <option value="Planejada">Planejada</option>
-                      <option value="Em andamento">Em andamento</option>
-                      <option value="Ativa">Ativa</option>
-                      <option value="Encerrada">Encerrada</option>
-                    </select>
-                  </div>
-                  <div className="info"><strong>Início:</strong> {a.dataInicio}</div>
-                  <div className="info"><strong>Fim:</strong> {a.dataFim}</div>
-                  <div className="info full-width"><strong>Descrição:</strong> {a.descricao}</div>
-                  <button className="botao-excluir" onClick={() => excluirAcao(a.id)}>Excluir</button>
-                </div>
-              </div>
-            ))}
-          </div> */}
         </div>
         </>
         )}
