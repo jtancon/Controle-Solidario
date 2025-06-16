@@ -9,39 +9,59 @@ import api from "../../../services/api"; // axios com baseURL
 function HistoricoDoacao() {
   const [doacoes, setDoacoes] = useState([]);
   const [filtro, setFiltro] = useState("");
-  // ✅ 1. Novo estado para guardar a lista de todos os utilizadores (ONGs)
   const [todosUsuarios, setTodosUsuarios] = useState([]);
 
-  // ✅ 2. Primeiro, buscamos todos os utilizadores de uma só vez
+  // 1. Primeiro, buscamos todos os utilizadores de uma só vez
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
+        console.log("1. [HISTÓRICO] Buscando todos os usuários...");
         const res = await api.get('/usuarios');
+        console.log("2. [HISTÓRICO] Usuários recebidos:", res.data);
         setTodosUsuarios(res.data);
       } catch (error) {
         console.error("Erro ao buscar todos os usuários:", error);
       }
     };
     fetchAllUsers();
-  }, []); // Executa apenas uma vez, quando o componente é montado
+  }, []);
 
-  // ✅ 3. Depois de ter os utilizadores, buscamos as doações e as enriquecemos localmente
+  // 2. Depois, buscamos as doações e as enriquecemos
   useEffect(() => {
     // Só executa se a lista de utilizadores já tiver sido carregada
-    if (todosUsuarios.length === 0) return;
+    if (todosUsuarios.length === 0) {
+      console.log("3. [HISTÓRICO] Aguardando a lista de usuários ser carregada...");
+      return;
+    }
 
+    console.log("3. [HISTÓRICO] Lista de usuários carregada. Buscando doações...");
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user && user.email) {
+        console.log(`4. [HISTÓRICO] Usuário logado encontrado: ${user.email}`);
         try {
           const doadorEmailCodificado = encodeURIComponent(user.email);
+          console.log(`5. [HISTÓRICO] Buscando doações para: /doacoes/doador/${doadorEmailCodificado}`);
+          
           const res = await api.get(`/doacoes/doador/${doadorEmailCodificado}`);
 
-          // ✅ 4. Lógica de enriquecimento local, sem novas chamadas à API por item
+          console.log("6. [HISTÓRICO] DADOS BRUTOS de doações recebidos:", res.data);
+
+          if (!res.data || res.data.length === 0) {
+              console.log("7. [HISTÓRICO] Nenhuma doação foi retornada pela API para este usuário.");
+              return;
+          }
+
           const enriquecidas = res.data.map((doacao) => {
-            // Encontra a ONG correspondente na lista que já temos
             const ongInfo = todosUsuarios.find(u => u.email === doacao.idOng);
             
+            // Log para cada tentativa de enriquecimento
+            if (ongInfo) {
+              // console.log(`Encontrada ONG '${ongInfo.nome}' para a doação com idOng '${doacao.idOng}'`);
+            } else {
+              // console.warn(`NÃO foi encontrada ONG para a doação com idOng '${doacao.idOng}'`);
+            }
+
             return {
               ...doacao,
               nome: ongInfo?.nome || "ONG Desconhecida",
@@ -49,15 +69,18 @@ function HistoricoDoacao() {
             };
           });
 
+          console.log("7. [HISTÓRICO] Doações ENRIQUECIDAS prontas para exibição:", enriquecidas);
           setDoacoes(enriquecidas);
         } catch (error) {
           console.error("Erro ao buscar doações:", error);
         }
+      } else {
+          console.log("4. [HISTÓRICO] Nenhum usuário logado, não é possível buscar doações.");
       }
     });
 
     return () => unsubscribe();
-  }, [todosUsuarios]); // Este useEffect depende da lista de utilizadores
+  }, [todosUsuarios]); // Depende da lista de utilizadores
 
   const doacoesFiltradas = doacoes.filter(d => {
     const texto = filtro.toLowerCase();
@@ -79,17 +102,22 @@ function HistoricoDoacao() {
           </div>
           <div className="cardWrapper">
             <div className="cardContainer">
-              {doacoesFiltradas.map((d) => (
-                <CardHist
-                  key={d.id}
-                  valor={d.valor}
-                  descricao={d.descricao}
-                  data={d.data?.seconds ? new Date(d.data.seconds * 1000).toLocaleDateString() : "Data inválida"}
-                  tipo={d.tipo}
-                  nome={d.nome}
-                  imagem={d.imagem}
-                />
-              ))}
+              {/* ✅ Adicionada uma verificação para exibir mensagem se não houver doações */}
+              {doacoesFiltradas.length > 0 ? (
+                  doacoesFiltradas.map((d) => (
+                    <CardHist
+                      key={d.id}
+                      valor={d.valor}
+                      descricao={d.descricao}
+                      data={d.data?.seconds ? new Date(d.data.seconds * 1000).toLocaleDateString() : "Data inválida"}
+                      tipo={d.tipo}
+                      nome={d.nome}
+                      imagem={d.imagem}
+                    />
+                  ))
+              ) : (
+                  <p>Nenhuma doação encontrada para exibir.</p>
+              )}
             </div>
           </div>
         </div>

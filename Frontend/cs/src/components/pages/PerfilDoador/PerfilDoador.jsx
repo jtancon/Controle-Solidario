@@ -1,16 +1,19 @@
 import { useContext, useState, useEffect } from "react";
+// ✅ Usando os caminhos de importação que você confirmou que funcionam
 import { AuthGoogleContext } from "../../../context/authGoogle";
-import { doc, updateDoc } from "firebase/firestore";
+import { storage } from "../../../services/firebaseconfig";
+import api from "../../../services/api";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "../../../services/firebaseconfig";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import { getAuth, updatePassword } from "firebase/auth";
+import { getAuth, updatePassword, deleteUser } from "firebase/auth";
 import NavbarDoador from "../../Navbar_Footer/NavbarDoador";
 import CS from "../../../assets/CS.jpg";
 import "./PerfilDoador.css";
 
 function PerfilDoador() {
+  // ✅ CORREÇÃO: Removido o 'setUser' do contexto, pois ele não é fornecido.
   const { user, signOut, deletarConta } = useContext(AuthGoogleContext);
   const [dados, setDados] = useState({});
   const [senha, setSenha] = useState("");
@@ -19,18 +22,10 @@ function PerfilDoador() {
   const [editando, setEditando] = useState(false);
   const [mostrarConfirmacaoEdicao, setMostrarConfirmacaoEdicao] = useState(false);
   const [mostrarConfirmacaoDelete, setMostrarConfirmacaoDelete] = useState(false);
-  const [camposEditaveis, setCamposEditaveis] = useState({ email: false, nomeCompleto: false, cpf: false });
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && user.classificacao === "ong") navigate("/PerfilONG");
     if (user) {
-      const campos = {
-        email: !user.email,
-        nomeCompleto: !user.nomeCompleto,
-        cpf: !user.cpf,
-      };
-      setCamposEditaveis(campos);
       setDados({
         nomeCompleto: user.nomeCompleto || "",
         nomeUsuario: user.nomeUsuario || "",
@@ -39,22 +34,18 @@ function PerfilDoador() {
         telefone: user.telefone || "",
         fotoPerfil: user.fotoPerfil || CS,
         endereco: user.endereco || "",
+        criadoEm: user.criadoEm?.seconds ? new Date(user.criadoEm.seconds * 1000).toLocaleDateString() : 'Não disponível',
       });
     }
-  }, [user, navigate]);
+  }, [user]);
 
   const formatarCampo = (name, value) => {
     let formatted = value;
     if (name === "cpf") {
-      formatted = value.replace(/\D/g, "").slice(0, 11);
-      formatted = formatted.replace(/(\d{3})(\d)/, "$1.$2");
-      formatted = formatted.replace(/(\d{3})(\d)/, "$1.$2");
-      formatted = formatted.replace(/(\d{3})(\d{2})$/, "$1-$2");
+      formatted = value.replace(/\D/g, "").slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{2})$/, "$1-$2");
     }
     if (name === "telefone") {
-      formatted = value.replace(/\D/g, "").slice(0, 11);
-      formatted = formatted.replace(/(\d{2})(\d)/, "($1) $2");
-      formatted = formatted.replace(/(\d{5})(\d)/, "$1-$2");
+      formatted = value.replace(/\D/g, "").slice(0, 11).replace(/(\d{2})(\d)/, "($1) $2").replace(/(\d{5})(\d)/, "$1-$2");
     }
     return formatted;
   };
@@ -71,67 +62,84 @@ function PerfilDoador() {
     const temMinuscula = /[a-z]/.test(senha);
     const temNumero = /[0-9]/.test(senha);
     const temEspecial = /[@$!%*?&#]/.test(senha);
-    const temSequencia = /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i.test(senha);
-
+    if (senha.length < 6) return "fraca";
     const criterios = [temMaiuscula, temMinuscula, temNumero, temEspecial].filter(Boolean).length;
-
-    if (senha.length < 6 || temSequencia || (!temNumero && !temEspecial)) return "fraca";
-    if (senha.length >= 6 && criterios >= 2 && !temSequencia) return criterios === 4 ? "forte" : "media";
+    if (criterios >= 3) return "forte";
+    if (criterios >= 2) return "media";
     return "fraca";
   };
-
-  const validarCampos = () => {
-    const { nomeCompleto, nomeUsuario, telefone, cpf } = dados;
-    const telefoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
-    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-    if (!nomeCompleto) return toast.error("Preencha o nome completo.");
-    if (!nomeUsuario) return toast.error("Preencha o nome de usuário.");
-    if (!telefone) return toast.error("Preencha o telefone.");
-    if (!telefoneRegex.test(telefone)) return toast.error("Telefone inválido.");
-    if (!cpf) return toast.error("Preencha o CPF.");
-    if (!cpfRegex.test(cpf)) return toast.error("CPF inválido.");
-    return true;
-  };
-
-  const handleSalvar = () => {
-    if (!validarCampos()) return;
-    setMostrarConfirmacaoEdicao(true);
-  };
-
+  
   const confirmarEdicao = async () => {
-    setMostrarConfirmacao(false);
-    if (senha.trim() !== "" || confirmarSenha.trim() !== "") {
+    setMostrarConfirmacaoEdicao(false);
+    
+    if (senha) {
       if (senha !== confirmarSenha) return toast.error("As senhas não coincidem.");
-      if (forcaSenha === "fraca") return toast.warn("A senha é muito fraca.");
+      if (verificarForcaSenha(senha) === "fraca") return toast.warn("A senha é muito fraca.");
+      
       try {
         const auth = getAuth();
-        const currentUser = auth.currentUser;
-        await updatePassword(currentUser, senha);
+        await updatePassword(auth.currentUser, senha);
         toast.success("Senha atualizada com sucesso!");
       } catch (error) {
-        console.error("Erro ao atualizar senha:", error);
-        toast.error("Erro ao atualizar a senha.");
+        toast.error("Erro ao atualizar a senha. Tente fazer logout e login novamente.");
         return;
       }
     }
+
     try {
-      await updateDoc(doc(db, "usuarios", user.uid), dados);
+      const dadosParaAtualizar = {
+          nomeCompleto: dados.nomeCompleto,
+          nomeUsuario: dados.nomeUsuario,
+          telefone: dados.telefone,
+          endereco: dados.endereco,
+          fotoPerfil: dados.fotoPerfil,
+      };
+      
+      await api.put(`/usuarios/${user.uid}`, dadosParaAtualizar);
+      
+      // ✅ CORREÇÃO: A linha que causava o erro foi removida.
+      // A atualização do ecrã agora depende apenas do estado local 'dados',
+      // que já foi atualizado pela função handleChange.
+      
       toast.success("Informações atualizadas com sucesso!");
-      setEditando(false);
+      setEditando(false); // Volta para o modo de visualização, que irá ler o estado 'dados' atualizado.
     } catch (error) {
-      console.error("Erro ao atualizar:", error);
-      toast.error("Erro ao atualizar os dados.");
+      console.error("Erro ao atualizar os dados do perfil:", error.response || error);
+      toast.error("Erro ao atualizar os dados do perfil.");
     }
   };
 
   const handleConfirmarDelete = async () => {
-    setMostrarConfirmacao(false);
-    setEditando(false);
-    await deleteDoc(doc(db, "usuarios", uid));
-    toast.error('Conta deletada.');
-    signOut();
-    sessionStorage.clear();
+    setMostrarConfirmacaoDelete(false);
+    try {
+        // Assume que a função deletarConta do contexto já faz todo o processo
+        await deletarConta();
+        toast.success("Conta apagada com sucesso.");
+        navigate("/login");
+    } catch(error) {
+        console.error("Erro ao apagar a conta:", error);
+        toast.error("Ocorreu um erro ao apagar a sua conta.");
+    }
   };
+
+  const handleUploadImagem = async (e) => {
+    const file = e.target.files[0];
+    if (file && user) {
+      const storageRef = ref(storage, `fotosPerfil/${user.uid}`);
+      try {
+        toast.info("A fazer upload da imagem...");
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+        setDados((prev) => ({ ...prev, fotoPerfil: url }));
+        toast.success("Foto de perfil carregada! Clique em Salvar para confirmar a alteração.");
+      } catch (error) {
+        console.error("Erro ao enviar imagem:", error);
+        toast.error("Erro ao fazer upload da imagem.");
+      }
+    }
+  };
+  
+  if (!user) return <div>A carregar...</div>;
 
   return (
     <>
@@ -143,28 +151,10 @@ function PerfilDoador() {
             <div className="foto-perfil-container">
               <img src={dados.fotoPerfil} alt="Foto de Perfil" className="foto-perfil" />
               <label className="file-label botao-foto-perfil">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={async (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      const storageRef = ref(storage, `fotosPerfil/${user.uid}`);
-                      try {
-                        await uploadBytes(storageRef, file);
-                        const url = await getDownloadURL(storageRef);
-                        setDados((prev) => ({ ...prev, fotoPerfil: url }));
-                        toast.success("Foto de perfil atualizada!");
-                      } catch (error) {
-                        console.error("Erro ao enviar imagem:", error);
-                        toast.error("Erro ao fazer upload da imagem.");
-                      }
-                    }
-                  }}
-                />
+                <input type="file" accept="image/*" onChange={handleUploadImagem} />
                 Trocar foto de perfil
               </label>
-              <p className="data-criacao">Perfil criado em {dados.criadoEm}</p>
+              <p className="data-criacao">Perfil criado em: {dados.criadoEm}</p>
             </div>
           )}
         </div>
@@ -185,14 +175,14 @@ function PerfilDoador() {
               </div>
             </div>
           ) : (
-            <form className="perfil-editar-form">
+            <form className="perfil-editar-form" onSubmit={(e) => e.preventDefault()}>
               <div className="coluna-esquerda">
                 <label>Nome completo</label>
-                <input type="text" name="nomeCompleto" value={dados.nomeCompleto} onChange={handleChange} disabled={!camposEditaveis.nomeCompleto} />
+                <input type="text" name="nomeCompleto" value={dados.nomeCompleto} onChange={handleChange} />
                 <label>Email</label>
-                <input type="email" name="email" value={dados.email} onChange={handleChange} disabled={!camposEditaveis.email} />
+                <input type="email" name="email" value={dados.email} disabled />
                 <label>CPF</label>
-                <input type="text" name="cpf" value={dados.cpf} onChange={handleChange} disabled={!camposEditaveis.cpf} />
+                <input type="text" name="cpf" value={dados.cpf} disabled />
                 <label>Nova senha</label>
                 <input type="password" name="senha" value={senha} placeholder="Nova senha (opcional)" onChange={(e) => { const s = e.target.value; setSenha(s); setForcaSenha(verificarForcaSenha(s)); }} />
                 {senha && <p style={{ color: forcaSenha === "forte" ? "green" : forcaSenha === "media" ? "orange" : "red", fontWeight: "bold" }}>Força da senha: {forcaSenha}</p>}
@@ -208,7 +198,7 @@ function PerfilDoador() {
                 <input type="password" name="confirmarSenha" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} placeholder="Confirme a nova senha" />
               </div>
               <div className="botao-atualizar-wrapper">
-                <button type="button" className="botao-atualizar" onClick={handleSalvar}>Salvar</button>
+                <button type="button" className="botao-atualizar" onClick={() => setMostrarConfirmacaoEdicao(true)}>Salvar</button>
                 <button type="button" className="cancel-button" onClick={() => { setEditando(false); toast.warn("Edição cancelada."); }}>Cancelar</button>
                 <button type="button" onClick={() => setMostrarConfirmacaoDelete(true)} className="delete-button">Deletar Conta</button>
               </div>
@@ -220,7 +210,7 @@ function PerfilDoador() {
           <div className="modal-overlay">
             <div className="modal">
               <h2>Confirmar alterações?</h2>
-              <p>Deseja prosseguir?</p>
+              <p>Deseja prosseguir e salvar as informações?</p>
               <div className="modal-buttons">
                 <button className="atualizar-confirm" onClick={confirmarEdicao}>Confirmar</button>
                 <button className="cancel-confirm" onClick={() => setMostrarConfirmacaoEdicao(false)}>Cancelar</button>
@@ -233,20 +223,10 @@ function PerfilDoador() {
           <div className="modal-overlay">
             <div className="modal">
               <h2>Atenção!</h2>
-              <p>Você está prestes a <strong>deletar sua conta</strong>. <br />Essa ação é <strong>irreversível</strong>. <br />Deseja continuar?</p>
+              <p>Você está prestes a <strong>apagar a sua conta</strong>. <br />Essa ação é <strong>irreversível</strong>. <br />Deseja continuar?</p>
               <div className="modal-buttons">
-                <button 
-                  className="delete-confirm" 
-                  onClick={handleConfirmarDelete}
-                >
-                  Deletar Conta
-                </button>
-                <button 
-                  className="cancel-confirm" 
-                  onClick={() => setMostrarConfirmacaoDelete(false)}
-                >
-                  Cancelar
-                </button>
+                <button className="delete-confirm" onClick={handleConfirmarDelete}>Apagar Conta</button>
+                <button className="cancel-confirm" onClick={() => setMostrarConfirmacaoDelete(false)}>Cancelar</button>
               </div>
             </div>
           </div>
