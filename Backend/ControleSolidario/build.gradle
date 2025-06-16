@@ -1,8 +1,9 @@
 plugins {
 	id 'org.jetbrains.kotlin.jvm' version '1.9.25'
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
-	id 'org.springframework.boot' version '3.4.4'
+	id 'org.springframework.boot' version '3.4.4' // Versão definida para 3.4.4 conforme sua solicitação
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco' // Adicione esta linha para o plugin JaCoCo
 }
 
 group = 'com.example'
@@ -21,13 +22,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' // Esta já traz o Mockito
 	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	runtimeOnly("com.microsoft.sqlserver:mssql-jdbc:12.2.0.jre11")
 	implementation("com.google.code.gson:gson:2.10.1")
 	implementation("com.google.firebase:firebase-admin:9.2.0")
+	testImplementation 'io.mockk:mockk:1.13.11'
 }
 
 kotlin {
@@ -36,6 +38,55 @@ kotlin {
 	}
 }
 
+// **Estratégia de Resolução para forçar a versão do Gson**
+configurations.all {
+	resolutionStrategy {
+		// Força a versão do Gson para 2.10.1 em todas as dependências transitivas
+		force 'com.google.code.gson:gson:2.10.1'
+	}
+}
+
+// Configuração do JaCoCo
+jacoco {
+	toolVersion = "0.8.11" // Use a versão mais recente que for estável, você pode verificar em jacoco.org
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
+	// Garante que o relatório de cobertura seja gerado após a execução dos testes
+	finalizedBy(tasks.jacocoTestReport)
+
+	// **REMOVIDAS as OPÇÕES DE JVM PARA DEPURAR CARREGAMENTO DE CLASSES**
+	// jvmArgs "-verbose:class", "-XX:+TraceClassLoading", "-Djava.class.path=${classpath.asPath}"
+}
+
+tasks.jacocoTestReport {
+	// Garante que os testes sejam executados antes de gerar o relatório
+	dependsOn(tasks.test)
+	reports {
+		// Habilita o relatório HTML (fácil de visualizar no navegador)
+		html.required = true
+		html.outputLocation = layout.buildDirectory.dir("reports/jacoco") // Onde o relatório será salvo
+		// Habilita o relatório XML (útil para integração com ferramentas como SonarQube)
+		xml.required = true
+		xml.outputLocation = layout.buildDirectory.file("reports/jacoco/jacoco.xml")
+		// Desabilita o relatório CSV (geralmente não é necessário)
+		csv.required = false
+	}
+
+	// Define quais classes devem ser incluídas/excluídas da análise de cobertura.
+	// É importante excluir classes que não contêm lógica de negócios e, portanto,
+	// não precisam ser testadas para fins de cobertura (ex: a classe principal do Spring Boot,
+	// classes de configuração simples, classes de modelo/POJOs sem lógica).
+	classDirectories.setFrom(
+			fileTree(layout.buildDirectory.dir("classes/kotlin/main")) {
+				exclude(
+						"**/com/example/demo/SuaAplicacaoApplication.class", // Altere "SuaAplicacaoApplication" para o nome da sua classe principal @SpringBootApplication
+						"**/com/example/demo/config/**", // Exclui classes de configuração
+						"**/com/example/demo/model/**" // Exclui classes de modelo/POJOs se não tiverem lógica complexa
+				)
+			}
+	)
+	// Se você tiver classes geradas ou de infraestrutura que não precisam de cobertura,
+	// adicione-as aqui também.
 }

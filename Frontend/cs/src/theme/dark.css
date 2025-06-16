@@ -1,153 +1,78 @@
-/* Tema escuro inspirado no ChatGPT */
-body.dark-mode {
-  background-color: #171717;
+/*MAIN*/
+body.dark-mode main {
+  background-color: #212121;
   color: #e0e0e0;
 }
 
-/* Navbar e Footer */
+/*NAV*/
+body.dark-mode {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
 body.dark-mode .navbar,
 body.dark-mode .footer {
   background-color: #212121;
   color: #ffffff;
 }
 
-/* Containers, inputs e cards */
-body.dark-mode .PerfilDoador,
-body.dark-mode .perfil-left,
-body.dark-mode .perfil-right,
-body.dark-mode .card,
-body.dark-mode input,
-body.dark-mode textarea,
-body.dark-mode select,
-body.dark-mode .modal,
+body.dark-mode .navbar {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .logo,
+body.dark-mode .icon-button {
+  color: #ffffff;
+  border-color: #b160fc;
+}
+
+body.dark-mode .nav-button,
 body.dark-mode .nav-dropdown {
   background-color: #424242;
   color: #e0e0e0;
-  border: 1px solid #b160fc !important;
-}
-
-/* Força botões padrão e personalizados */
-body.dark-mode button,
-body.dark-mode .nav-button,
-body.dark-mode .botao-atualizar,
-body.dark-mode .cancel-button,
-body.dark-mode .delete-button,
-body.dark-mode .icon-button {
-  background-color: transparent !important;
-  color: #b160fc !important;
-  border: 2px solid #b160fc !important;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-/* Hover */
-body.dark-mode button:hover,
-body.dark-mode .nav-button:hover,
-body.dark-mode .botao-atualizar:hover,
-body.dark-mode .cancel-button:hover,
-body.dark-mode .delete-button:hover,
-body.dark-mode .icon-button:hover {
-  background-color: #b160fc !important;
-  color: #ffffff !important;
-  border-color: #b160fc !important;
-}
-
-/* Links */
-body.dark-mode a {
-  color: #b160fc !important;
-}
-body.dark-mode .botao-foto-perfil {
-  background-color: transparent !important;
-  color: #b160fc !important;
-  border: 2px solid #b160fc !important;
-}
-
-body.dark-mode .botao-foto-perfil:hover {
-  background-color: #b160fc !important;
-  color: white !important;
-}
-body.dark-mode h2 {
-  color: #b160fc !important;
-}
-body.dark-mode .foto-perfil {
-  border: 3px solid #b160fc !important;
-}
-body.dark-mode .modal {
-  color: #ffffff !important;
-}
-
-body.dark-mode .modal h2,
-body.dark-mode .modal p {
-  color: #ffffff !important;
-}
-body.dark-mode label {
-  color: #b160fc !important;
-  font-weight: 500;
-}
-body.dark-mode strong {
-  color: #b160fc !important;
-}
-body.dark-mode .banner-home {
-  position: relative;
-}
-
-body.dark-mode .banner-home::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-}
-body.dark-mode .card-ong {
-  background-color: #2a2a2a;
   border: 1px solid #b160fc;
-  border-radius: 16px;
-  padding: 1rem;
-  text-align: center;
-  color: #e0e0e0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s ease;
 }
 
-body.dark-mode .card-ong:hover {
-  transform: translateY(-5px);
-}
-
-body.dark-mode .card-ong h3 {
+body.dark-mode .nav-dropdown .nav-button {
+  border-color: #b160fc;
   color: #b160fc;
-  font-weight: 600;
-  margin: 1rem 0 0.5rem;
-  font-size: 1rem;
 }
 
-body.dark-mode .card-ong img {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 12px;
-  margin-bottom: 0.5rem;
-}
-
-body.dark-mode .card-ong button {
-  margin-top: 1rem;
-  padding: 8px 16px;
-  background-color: transparent;
-  color: #b160fc;
-  border: 2px solid #b160fc;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-body.dark-mode .card-ong button:hover {
+body.dark-mode .nav-dropdown .nav-button:hover {
   background-color: #b160fc;
   color: white;
 }
-body.dark-mode .tituloDoadorbg .transparencia {
-  background-color: rgba(0, 0, 0, 0.6); /* escurece o banner */
+
+body.dark-mode .nav-dropdown .logout {
+  border-color: #ff4d4d;
+  color: #ff4d4d;
+}
+
+body.dark-mode .nav-dropdown .logout:hover {
+  background-color: #4d1a1a;
+  color: #ffffff;
+}
+
+body.dark-mode .icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+/*INDEX*/
+body.dark-mode {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .transparencia {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .tituloDoador {
+  color: #e0e0e0;
+}
+
+body.dark-mode .divisor {
+  background-color: #2a2a2a;
 }
 
 body.dark-mode .fraseImpacto {
@@ -156,85 +81,90 @@ body.dark-mode .fraseImpacto {
   border: 2px solid #b160fc;
 }
 
+body.dark-mode .slick-dots div {
+  color: #b160fc;
+}
+
 body.dark-mode .botoesDoadorMenu {
-  background-color: transparent !important;
-  color: #b160fc !important;
-  border: 2px solid #b160fc !important;
+  background-color: #2a2a2a;
+  color: white;
+  border: 2px solid #b160fc;
 }
 
 body.dark-mode .botoesDoadorMenu:hover {
-  background-color: #b160fc !important;
-  color: white !important;
+  background-color: #b160fc;
+  color: white;
+  border-color: white;
 }
 
 body.dark-mode .textoBg {
-  background-color: transparent;
+  background-color: #2a2a2a;
 }
 
 body.dark-mode .texto {
-  background-color: #2a2a2a;
+  background-color: #424242;
   color: #e0e0e0;
   border: 1px solid #b160fc;
-  padding: 20px;
-  border-radius: 12px;
-}body.dark-mode .card-instituicao {
+}
+
+body.dark-mode .bem-vindoBg {
   background-color: #2a2a2a;
-  border: 1px solid #b160fc;
-  border-radius: 16px;
-  padding: 1rem;
-  text-align: center;
+}
+
+body.dark-mode .painel-ong-titulo {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .descricao {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .descricao h1 {
   color: #e0e0e0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s ease;
 }
 
-body.dark-mode .card-instituicao:hover {
-  transform: translateY(-5px);
+body.dark-mode .logoContainer {
+  background-color: #212121;
+  border: 2px solid #b160fc;
 }
 
-body.dark-mode .card-instituicao h3 {
-  color: #b160fc;
-  font-weight: 600;
-  margin: 1rem 0 0.5rem;
-  font-size: 1rem;
-}
-
-body.dark-mode .card-instituicao img {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 12px;
-  margin-bottom: 0.5rem;
-}
-
-body.dark-mode .card-instituicao button {
-  margin-top: 1rem;
-  padding: 8px 16px;
+body.dark-mode .admnistrarBtn {
   background-color: transparent;
   color: #b160fc;
   border: 2px solid #b160fc;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
 }
 
-body.dark-mode .card-instituicao button:hover {
+body.dark-mode .admnistrarBtn:hover {
   background-color: #b160fc;
   color: white;
 }
-body.dark-mode .divisor {
-  background-color: #2a2a2a;
-}body.dark-mode .historico {
+
+body.dark-mode .ongBotoes {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .ongBotoes:hover {
+  background-color: #b160fc;
+  color: white;
+}
+body.dark-mode .main-content {
+  background-color: #2a2a2a !important;
+}
+
+/*HISTORICO*/
+
+body.dark-mode .historico {
   background-color: #212121;
   color: #e0e0e0;
+  box-shadow: none;
 }
 
 body.dark-mode .mainHist {
-  background-color: #171717;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 2px solid #b160fc;
 }
 
 body.dark-mode .mainHist h1 {
@@ -243,8 +173,9 @@ body.dark-mode .mainHist h1 {
 
 body.dark-mode .cardHistorico {
   background-color: #2a2a2a;
-  border: 1px solid #b160fc;
   color: #e0e0e0;
+  border: 1px solid #b160fc;
+  box-shadow: none;
 }
 
 body.dark-mode .imgHist {
@@ -268,38 +199,230 @@ body.dark-mode .pesquisa input {
   color: #e0e0e0;
   border: 1px solid #b160fc;
 }
-body.dark-mode {
-  background-color: #212121; /* fundo da página */
-}
 
-body.dark-mode .mainHist {
-  background-color: #2a2a2a;     /* fundo interno da div */
-  border: 2px solid #b160fc;     /* borda roxa */
-  border-radius: 10px;
-  padding: 20px 40px 50px;
-}
-
-body.dark-mode .historico {
-  background-color: transparent; /* fundo da caixa externa removido para visualizar a mainHist */
-  box-shadow: none;
-}
 body.dark-mode .search-bar {
-  background-color: #3a3a3a;        /* cinza mais claro para o input wrapper */
+  background-color: #3a3a3a;
   border: 2px solid #b160fc;
 }
 
 body.dark-mode .search-bar input {
   color: #ffffff;
-  background-color: #3a3a3a;        /* mesma cor para interior do input */
+  background-color: #3a3a3a;
 }
 
 body.dark-mode .search-bar input::placeholder {
-  color: #bbbbbb;                   /* tom claro e suave */
+  color: #bbbbbb;
 }
 
 body.dark-mode .search-bar svg {
   color: #b160fc;
 }
+/* login */
+
+
+body.dark-mode .login-page,
+body.dark-mode .login-container {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .login-container h1 {
+  color: #b160fc;
+}
+
+body.dark-mode .login-form input {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .login-form input::placeholder {
+  color: #cccccc;
+}
+
+body.dark-mode .login-form button,
+body.dark-mode .login-button {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .login-form button:hover,
+body.dark-mode .login-button:hover {
+  background-color: #b160fc;
+  color: #ffffff;
+}
+
+body.dark-mode .ou-texto {
+  color: #e0e0e0;
+}
+/* CadastroONG */
+
+body.dark-mode .CadastroONG {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #b160fc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .CadastroONG h1 {
+  color: #b160fc;
+}
+
+body.dark-mode .CadastroONG input {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .CadastroONG label {
+  color: #b160fc;
+  font-weight: 600;
+}
+
+body.dark-mode .CadastroONG button {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .CadastroONG button:hover {
+  background-color: #b160fc;
+  color: #ffffff;
+}
+
+body.dark-mode .forca-fraca {
+  color: #ff4d4d;
+}
+
+body.dark-mode .forca-media {
+  color: #ffcc00;
+}
+
+body.dark-mode .forca-forte {
+  color: #00e676;
+}
+/*PERFIL*/
+
+body.dark-mode {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+body.dark-mode .PerfilDoador,
+body.dark-mode .perfil-left,
+body.dark-mode .perfil-right {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .foto-perfil {
+  border: 3px solid #b160fc;
+}
+
+body.dark-mode .botao-foto-perfil {
+  background-color: transparent;
+  color: #b160fc !important;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .botao-foto-perfil:hover {
+  background-color: #b160fc;
+  color: white !important;
+}
+
+body.dark-mode .perfil-right h2 {
+  color: #b160fc;
+}
+
+body.dark-mode .PerfilDoador input[type="text"],
+body.dark-mode .PerfilDoador input[type="email"],
+body.dark-mode .PerfilDoador input[type="password"] {
+  background-color: #424242;
+  color: #e0e0e0;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .PerfilDoador label {
+  color: #b160fc;
+  font-weight: 500;
+}
+
+body.dark-mode .PerfilDoador button,
+body.dark-mode .PerfilDoador .cancel-button,
+body.dark-mode .PerfilDoador .delete-button {
+  background-color: transparent !important;
+  color: #b160fc !important;
+  border: 2px solid #b160fc !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .PerfilDoador button:hover,
+body.dark-mode .PerfilDoador .cancel-button:hover,
+body.dark-mode .PerfilDoador .delete-button:hover {
+  background-color: #b160fc !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .modal {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .modal h2,
+body.dark-mode .modal p {
+  color: #ffffff;
+}
+
+body.dark-mode .modal-buttons .delete-confirm,
+body.dark-mode .modal-buttons .cancel-confirm {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .modal-buttons .delete-confirm:hover,
+body.dark-mode .modal-buttons .cancel-confirm:hover {
+  background-color: #b160fc;
+  color: white;
+}
+/* dashboards*/
+
+body.dark-mode .pagina-relatorios {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .titulo,
+body.dark-mode .valor {
+  color: #ffffff;
+}
+
+body.dark-mode .filtro-ano,
+body.dark-mode .filtros-avancados label,
+body.dark-mode .legenda {
+  color: #cccccc;
+}
+
+body.dark-mode .filtros-avancados select,
+body.dark-mode .filtros-avancados input {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border-color: #b160fc;
+}
+
+body.dark-mode .card-kpi,
+body.dark-mode .grafico-placeholder {
+  background-color: #3a3a3a;
+  color: #e0e0e0;
+  border-left-color: #b160fc;
+  box-shadow: none;
+}
+/* saq */
+
 body.dark-mode .saq {
   color: #e0e0e0;
 }
@@ -319,6 +442,13 @@ body.dark-mode .saq ul li::before {
   color: #b160fc;
 }
 
+body.dark-mode .imgSobre,
+body.dark-mode .imgValores,
+body.dark-mode .imgDoadores,
+body.dark-mode .imgOngs {
+  box-shadow: 7px 10px 4px #b160fc55;
+}
+
 body.dark-mode .linha {
   background-color: #b160fc;
 }
@@ -331,23 +461,272 @@ body.dark-mode .ongTexto {
   box-shadow: 7px 10px 4px #b160fc55;
 }
 
-body.dark-mode .imgSobre,
-body.dark-mode .imgValores,
-body.dark-mode .imgDoadores,
-body.dark-mode .imgOngs {
-  box-shadow: 7px 10px 4px #b160fc55;
-}
-
 body.dark-mode .faixaFundo,
 body.dark-mode .ongFrase {
-  background-color: #333333;
+  background-color: #212121;
 }
 
 body.dark-mode .ongFrase h3 {
   color: #b160fc;
 }
-/* Fundo geral do body */
-body.dark-mode {
+
+/*Admin ONG */
+
+body.dark-mode .AdminONG {
   background-color: #2a2a2a;
   color: #e0e0e0;
+}
+
+body.dark-mode .menuTopo .aba {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+body.dark-mode .menuTopo .aba.ativa {
+  background-color: #3a3a3a;
+  border-bottom: 2px solid #b160fc;
+}
+
+body.dark-mode .menuDoacoes,
+body.dark-mode .menuAcoes,
+body.dark-mode .DoacaoOngContainer,
+body.dark-mode .novaAcaoContainer {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .titulo {
+  color: #b160fc;
+}
+
+body.dark-mode .novaAcaoContainer input,
+body.dark-mode .novaAcaoContainer textarea {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .btnNovaAcao,
+body.dark-mode .btnCriarAcao {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .btnNovaAcao:hover,
+body.dark-mode .btnCriarAcao:hover {
+  background-color: #b160fc;
+  color: #ffffff;
+}
+
+body.dark-mode .linhaTexto label {
+  color: #b160fc;
+  font-weight: 600;
+}
+
+/*Ações card*/
+
+body.dark-mode .cardAcoes {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .linhaTexto strong {
+  color: #b160fc;
+}
+
+body.dark-mode .linhaTexto p {
+  color: #e0e0e0;
+}
+
+body.dark-mode .statusSelect,
+body.dark-mode select {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .cardAcoes button {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .cardAcoes button:hover {
+  background-color: #b160fc;
+  color: #ffffff;
+}
+
+body.dark-mode .cardAcoes .btnExcluir {
+  background-color: transparent;
+  color: #ff4d4d;
+  border: 2px solid #ff4d4d;
+}
+
+body.dark-mode .cardAcoes .btnExcluir:hover {
+  background-color: #ff4d4d;
+  color: #ffffff;
+}
+/*cardHistoricoONG*/
+
+body.dark-mode .cardHistoricoONG {
+  background-color: #2a2a2a;
+  border: 1px solid #b160fc;
+  color: #e0e0e0;
+}
+
+body.dark-mode .textoCard {
+  margin-right: 35px;
+}
+
+body.dark-mode .nomeDoador {
+  color: #b160fc;
+}
+
+body.dark-mode .dataHora {
+  color: #cccccc;
+}
+
+body.dark-mode .valor {
+  color: #ffffff;
+}
+/*Escolher classificação*/
+body.dark-mode .modal-content {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #b160fc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .modal-content h2 {
+  color: #b160fc;
+}
+
+body.dark-mode .modal-content button {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .modal-content button:hover {
+  background-color: #b160fc;
+  color: #ffffff;
+}
+/*Recuperar senha*/
+body.dark-mode .recuperar-container {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .recuperar-container h1 {
+  color: #b160fc;
+}
+
+body.dark-mode .recuperar-container input {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .recuperar-container input::placeholder {
+  color: #cccccc;
+}
+
+body.dark-mode .recuperar-container button {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .recuperar-container button:hover {
+  background-color: #b160fc;
+  color: #ffffff;
+}
+
+body.dark-mode .recuperar-container .sucesso {
+  color: #00e676;
+}
+
+body.dark-mode .recuperar-container .erro {
+  color: #ff4d4d;
+}
+/*Doação*/
+/* Dark mode para página de doação */
+
+body.dark-mode .doacao,
+body.dark-mode .instituicoes,
+body.dark-mode .doacao-valor,
+body.dark-mode .doacao-valor-dados,
+body.dark-mode .doacao-valor-resumo,
+body.dark-mode .pagamento,
+body.dark-mode .pagamento-opcoes,
+body.dark-mode .pagamento-resumo,
+body.dark-mode .form-cartao,
+body.dark-mode .modal {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+body.dark-mode .dados-ong,
+body.dark-mode .dados-valores,
+body.dark-mode .opcao-pagamento,
+body.dark-mode .form-cartao,
+body.dark-mode .resumo-valor,
+body.dark-mode .cartao-info input,
+body.dark-mode .linha-input input,
+body.dark-mode .grupo-item input,
+body.dark-mode .modal {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .botao-pagamento,
+body.dark-mode .botao-concluir,
+body.dark-mode .botao-adicionar,
+body.dark-mode .botoes-valores button {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .botao-pagamento:hover,
+body.dark-mode .botao-concluir:hover,
+body.dark-mode .botao-adicionar:hover,
+body.dark-mode .botoes-valores button:hover {
+  background-color: #b160fc;
+  color: #ffffff;
+}
+
+body.dark-mode .campo-outro {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: 1px solid #b160fc;
+}
+
+body.dark-mode .campo-outro:focus {
+  background-color: #444;
+}
+
+body.dark-mode .resumo-linha {
+  background-color: #b160fc;
+}
+
+body.dark-mode .modal h2 {
+  color: #b160fc;
+}
+
+body.dark-mode .modal button {
+  background-color: transparent;
+  color: #b160fc;
+  border: 2px solid #b160fc;
+}
+
+body.dark-mode .modal button:hover {
+  background-color: #b160fc;
+  color: white;
 }

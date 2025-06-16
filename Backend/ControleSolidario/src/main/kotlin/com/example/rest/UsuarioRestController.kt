@@ -27,9 +27,11 @@ class UsuarioRestController(
             val usuarios = usersController.listarTodosUsuarios()
             ResponseEntity.ok(usuarios)
         } catch (e: Exception) {
+            // Esta captura de erro é uma segurança extra, mas o erro principal será logado no controller.
             ResponseEntity.internalServerError().body(mapOf("error" to e.message))
         }
     }
+
 
     /**
      * Endpoint que busca um usuário pelo seu email.
@@ -62,22 +64,23 @@ class UsuarioRestController(
     /**
      * Endpoint para atualizar um usuário, identificado pelo seu email.
      */
-    @PutMapping("/{email}")
-    fun atualizarUsuario(@PathVariable email: String, @RequestBody usuario: Users): ResponseEntity<String> {
-        return if (usersController.atualizarUsuario(email, usuario))
-            ResponseEntity.ok("✅ Usuário atualizado com sucesso")
-        else
-            ResponseEntity.internalServerError().body("❌ Erro ao atualizar usuário")
+    @PutMapping("/{uid}")
+    fun atualizarUsuario(@PathVariable uid: String, @RequestBody dados: Map<String, Any>): ResponseEntity<Map<String, String>> {
+        return if (usersController.atualizarUsuario(uid, dados)) {
+            ResponseEntity.ok(mapOf("message" to "Usuário atualizado com sucesso"))
+        } else {
+            ResponseEntity
+                .status(500)
+                .body(mapOf("error" to "Ocorreu um erro no servidor ao tentar atualizar o usuário."))
+        }
     }
 
-    /**
-     * Endpoint para deletar um usuário, identificado pelo seu email.
-     */
-    @DeleteMapping("/{email}")
-    fun deletarUsuario(@PathVariable email: String): ResponseEntity<String> {
-        return if (usersController.deletarUsuario(email))
-            ResponseEntity.ok("🗑️ Usuário deletado com sucesso")
+    // O seu endpoint de apagar (@DeleteMapping) está bom como está.
+    @DeleteMapping("/{uid}")
+    fun deletarUsuario(@PathVariable uid: String): ResponseEntity<String> {
+        return if (usersController.deletarUsuario(uid))
+            ResponseEntity.ok("🗑️ Usuário apagado com sucesso do Firestore")
         else
-            ResponseEntity.internalServerError().body("❌ Erro ao deletar usuário")
+            ResponseEntity.internalServerError().body("❌ Erro ao apagar usuário do Firestore")
     }
 }

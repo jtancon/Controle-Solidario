@@ -1,5 +1,8 @@
+// ✅ CORREÇÃO: Voltando para caminhos relativos com base na estrutura mais provável do seu projeto.
 import "./CadastroDoador.css";
 import { useState } from "react";
+// O ficheiro atual está em: src/components/pages/CadastroDoador/
+// Para chegar a 'src/services/', precisamos de subir 3 níveis.
 import { db } from "../../../services/firebaseconfig";
 import {
   doc,
@@ -8,6 +11,7 @@ import {
   collection,
   query,
   where,
+  serverTimestamp,
 } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -18,12 +22,16 @@ import CS from "../../../assets/CS.jpg";
 
 function CadastroDoador() {
   const [form, setForm] = useState({
+    // Campos preenchidos pelo usuário no formulário
     nomeCompleto: "",
-    usuario: "",
+    nomeUsuario: "",
     email: "",
     cpf: "",
     telefone: "",
+    cep: "",
+    endereco: "",
     senha: "",
+    // Campos com valores padrão ou definidos pelo sistema
     fotoPerfil: CS,
     classificacao: "doador",
   });
@@ -50,8 +58,13 @@ function CadastroDoador() {
       formattedValue = formattedValue.replace(/(\d{5})(\d)/, "$1-$2");
     }
 
+    if (name === "cep") {
+        formattedValue = value.replace(/\D/g, "").slice(0, 8);
+        formattedValue = formattedValue.replace(/(\d{5})(\d)/, '$1-$2');
+    }
+
     setForm({ ...form, [name]: formattedValue });
-    setErrors({ ...errors, [name]: "" }); // Limpa o erro desse campo quando altera
+    setErrors({ ...errors, [name]: "" });
   };
 
   const verificarForcaSenha = (senha) => {
@@ -59,15 +72,8 @@ function CadastroDoador() {
     const temMinuscula = /[a-z]/.test(senha);
     const temNumero = /[0-9]/.test(senha);
     const temEspecial = /[@$!%*?&#]/.test(senha);
-    const temSequencia = /(012|123|234|345|456|567|678|789|890|abc|bcd)/i.test(
-      senha
-    );
-    const criterios = [
-      temMaiuscula,
-      temMinuscula,
-      temNumero,
-      temEspecial,
-    ].filter(Boolean).length;
+    const temSequencia = /(012|123|234|345|456|567|678|789|890|abc|bcd)/i.test(senha);
+    const criterios = [temMaiuscula, temMinuscula, temNumero, temEspecial].filter(Boolean).length;
 
     if (senha.length < 6 || temSequencia) return "fraca";
     if (criterios >= 2) return criterios === 4 ? "forte" : "media";
@@ -75,14 +81,8 @@ function CadastroDoador() {
   };
 
   const verificarEmailOuCPFExistente = async () => {
-    const emailQuery = query(
-      collection(db, "usuarios"),
-      where("email", "==", form.email)
-    );
-    const cpfQuery = query(
-      collection(db, "usuarios"),
-      where("cpf", "==", form.cpf)
-    );
+    const emailQuery = query(collection(db, "usuarios"), where("email", "==", form.email));
+    const cpfQuery = query(collection(db, "usuarios"), where("cpf", "==", form.cpf));
 
     const [emailSnap, cpfSnap] = await Promise.all([
       getDocs(emailQuery),
@@ -95,7 +95,7 @@ function CadastroDoador() {
       errosTemp.email = errorMessages.emailJaCadastrado;
     }
     if (!cpfSnap.empty) {
-      errosTemp.cpf = "CPF já cadastrado."; // Você pode adicionar essa mensagem no errorMessages também se quiser
+      errosTemp.cpf = "CPF já cadastrado.";
     }
 
     setErrors((prev) => ({ ...prev, ...errosTemp }));
@@ -104,15 +104,16 @@ function CadastroDoador() {
   };
 
   const validarCampos = async () => {
-    const { nomeCompleto, usuario, email, cpf, telefone, senha } = form;
+    const { nomeCompleto, nomeUsuario, email, cpf, telefone, cep, endereco, senha } = form;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const telefoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
     const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+    const cepRegex = /^\d{5}-\d{3}$/;
 
     const errosTemp = {};
 
     if (!nomeCompleto) errosTemp.nomeCompleto = errorMessages.camposObrigatorios;
-    if (!usuario) errosTemp.usuario = errorMessages.camposObrigatorios;
+    if (!nomeUsuario) errosTemp.nomeUsuario = errorMessages.camposObrigatorios;
     if (!email) {
       errosTemp.email = errorMessages.camposObrigatorios;
     } else if (!emailRegex.test(email)) {
@@ -124,6 +125,14 @@ function CadastroDoador() {
     } else if (!cpfRegex.test(cpf)) {
       errosTemp.cpf = "CPF inválido.";
     }
+    
+    if (!cep) {
+        errosTemp.cep = errorMessages.camposObrigatorios;
+    } else if (!cepRegex.test(cep)) {
+        errosTemp.cep = "CEP inválido.";
+    }
+    
+    if (!endereco) errosTemp.endereco = errorMessages.camposObrigatorios;
 
     if (!telefone) {
       errosTemp.telefone = errorMessages.camposObrigatorios;
@@ -164,9 +173,17 @@ function CadastroDoador() {
         form.senha
       );
 
-  const { senha, ...dadosParaSalvar } = form;
+      const { senha, ...dadosDoForm } = form;
+      
+      const dadosParaSalvar = {
+        ...dadosDoForm,
+        uid: user.uid,
+        nome: form.nomeCompleto,
+        usuario: form.email,
+        criadoEm: serverTimestamp()
+      };
 
-  await setDoc(doc(db, "usuarios", user.uid), dadosParaSalvar);
+      await setDoc(doc(db, "usuarios", user.uid), dadosParaSalvar);
 
       navigate("/");
     } catch (error) {
@@ -181,93 +198,51 @@ function CadastroDoador() {
       {errors.general && <MensagemErro message={errors.general} />}
       <form onSubmit={handleSubmit}>
         <label>Nome Completo</label>
-        <input
-          type="text"
-          name="nomeCompleto"
-          placeholder="Ex: Maria Joaquina"
-          value={form.nomeCompleto}
-          onChange={handleChange}
-        />
+        <input type="text" name="nomeCompleto" placeholder="Ex: Maria Joaquina de Amaral Pereira" value={form.nomeCompleto} onChange={handleChange}/>
         {errors.nomeCompleto && <InputError message={errors.nomeCompleto} />}
 
         <label>Nome de Usuário</label>
-        <input
-          type="text"
-          name="usuario"
-          placeholder="Maria"
-          value={form.usuario}
-          onChange={handleChange}
-        />
-        {errors.usuario && <InputError message={errors.usuario} />}
+        <input type="text" name="nomeUsuario" placeholder="Ex: maria.joaquina" value={form.nomeUsuario} onChange={handleChange}/>
+        {errors.nomeUsuario && <InputError message={errors.nomeUsuario} />}
 
         <label>E-mail</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="nome@email.com"
-          value={form.email}
-          onChange={handleChange}
-        />
+        <input type="email" name="email" placeholder="nome@email.com" value={form.email} onChange={handleChange}/>
         {errors.email && <InputError message={errors.email} />}
 
         <label>CPF</label>
-        <input
-          type="text"
-          name="cpf"
-          placeholder="000.000.000-00"
-          value={form.cpf}
-          onChange={handleChange}
-        />
+        <input type="text" name="cpf" placeholder="000.000.000-00" value={form.cpf} onChange={handleChange}/>
         {errors.cpf && <InputError message={errors.cpf} />}
+        
+        <label>CEP</label>
+        <input type="text" name="cep" placeholder="00000-000" value={form.cep} onChange={handleChange}/>
+        {errors.cep && <InputError message={errors.cep} />}
+
+        <label>Endereço</label>
+        <input type="text" name="endereco" placeholder="Rua, Número, Bairro, Cidade - Estado" value={form.endereco} onChange={handleChange}/>
+        {errors.endereco && <InputError message={errors.endereco} />}
 
         <label>Telefone</label>
-        <input
-          type="text"
-          name="telefone"
-          placeholder="(11) 91234-5678"
-          value={form.telefone}
-          onChange={handleChange}
-        />
+        <input type="text" name="telefone" placeholder="(11) 91234-5678" value={form.telefone} onChange={handleChange}/>
         {errors.telefone && <InputError message={errors.telefone} />}
 
         <label>Senha</label>
-        <input
-          type="password"
-          name="senha"
-          placeholder="Mínimo 6 caracteres"
-          value={form.senha}
-          onChange={(e) => {
+        <input type="password" name="senha" placeholder="Mínimo 6 caracteres" value={form.senha} onChange={(e) => {
             handleChange(e);
             setForcaSenha(verificarForcaSenha(e.target.value));
-          }}
-        />
-        {form.senha && (
-          <p className={`forca-senha forca-${forcaSenha}`}>
-            Força da senha: {forcaSenha}
-          </p>
-        )}
+          }}/>
+        {form.senha && (<p className={`forca-senha forca-${forcaSenha}`}> Força da senha: {forcaSenha} </p>)}
         {errors.senha && <InputError message={errors.senha} />}
 
         <label>Confirmar Senha</label>
-        <input
-          type="password"
-          name="confirmarSenha"
-          placeholder="Confirme sua senha"
-          value={confirmarSenha}
-          onChange={(e) => {
+        <input type="password" name="confirmarSenha" placeholder="Confirme sua senha" value={confirmarSenha} onChange={(e) => {
             setConfirmarSenha(e.target.value);
             setErrors({ ...errors, confirmarSenha: "" });
-          }}
-        />
-        {errors.confirmarSenha && (
-          <InputError message={errors.confirmarSenha} />
-        )}
+          }}/>
+        {errors.confirmarSenha && (<InputError message={errors.confirmarSenha} />)}
 
         <button type="submit">Cadastrar</button>
       </form>
-      <p>
-        Já tem uma conta? <a href="/Login">Faça login</a>
-      </p>
+      <p> Já tem uma conta? <a href="/Login">Faça login</a> </p>
     </div>
   );
 }
