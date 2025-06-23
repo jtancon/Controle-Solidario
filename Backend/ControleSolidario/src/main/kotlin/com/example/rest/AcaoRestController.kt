@@ -45,7 +45,7 @@ class AcaoRestController(
     @GetMapping("/ong/{id}")
     fun listarAcoesPorOng(@PathVariable id: String): ResponseEntity<Any> {
         val todas = acaoController.listarTodasAcoes()
-        val filtradas = todas.filter { it.IdOng == id }
+        val filtradas = todas.filter { it.idOng == id }
         return ResponseEntity.ok(filtradas)
     }
 }

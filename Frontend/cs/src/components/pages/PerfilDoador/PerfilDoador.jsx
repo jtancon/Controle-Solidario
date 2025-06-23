@@ -97,12 +97,8 @@ function PerfilDoador() {
       
       await api.put(`/usuarios/${user.uid}`, dadosParaAtualizar);
       
-      // ✅ CORREÇÃO: A linha que causava o erro foi removida.
-      // A atualização do ecrã agora depende apenas do estado local 'dados',
-      // que já foi atualizado pela função handleChange.
-      
       toast.success("Informações atualizadas com sucesso!");
-      setEditando(false); // Volta para o modo de visualização, que irá ler o estado 'dados' atualizado.
+      setEditando(false); 
     } catch (error) {
       console.error("Erro ao atualizar os dados do perfil:", error.response || error);
       toast.error("Erro ao atualizar os dados do perfil.");
@@ -112,7 +108,6 @@ function PerfilDoador() {
   const handleConfirmarDelete = async () => {
     setMostrarConfirmacaoDelete(false);
     try {
-        // Assume que a função deletarConta do contexto já faz todo o processo
         await deletarConta();
         toast.success("Conta apagada com sucesso.");
         navigate("/login");
